@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/io.github.shonebinu.Glyph.desktop.in
+data/io.github.shonebinu.Glyph.metainfo.xml.in
+data/io.github.shonebinu.Glyph.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

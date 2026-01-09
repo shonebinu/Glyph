@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=glyph
+Exec=glyph
+Icon=io.github.shonebinu.Glyph
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true
