@@ -57,8 +57,9 @@ def main():
             except Exception:
                 continue
 
-    output_json = Path("fonts_index.json")
-    output_json.write_text(json.dumps(db, indent=2), encoding="utf-8")
+    db.sort(key=lambda f: f["family"].lower())
+
+    Path("fonts_index.json").write_text(json.dumps(db, indent=2), encoding="utf-8")
 
     compact_json = json.dumps(db, separators=(",", ":")).encode("utf-8")
     compressed_data = brotli.compress(compact_json, quality=11)
