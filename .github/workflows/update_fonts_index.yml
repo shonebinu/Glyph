@@ -36,7 +36,7 @@ jobs:
           # Check if there are changes to avoid empty commits
           if [ -n "$(git status --porcelain)" ]; then
             git add fonts_index.json*
-            git commit -m "Update font database: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git commit -m "Update font index: $(date -u +'%Y-%m-%d %H:%M UTC')"
             git push
           else
             echo "No changes detected."
