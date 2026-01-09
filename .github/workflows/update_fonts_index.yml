@@ -1,0 +1,42 @@
+name: Daily fonts index update
+
+on:
+  schedule:
+    - cron: "0 0 * * *" 
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+
+      - name: Set up python and deps
+        uses: actions/setup-python@v6.1.0
+        with:
+          pip-install: brotli
+  
+      - name: Clone google fonts 
+        run: git clone --depth=1 https://github.com/google/fonts.git google_fonts
+          
+      - name: Run indexing script
+        run: python generate_fonts_index.py 
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are changes to avoid empty commits
+          if [ -n "$(git status --porcelain)" ]; then
+            git add fonts_index.json*
+            git commit -m "Update font database: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          else
+            echo "No changes detected."
+          fi
