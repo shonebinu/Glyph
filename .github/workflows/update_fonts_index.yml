@@ -16,10 +16,11 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v4
 
-      - name: Set up python and deps
+      - name: Set up python 
         uses: actions/setup-python@v6.1.0
-        with:
-          pip-install: brotli
+      
+      - name: Install brotli 
+        run: pip install brotli 
   
       - name: Clone google fonts 
         run: git clone --depth=1 https://github.com/google/fonts.git google_fonts
