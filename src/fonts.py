@@ -40,7 +40,6 @@ class Fonts:
 
         self.available_fonts = available_fonts
 
-        await self.install_font_family("Roboto Mono")
         return available_fonts
 
     async def install_font_family(self, font_family):
