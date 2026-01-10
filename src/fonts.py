@@ -36,11 +36,9 @@ class Fonts:
 
     async def fetch_available_fonts(self):
         response = await self._request(self.GFONTS_INDEX_URL)
-        available_fonts = response.json()
+        self.available_fonts = response.json()
 
-        self.available_fonts = available_fonts
-
-        return available_fonts
+        return self.available_fonts
 
     async def install_font_family(self, font_family):
         font_data = next(
@@ -93,10 +91,10 @@ class Fonts:
         font_resp = await self._request(ttf_url)
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".ttf") as tmp:
-            tmp.write(font_resp.content)
+            await asyncio.to_thread(tmp.write, font_resp.content)
 
-            self.loaded_preview_fonts[font_family] = tmp.name
-            return tmp.name
+        self.loaded_preview_fonts[font_family] = tmp.name
+        return tmp.name
 
     # TODO: think abt bundling index and caching it for every 24h, also cache preview fonts maybe?
     # TODO: check to see if google quick preview subsets can be used
