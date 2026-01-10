@@ -17,7 +17,7 @@ class Fonts:
     FONTSOURCE_API = "https://api.fontsource.org/v1/fonts"
 
     def __init__(self):
-        self.client = httpx.AsyncClient(timeout=10.0)
+        self.client = httpx.AsyncClient(timeout=30)  # TODO: do we need timeout?
         self.user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
 
