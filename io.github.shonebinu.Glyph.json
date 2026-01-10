@@ -1,7 +1,7 @@
 {
   "id": "io.github.shonebinu.Glyph",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "48",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "command": "glyph",
   "finish-args": [
@@ -23,20 +23,6 @@
     "*.a"
   ],
   "modules": [
-    {
-      "name": "python3-brotli",
-      "buildsystem": "simple",
-      "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"brotli\" --no-build-isolation"
-      ],
-      "sources": [
-        {
-          "type": "file",
-          "url": "https://files.pythonhosted.org/packages/f7/16/c92ca344d646e71a43b8bb353f0a6490d7f6e06210f8554c8f874e454285/brotli-1.2.0.tar.gz",
-          "sha256": "e310f77e41941c13340a95976fe66a8a95b01e783d430eeaf7a2f87e0a57dd0a"
-        }
-      ]
-    },
     {
       "name": "python3-typing_extensions",
       "buildsystem": "simple",

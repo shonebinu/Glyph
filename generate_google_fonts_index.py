@@ -1,10 +1,8 @@
 import json
 import re
 from pathlib import Path
+import argparse
 
-import brotli
-
-REPO_PATH = Path("./google_fonts")
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 RAW_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
 
@@ -24,7 +22,7 @@ def parse_metadata(file_path, license_type):
         weight_match = re.search(r"weight: (\d+)", block)
         file_match = re.search(r'filename: "(.*?)"', block)
 
-        if all([style_match, weight_match, file_match]):
+        if style_match and weight_match and file_match:
             font_filename = file_match.group(1)
             family_dir = file_path.parent.name
 
@@ -44,30 +42,51 @@ def parse_metadata(file_path, license_type):
     }
 
 
-def main():
+def main(repo_path: Path, output_path: Path):
     db = []
 
     for folder in LICENSE_FOLDERS:
-        license_path = REPO_PATH / folder
+        license_path = repo_path / folder
+
+        if not license_path.exists():
+            continue
 
         for metadata_path in license_path.glob("*/METADATA.pb"):
             try:
                 family_data = parse_metadata(metadata_path, folder)
-                db.append(family_data)
-            except Exception:
+                if family_data["family"]:
+                    db.append(family_data)
+            except Exception as e:
+                print(f"Skipping {metadata_path}: {e}")
                 continue
 
     db.sort(key=lambda f: f["family"].lower())
 
-    Path("fonts_index.json").write_text(json.dumps(db, indent=2), encoding="utf-8")
-
-    compact_json = json.dumps(db, separators=(",", ":")).encode("utf-8")
-    compressed_data = brotli.compress(compact_json, quality=11)
-
-    Path("fonts_index.json.br").write_bytes(compressed_data)
+    output_path.write_text(
+        json.dumps(db, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
 
     print(f"Done! Indexed {len(db)} families.")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Index Google Fonts metadata.")
+
+    parser.add_argument(
+        "repo_path",
+        type=Path,
+        help="Path to the root of the google/fonts repository",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=Path,
+        default=Path("google_fonts_index.json"),
+        help="Output JSON file path (default: google_fonts_index.json)",
+    )
+
+    args = parser.parse_args()
+
+    main(args.repo_path, args.output)

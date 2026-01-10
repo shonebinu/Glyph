@@ -1,0 +1,48 @@
+name: Daily google fonts index update
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Sparse checkout google/fonts metadatas
+        run: |
+          git clone --filter=blob:none --no-checkout --depth 1 https://github.com/google/fonts.git google_fonts
+          cd google_fonts
+          git sparse-checkout init --no-cone
+          git sparse-checkout set "ofl/*/METADATA.pb" "apache/*/METADATA.pb" "ufl/*/METADATA.pb"
+          git checkout
+          cd ..
+
+      - name: Run indexing script
+        run: python generate_google_fonts_index.py ./google_fonts -o google_fonts_index.json
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          rm -rf google_fonts
+
+          git add google_fonts_index.json
+
+          if ! git diff --cached --exit-code --quiet; then
+            git commit -m "Update font index: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          else
+            echo "No changes detected in fonts index files."
+          fi
