@@ -41,13 +41,45 @@ template $GlyphWindow: Adw.ApplicationWindow {
 
           child: SearchEntry search_entry {
             hexpand: true;
-            placeholder-text: _("Search font family");
+            placeholder-text: _("Search font");
           };
         }
 
-        content: Adw.StatusPage {
-          Label {
-            label: _("Sidebar");
+        content: Adw.Sidebar {
+          Adw.SidebarSection {
+            Adw.SidebarItem {
+              title: _("All fonts");
+              subtitle: _("...");
+            }
+          }
+
+          Adw.SidebarSection {
+            title: _("Categories");
+
+            Adw.SidebarItem {
+              title: _("Sans Serif");
+              subtitle: _("...");
+            }
+
+            Adw.SidebarItem {
+              title: _("Display");
+              subtitle: _("...");
+            }
+
+            Adw.SidebarItem {
+              title: _("Serif");
+              subtitle: _("...");
+            }
+
+            Adw.SidebarItem {
+              title: _("Handwriting");
+              subtitle: _("...");
+            }
+
+            Adw.SidebarItem {
+              title: _("Monospace");
+              subtitle: _("...");
+            }
           }
         };
       };
