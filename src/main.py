@@ -1,29 +1,14 @@
-# main.py
-#
-# Copyright 2026 Shone Binu
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
-
+import asyncio
 import sys
+
 import gi
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
-from gi.repository import Gtk, Gio, Adw
+from gi.events import GLibEventLoopPolicy
+from gi.repository import Adw, Gio, Gtk
+
 from .window import GlyphWindow
 
 
@@ -31,12 +16,14 @@ class GlyphApplication(Adw.Application):
     """The main application singleton class."""
 
     def __init__(self):
-        super().__init__(application_id='io.github.shonebinu.Glyph',
-                         flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
-                         resource_base_path='/io/github/shonebinu/Glyph')
-        self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
-        self.create_action('about', self.on_about_action)
-        self.create_action('preferences', self.on_preferences_action)
+        super().__init__(
+            application_id="io.github.shonebinu.Glyph",
+            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+            resource_base_path="/io/github/shonebinu/Glyph",
+        )
+        self.create_action("quit", lambda *_: self.quit(), ["<control>q"])
+        self.create_action("about", self.on_about_action)
+        self.create_action("preferences", self.on_preferences_action)
 
     def do_activate(self):
         """Called when the application is activated.
@@ -51,19 +38,21 @@ class GlyphApplication(Adw.Application):
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
-        about = Adw.AboutDialog(application_name='glyph',
-                                application_icon='io.github.shonebinu.Glyph',
-                                developer_name='Shone Binu',
-                                version='0.1.0',
-                                developers=['Shone Binu'],
-                                copyright='© 2026 Shone Binu')
+        about = Adw.AboutDialog(
+            application_name="glyph",
+            application_icon="io.github.shonebinu.Glyph",
+            developer_name="Shone Binu",
+            version="0.1.0",
+            developers=["Shone Binu"],
+            copyright="© 2026 Shone Binu",
+        )
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-        about.set_translator_credits(_('translator-credits'))
+        about.set_translator_credits(_("translator-credits"))
         about.present(self.props.active_window)
 
     def on_preferences_action(self, widget, _):
         """Callback for the app.preferences action."""
-        print('app.preferences action activated')
+        print("app.preferences action activated")
 
     def create_action(self, name, callback, shortcuts=None):
         """Add an application action.
@@ -83,5 +72,6 @@ class GlyphApplication(Adw.Application):
 
 def main(version):
     """The application's entry point."""
+    asyncio.set_event_loop_policy(GLibEventLoopPolicy())
     app = GlyphApplication()
     return app.run(sys.argv)

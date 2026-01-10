@@ -40,6 +40,7 @@ glyph_sources = [
   '__init__.py',
   'main.py',
   'window.py',
+  'fonts.py',
 ]
 
 install_data(glyph_sources, install_dir: moduledir)
