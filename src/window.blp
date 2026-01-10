@@ -6,24 +6,67 @@ template $GlyphWindow: Adw.ApplicationWindow {
   default-width: 1125;
   default-height: 750;
 
-  content: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      [end]
-      MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Main Menu");
-        menu-model: primary_menu;
-      }
+  Adw.Breakpoint {
+    condition ("max-width: 400sp")
+
+    setters {
+      split_view.collapsed: true;
     }
+  }
 
-    content: Label label {
-      label: _("Hello, World!");
+  content: Adw.NavigationSplitView split_view {
+    sidebar: Adw.NavigationPage {
+      title: _("Sidebar");
+      tag: "sidebar";
 
-      styles [
-        "title-1",
-      ]
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          ToggleButton search_button {
+            icon-name: "edit-find-symbolic";
+          }
+
+          [end]
+          MenuButton {
+            primary: true;
+            icon-name: "open-menu-symbolic";
+            menu-model: primary_menu;
+          }
+        }
+
+        [top]
+        SearchBar {
+          key-capture-widget: template;
+          search-mode-enabled: bind search_button.active bidirectional;
+
+          child: SearchEntry search_entry {
+            hexpand: true;
+            placeholder-text: _("Search font family");
+          };
+        }
+
+        content: Adw.StatusPage {
+          Label {
+            label: _("Sidebar");
+          }
+        };
+      };
+    };
+
+    content: Adw.NavigationPage {
+      title: _("Content");
+      tag: "content";
+
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          show-title: true;
+        }
+
+        content: Label {
+          label: _("Content");
+        };
+      };
     };
   };
 }

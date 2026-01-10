@@ -9,8 +9,6 @@ from .fonts import Fonts
 class GlyphWindow(Adw.ApplicationWindow):
     __gtype_name__ = "GlyphWindow"
 
-    label: Gtk.Label = Gtk.Template.Child()
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
