@@ -2,90 +2,96 @@ using Gtk 4.0;
 using Adw 1;
 
 template $Sidebar: Adw.NavigationPage {
-    title: _("Glyph");
-    tag: "sidebar";
+  title: _("Glyph");
+  tag: "sidebar";
 
-    child: Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {
-            ToggleButton search_button {
-                icon-name: "edit-find-symbolic";
-            }
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      ToggleButton search_button {
+        icon-name: "edit-find-symbolic";
+      }
 
-            [end]
-            MenuButton {
-                primary: true;
-                icon-name: "open-menu-symbolic";
-                menu-model: primary_menu;
-            }
+      [end]
+      MenuButton {
+        primary: true;
+        icon-name: "open-menu-symbolic";
+        menu-model: primary_menu;
+      }
+    }
+
+    [top]
+    SearchBar {
+      key-capture-widget: template;
+      search-mode-enabled: bind search_button.active bidirectional;
+
+      child: SearchEntry search_entry {
+        hexpand: true;
+        placeholder-text: _("Search font");
+      };
+    }
+
+    content: Adw.Sidebar {
+      Adw.SidebarSection {
+        Adw.SidebarItem all_fonts_label {
+          title: _("All fonts");
+          subtitle: "...";
+          icon-name: "font-x-generic-symbolic";
+        }
+      }
+
+      Adw.SidebarSection {
+        title: _("Categories");
+
+        Adw.SidebarItem sans_serif_label {
+          title: _("Sans Serif");
+          subtitle: "...";
+          icon-name: "display-symbolic";
         }
 
-        [top]
-        SearchBar {
-            key-capture-widget: template;
-            search-mode-enabled: bind search_button.active bidirectional;
-
-            child: SearchEntry search_entry {
-                hexpand: true;
-                placeholder-text: _("Search font");
-            };
+        Adw.SidebarItem display_label {
+          title: _("Display");
+          subtitle: "...";
+          icon-name: "newspaper-symbolic";
         }
 
-        content: Adw.Sidebar {
-            Adw.SidebarSection {
-                Adw.SidebarItem all_fonts_label {
-                    title: _("All fonts");
-                    subtitle: _("...");
-                }
-            }
+        Adw.SidebarItem serif_label {
+          title: _("Serif");
+          subtitle: "...";
+          icon-name: "printer2-symbolic";
+        }
 
-            Adw.SidebarSection {
-                title: _("Categories");
+        Adw.SidebarItem handwriting_label {
+          title: _("Handwriting");
+          subtitle: "...";
+          icon-name: "pencil-symbolic";
+        }
 
-                Adw.SidebarItem sans_serif_label {
-                    title: _("Sans Serif");
-                    subtitle: _("...");
-                }
-
-                Adw.SidebarItem display_label {
-                    title: _("Display");
-                    subtitle: _("...");
-                }
-
-                Adw.SidebarItem serif_label {
-                    title: _("Serif");
-                    subtitle: _("...");
-                }
-
-                Adw.SidebarItem handwriting_label {
-                    title: _("Handwriting");
-                    subtitle: _("...");
-                }
-
-                Adw.SidebarItem monospace_label {
-                    title: _("Monospace");
-                    subtitle: _("...");
-                }
-            }
-        };
+        Adw.SidebarItem monospace_label {
+          title: _("Monospace");
+          subtitle: "...";
+          icon-name: "terminal-symbolic";
+        }
+      }
     };
+  };
 }
 
 menu primary_menu {
-    section {
-        item {
-            label: _("_Preferences");
-            action: "app.preferences";
-        }
-
-        item {
-            label: _("_Keyboard Shortcuts");
-            action: "app.shortcuts";
-        }
-
-        item {
-            label: _("_About Glyph");
-            action: "app.about";
-        }
+  section {
+    item {
+      label: _("_Preferences");
+      action: "app.preferences";
     }
+
+    item {
+      label: _("_Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("_About Glyph");
+      action: "app.about";
+    }
+  }
 }

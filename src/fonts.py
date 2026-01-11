@@ -1,9 +1,12 @@
-import httpx
+import asyncio
 import tempfile
 from pathlib import Path
 from urllib.parse import urlparse
-import asyncio
+
+import httpx
 from gi.repository import GLib
+
+# TODO: implement data class for api?
 
 
 class Fonts:

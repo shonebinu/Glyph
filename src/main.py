@@ -38,13 +38,8 @@ class GlyphApplication(Adw.Application):
 
     def on_about_action(self, *args):
         """Callback for the app.about action."""
-        about = Adw.AboutDialog(
-            application_name="glyph",
-            application_icon="io.github.shonebinu.Glyph",
-            developer_name="Shone Binu",
-            version="0.1.0",
-            developers=["Shone Binu"],
-            copyright="© 2026 Shone Binu",
+        about = Adw.AboutDialog.new_from_appdata(
+            "/io/github/shonebinu/Glyph/appdata.xml",
         )
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
         about.set_translator_credits(_("translator-credits"))

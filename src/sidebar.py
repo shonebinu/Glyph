@@ -25,8 +25,8 @@ class Sidebar(Adw.NavigationPage):
         }
 
         for key, widget in mapping.items():
-            widget.set_subtitle(f"{len(fonts_by_category[key])} nos.")
+            widget.set_subtitle(f"{len(fonts_by_category[key])} fonts")
 
         self.all_fonts_label.set_subtitle(
-            f"{sum(len(fonts_by_category[category]) for category in fonts_by_category)} nos."
+            f"{sum(len(fonts_by_category[category]) for category in fonts_by_category)} fonts"
         )
