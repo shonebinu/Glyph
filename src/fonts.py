@@ -17,11 +17,11 @@ class Fonts:
     FONTSOURCE_API = "https://api.fontsource.org/v1/fonts"
 
     def __init__(self):
-        self.client = httpx.AsyncClient(timeout=30)  # TODO: do we need timeout?
+        self.client = httpx.AsyncClient()
         self.user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
 
-        self.available_fonts = []
+        self.fonts = []
         self.loaded_preview_fonts = {}  # family -> ttf file
 
     async def _request(self, url):
@@ -34,15 +34,21 @@ class Fonts:
         except Exception as e:
             raise Exception(str(e))
 
-    async def fetch_available_fonts(self):
+    async def fetch_fonts(self):
         response = await self._request(self.GFONTS_INDEX_URL)
-        self.available_fonts = response.json()
+        fonts = response.json()
 
-        return self.available_fonts
+        self.fonts = fonts
 
-    async def install_font_family(self, font_family):
+        fonts_by_category = {}
+        for font in fonts:
+            fonts_by_category.setdefault(font["category"], []).append(font)
+
+        return fonts_by_category
+
+    async def install_font(self, font_family):
         font_data = next(
-            (f for f in self.available_fonts if f.get("family") == font_family), None
+            (f for f in self.fonts if f.get("family") == font_family), None
         )
         if not font_data:
             raise Exception("Font data not found for the given font family")
@@ -57,7 +63,7 @@ class Fonts:
         target_path = self.user_font_dir / (filename + "__glyph")
         await asyncio.to_thread(target_path.write_bytes, file_resp.content)
 
-    async def get_preview_font_binary(self, font_family: str):
+    async def get_preview_font(self, font_family: str):
         # https://fonts.googleapis.com/css2?family=Inter&text=QuickPreview
         # the above api provides an url to lightest font subsets for the given text but can't seem to add it to Pango for preview
         # (could work in webkitview)

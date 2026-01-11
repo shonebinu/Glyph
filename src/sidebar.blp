@@ -1,0 +1,91 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $Sidebar: Adw.NavigationPage {
+    title: _("Glyph");
+    tag: "sidebar";
+
+    child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+            ToggleButton search_button {
+                icon-name: "edit-find-symbolic";
+            }
+
+            [end]
+            MenuButton {
+                primary: true;
+                icon-name: "open-menu-symbolic";
+                menu-model: primary_menu;
+            }
+        }
+
+        [top]
+        SearchBar {
+            key-capture-widget: template;
+            search-mode-enabled: bind search_button.active bidirectional;
+
+            child: SearchEntry search_entry {
+                hexpand: true;
+                placeholder-text: _("Search font");
+            };
+        }
+
+        content: Adw.Sidebar {
+            Adw.SidebarSection {
+                Adw.SidebarItem all_fonts_label {
+                    title: _("All fonts");
+                    subtitle: _("...");
+                }
+            }
+
+            Adw.SidebarSection {
+                title: _("Categories");
+
+                Adw.SidebarItem sans_serif_label {
+                    title: _("Sans Serif");
+                    subtitle: _("...");
+                }
+
+                Adw.SidebarItem display_label {
+                    title: _("Display");
+                    subtitle: _("...");
+                }
+
+                Adw.SidebarItem serif_label {
+                    title: _("Serif");
+                    subtitle: _("...");
+                }
+
+                Adw.SidebarItem handwriting_label {
+                    title: _("Handwriting");
+                    subtitle: _("...");
+                }
+
+                Adw.SidebarItem monospace_label {
+                    title: _("Monospace");
+                    subtitle: _("...");
+                }
+            }
+        };
+    };
+}
+
+menu primary_menu {
+    section {
+        item {
+            label: _("_Preferences");
+            action: "app.preferences";
+        }
+
+        item {
+            label: _("_Keyboard Shortcuts");
+            action: "app.shortcuts";
+        }
+
+        item {
+            label: _("_About Glyph");
+            action: "app.about";
+        }
+    }
+}
