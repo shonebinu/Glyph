@@ -1,0 +1,18 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $FontsView: Adw.NavigationPage {
+    title: _("All fonts");
+    tag: "content";
+
+    child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+            show-title: true;
+        }
+
+        content: Label {
+            label: _("Font view");
+        };
+    };
+}

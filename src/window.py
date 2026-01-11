@@ -3,6 +3,7 @@ from gi.repository import Adw, Gtk
 
 from .fonts import Fonts
 from .sidebar import Sidebar
+from .fonts_view import FontsView
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/window.ui")

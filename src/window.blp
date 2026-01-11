@@ -17,20 +17,6 @@ template $GlyphWindow: Adw.ApplicationWindow {
   content: Adw.NavigationSplitView split_view {
     sidebar: $Sidebar sidebar {};
 
-    content: Adw.NavigationPage {
-      title: _("Content");
-      tag: "content";
-
-      child: Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {
-          show-title: true;
-        }
-
-        content: Label {
-          label: _("Font view");
-        };
-      };
-    };
+    content: $FontsView fonts_view {};
   };
 }
