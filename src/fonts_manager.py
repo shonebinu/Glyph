@@ -9,7 +9,7 @@ from gi.repository import GLib
 # TODO: implement data class for api?
 
 
-class Fonts:
+class FontsManager:
     # index of gfonts with download links straight to raw files on google-fonts github
     # updated every 24h with github action
     GFONTS_INDEX_URL = "https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/google_fonts_index.json"

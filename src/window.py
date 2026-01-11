@@ -1,9 +1,10 @@
 import asyncio
+
 from gi.repository import Adw, Gtk
 
-from .fonts import Fonts
-from .sidebar import Sidebar
+from .fonts_manager import FontsManager
 from .fonts_view import FontsView
+from .sidebar import Sidebar
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/window.ui")
@@ -15,7 +16,7 @@ class GlyphWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.fonts_manager = Fonts()
+        self.fonts_manager = FontsManager()
 
         asyncio.create_task(self.setup())
 
