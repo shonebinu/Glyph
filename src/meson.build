@@ -42,7 +42,7 @@ glyph_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'fonts.py',
+  'fonts_manager.py',
   'sidebar.py',
   'fonts_view.py',
 ]
