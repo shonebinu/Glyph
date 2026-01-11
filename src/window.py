@@ -21,14 +21,16 @@ class GlyphWindow(Adw.ApplicationWindow):
 
         asyncio.create_task(self.setup())
 
-        self.connect("destroy", self.fonts_manager.cleanup)
-
     async def setup(self):
         try:
             self.fonts_by_category = await self.fonts_manager.fetch_fonts()
             # TODO: only pass counts?
+            # TODO: unselect when searched sidebar
             self.sidebar.set_category_count(self.fonts_by_category)
-            self.fonts_view.show_fonts(self.fonts_by_category["SERIF"])
+            self.fonts_view.set_font_manager(self.fonts_manager)
+            # TODO: pass the fonts here, even when searching. it will manage all, add a flag to display category
+            self.fonts_view.show_fonts(self.fonts_by_category["SANS_SERIF"])
+            # TODO: show the appropriate content side title
             # TODO: listen to sidebar change with signals? and only pass that font
         except Exception:
             self.fonts_view.show_network_error_page()

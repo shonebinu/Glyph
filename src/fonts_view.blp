@@ -1,5 +1,6 @@
 using Gtk 4.0;
 using Adw 1;
+using Gio 2.0;
 
 template $FontsView: Adw.NavigationPage {
   title: _("All fonts");
@@ -55,7 +56,34 @@ template $FontsView: Adw.NavigationPage {
         name: "results";
 
         child: Gtk.ScrolledWindow {
-          ListView list_view {}
+          hscrollbar-policy: never;
+          propagate-natural-height: true;
+
+          ListView {
+            show-separators: true;
+
+            factory: BuilderListItemFactory {
+              template ListItem {
+                child: Box {
+                  orientation: vertical;
+
+                  Label {
+                    label: bind (template.item as <$ListFontItem>).preview_markup;
+                    use-markup: true;
+                    halign: start;
+                    ellipsize: end;
+                    hexpand: true;
+                  }
+                };
+              }
+            };
+
+            model: NoSelection {
+              model: Gio.ListStore list_store {
+                item-type: typeof<$ListFontItem>;
+              };
+            };
+          }
         };
       }
     };

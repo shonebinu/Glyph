@@ -106,11 +106,5 @@ class FontsManager:
         self.loaded_preview_fonts[font_family] = tmp.name
         return tmp.name
 
-    async def cleanup(self, *args):
-        await self.client.aclose()
-        for file in self.loaded_preview_fonts.values():
-            file_path = Path(file)
-            await asyncio.to_thread(file_path.unlink, missing_ok=True)
-
     # TODO: think abt bundling index and caching it for every 24h, also cache preview fonts maybe?
     # TODO: check to see if google quick preview subsets can be used
