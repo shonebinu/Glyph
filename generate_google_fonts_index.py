@@ -7,10 +7,10 @@ LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 RAW_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
 
 
-def parse_metadata(file_path, license_type):
+def parse_metadata(file_path: Path, license_type: str):
     content = file_path.read_text(encoding="utf-8")
 
-    def get_value(key):
+    def get_value(key: str):
         match = re.search(rf'^{key}:\s*"(.*?)"', content, re.M)
         return match.group(1) if match else ""
 
@@ -18,21 +18,13 @@ def parse_metadata(file_path, license_type):
     font_blocks = re.findall(r"fonts\s*\{(.*?)\}", content, re.S)
 
     for block in font_blocks:
-        style_match = re.search(r'style: "(.*?)"', block)
-        weight_match = re.search(r"weight: (\d+)", block)
         file_match = re.search(r'filename: "(.*?)"', block)
 
-        if style_match and weight_match and file_match:
+        if file_match:
             font_filename = file_match.group(1)
             family_dir = file_path.parent.name
 
-            fonts.append(
-                {
-                    "weight": int(weight_match.group(1)),
-                    "style": style_match.group(1),
-                    "url": f"{RAW_BASE_URL}/{license_type}/{family_dir}/{font_filename}",
-                }
-            )
+            fonts.append(f"{RAW_BASE_URL}/{license_type}/{family_dir}/{font_filename}")
 
     return {
         "family": get_value("name"),
