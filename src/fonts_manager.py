@@ -1,110 +1,117 @@
 import asyncio
+from enum import Enum
 import tempfile
-from pathlib import Path
-from urllib.parse import urlparse
-
+from typing import List
 import httpx
+import re
+from pathlib import Path
+from dataclasses import dataclass
+from urllib.parse import urlparse
 from gi.repository import GLib
 
-# TODO: implement data class for api?
+
+class Category(str, Enum):
+    SANS_SERIF = "SANS_SERIF"
+    DISPLAY = "DISPLAY"
+    SERIF = "SERIF"
+    HANDWRITING = "HANDWRITING"
+    MONOSPACE = "MONOSPACE"
+
+
+@dataclass
+class Font:
+    family: str
+    category: Category
+    subsets: List[str]
+    font_files: List[str]
 
 
 class FontsManager:
-    # index of gfonts with download links straight to raw files on google-fonts github
-    # updated every 24h with github action
     GFONTS_INDEX_URL = "https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/google_fonts_index.json"
-
-    # fontsource api provides subsets of fonts since we can't download large raw files for preview
-    # fontsource has all google-fonts fonts in their api, so preview can be made for all fonts in the index
-    # we dont install font files to system from fontsource or google apis since they are often subsets intended for web usage
-    FONTSOURCE_API = "https://api.fontsource.org/v1/fonts"
+    GFONTS_CSS_API = "https://fonts.googleapis.com/css2"
 
     def __init__(self):
-        self.client = httpx.AsyncClient()
+        self.client = httpx.AsyncClient(timeout=10)
+
         self.user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
 
         self.fonts = []
-        self.loaded_preview_fonts = {}  # family -> ttf file
-
-    # TODO: create custom error class for network error and other errors
-    async def _request(self, url):
-        try:
-            response = await self.client.get(url)
-            response.raise_for_status()
-            return response
-        except (httpx.ConnectError, httpx.ConnectTimeout):
-            raise Exception("No internet connection available.")
-        except Exception as e:
-            raise Exception(str(e))
+        self.loaded_preview_fonts = {}
 
     async def fetch_fonts(self):
-        response = await self._request(self.GFONTS_INDEX_URL)
-        fonts = response.json()
+        response = await self.client.get(self.GFONTS_INDEX_URL)
+        response.raise_for_status()
 
-        self.fonts = fonts
+        self.fonts = [
+            Font(
+                family=font["family"],
+                category=Category(font["category"]),
+                subsets=font["subsets"],
+                font_files=font["fonts"],
+            )
+            for font in response.json()
+        ]
 
-        fonts_by_category = {}
-        for font in fonts:
-            fonts_by_category.setdefault(font["category"], []).append(font)
+        return self.fonts
 
-        return fonts_by_category
+    async def install_font(self, family_name):
+        fonts_urls = next((f.font_files for f in self.fonts if f.family == family_name))
 
-    async def install_font(self, font_family):
-        font_data = next(
-            (f for f in self.fonts if f.get("family") == font_family), None
-        )
-        if not font_data:
-            raise Exception("Font data not found for the given font family")
+        if not fonts_urls:
+            raise ValueError(f"Font family {family_name} not found")
 
-        tasks = [self._install_font(font["url"]) for font in font_data.get("fonts", [])]
-        await asyncio.gather(*tasks)
+        tasks = [self.client.get(url) for url in fonts_urls]
+        responses = await asyncio.gather(*tasks)
 
-    async def _install_font(self, font_url):
-        file_resp = await self._request(font_url)
-        filename = Path(urlparse(font_url).path).name
+        for r in responses:
+            r.raise_for_status()
 
-        target_path = self.user_font_dir / (filename + "__glyph")
-        await asyncio.to_thread(target_path.write_bytes, file_resp.content)
-
-    async def get_preview_font(self, font_family: str):
-        # https://fonts.googleapis.com/css2?family=Inter&text=QuickPreview
-        # the above api provides an url to lightest font subsets for the given text but can't seem to add it to Pango for preview
-        # (could work in webkitview)
-
-        if self.loaded_preview_fonts.get(font_family):
-            return self.loaded_preview_fonts.get(font_family)
-
-        # fontsource use sluggified family name as id
-        fontsource_id = font_family.replace(" ", "-").lower()
-
-        resp = await self._request(f"{self.FONTSOURCE_API}/{fontsource_id}")
-        data = resp.json()
+        written_files: List[Path] = []
 
         try:
-            variants = data.get("variants", {})
-            weight = "400" if "400" in variants else next(iter(variants.keys()))
-            style = variants[weight].get("normal") or next(
-                iter(variants[weight].values())
-            )
-            subset_key = data.get("defSubset", "latin")
-            subset = style.get(subset_key) or next(iter(style.values()))
+            for url, resp in zip(fonts_urls, responses):
+                filename = Path(urlparse(url).path).name
+                path = (
+                    self.user_font_dir
+                    / f"{Path(filename).stem}__glyph{Path(filename).suffix}"
+                )
+                path.write_bytes(resp.content)
 
-            # for some reason lighter woff2 fonts can't be added to Pango for font rendering
-            ttf_url = subset.get("url", {}).get("ttf")
+                written_files.append(path)
         except Exception:
-            return None
+            for f in written_files:
+                f.unlink(missing_ok=True)
 
-        if not ttf_url:
-            return None
+            raise
 
-        font_resp = await self._request(ttf_url)
+    async def get_preview_font(self, family_name: str, text: str):
+        if family_name in self.loaded_preview_fonts:
+            return self.loaded_preview_fonts.get(family_name)
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".ttf") as tmp:
-            await asyncio.to_thread(tmp.write, font_resp.content)
+        css_resp = await self.client.get(
+            self.GFONTS_CSS_API,
+            params={"family": family_name, "text": text},
+            follow_redirects=True,
+        )
+        css_resp.raise_for_status()
 
-        self.loaded_preview_fonts[font_family] = tmp.name
+        css = css_resp.text
+        urls = re.findall(r'url\(["\']?(https?://[^)"\']+)["\']?\)', css)
+
+        if not urls:
+            raise Exception("Preview font not available")
+
+        file_resp = await self.client.get(urls[-1])
+        file_resp.raise_for_status()
+
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            tmp.write(file_resp.content)
+
+        self.loaded_preview_fonts[family_name] = tmp.name
         return tmp.name
 
-    # TODO: think abt bundling index and caching it for every 24h, also cache preview fonts maybe?
-    # TODO: check to see if google quick preview subsets can be used
+    async def clean_tmp(self):
+        for tmp_file in self.loaded_preview_fonts.values():
+            Path(tmp_file).unlink(missing_ok=True)
+        asyncio.create_task(self.client.aclose())
