@@ -1,7 +1,7 @@
 import asyncio
 from enum import Enum
 import tempfile
-from typing import List
+from typing import Dict, List, Optional
 import httpx
 import re
 from pathlib import Path
@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 from gi.repository import GLib
 
 
-class Category(str, Enum):
+class FontCategory(str, Enum):
     SANS_SERIF = "SANS_SERIF"
     DISPLAY = "DISPLAY"
     SERIF = "SERIF"
@@ -21,7 +21,7 @@ class Category(str, Enum):
 @dataclass
 class Font:
     family: str
-    category: Category
+    category: FontCategory
     subsets: List[str]
     font_files: List[str]
 
@@ -31,13 +31,14 @@ class FontsManager:
     GFONTS_CSS_API = "https://fonts.googleapis.com/css2"
 
     def __init__(self):
+        self.is_initialized = False
+
         self.client = httpx.AsyncClient(timeout=10)
 
         self.user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
 
         self.fonts = []
-        self.loaded_preview_fonts = {}
 
     async def fetch_fonts(self):
         response = await self.client.get(self.GFONTS_INDEX_URL)
@@ -46,14 +47,29 @@ class FontsManager:
         self.fonts = [
             Font(
                 family=font["family"],
-                category=Category(font["category"]),
+                category=FontCategory(font["category"]),
                 subsets=font["subsets"],
                 font_files=font["fonts"],
             )
             for font in response.json()
         ]
 
-        return self.fonts
+        self.is_initialized = True
+
+    def get_fonts(self, category: Optional[FontCategory] = None) -> List[Font]:
+        if not category:
+            return self.fonts
+        return [f for f in self.fonts if f.category == category]
+
+    def search_fonts(self, search_txt: str):
+        # TODO
+        return search_txt
+
+    def get_category_counts(self) -> Dict[FontCategory, int]:
+        counts = {cat: 0 for cat in FontCategory}
+        for font in self.fonts:
+            counts[font.category] += 1
+        return counts
 
     async def install_font(self, family_name):
         fonts_urls = next((f.font_files for f in self.fonts if f.family == family_name))
@@ -85,10 +101,7 @@ class FontsManager:
 
             raise
 
-    async def get_preview_font(self, family_name: str, text: str):
-        if family_name in self.loaded_preview_fonts:
-            return self.loaded_preview_fonts.get(family_name)
-
+    async def get_preview_font(self, family_name: str, text: str) -> str:
         css_resp = await self.client.get(
             self.GFONTS_CSS_API,
             params={"family": family_name, "text": text},
@@ -107,11 +120,6 @@ class FontsManager:
 
         with tempfile.NamedTemporaryFile(delete=False) as tmp:
             tmp.write(file_resp.content)
+        # TODO: setup tmp cleaning on app close
 
-        self.loaded_preview_fonts[family_name] = tmp.name
         return tmp.name
-
-    async def clean_tmp(self):
-        for tmp_file in self.loaded_preview_fonts.values():
-            Path(tmp_file).unlink(missing_ok=True)
-        asyncio.create_task(self.client.aclose())

@@ -2,7 +2,7 @@ import asyncio
 
 from gi.repository import Adw, Gtk
 
-from .fonts_manager import FontsManager
+from .fonts_manager import FontCategory, FontsManager
 from .fonts_view import FontsView
 from .sidebar import Sidebar
 
@@ -16,23 +16,50 @@ class GlyphWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         self.fonts_manager = FontsManager()
+        self.fonts_view.set_fonts_manager(self.fonts_manager)
+
+        self.sidebar.connect("category_selected", self.on_category_selected)
+        self.sidebar.connect("search_changed", self.on_search_changed)
+        self.sidebar.connect(
+            "search_started", lambda *_: self.fonts_view.set_title("Search Results")
+        )
 
         asyncio.create_task(self.setup())
 
     async def setup(self):
         try:
-            self.fonts_by_category = await self.fonts_manager.fetch_fonts()
-            # TODO: only pass counts?
-            # TODO: unselect when searched sidebar
-            self.sidebar.set_category_count(self.fonts_by_category)
-            self.fonts_view.set_font_manager(self.fonts_manager)
-            # TODO: pass the fonts here, even when searching. it will manage all, add a flag to display category
-            self.fonts_view.show_fonts(self.fonts_by_category["SANS_SERIF"])
-            # TODO: show the appropriate content side title
-            # TODO: listen to sidebar change with signals? and only pass that font
-        except Exception:
+            await self.fonts_manager.fetch_fonts()
+
+            counts = self.fonts_manager.get_category_counts()
+            self.sidebar.set_category_counts(counts)
+
+            fonts = self.fonts_manager.get_fonts()
+            self.fonts_view.show_fonts(fonts)
+
+        except Exception as e:
+            # TODO: setup proper error handling for network and other errors
+            # TODO: Add toasts for errors and success msgs
+            # TODO: implement some network monitor that sees the network status and if came back. auto retry
+
+            print(e)
             self.fonts_view.show_network_error_page()
-        # TODO: if they turn network back on?
-        # TODO: catch network error and other error different ways
+
+    def on_category_selected(self, _, category):
+        if not self.fonts_manager.is_initialized:
+            return
+
+        ctgry = FontCategory(category) if category != "ALL" else None
+        fonts = self.fonts_manager.get_fonts(ctgry)
+        title = (
+            f"{ctgry.value.replace('_', ' ').title()} Fonts" if ctgry else "All Fonts"
+        )
+
+        self.fonts_view.set_title(title)
+        self.fonts_view.show_fonts(fonts)
+
+    def on_search_changed(self, _, search_txt):
+        if not self.fonts_manager.is_initialized:
+            return
+        # TODO: implement search
+        print(self.fonts_manager.search_fonts(search_txt))

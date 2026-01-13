@@ -15,6 +15,10 @@ class Sidebar(Adw.NavigationPage):
     def search_changed(self, query: str):
         pass
 
+    @GObject.Signal()
+    def search_started(self):
+        pass
+
     search_button: Gtk.ToggleButton = Gtk.Template.Child()
     search_entry: Gtk.SearchEntry = Gtk.Template.Child()
     sidebar_widget: Adw.Sidebar = Gtk.Template.Child()
@@ -43,7 +47,7 @@ class Sidebar(Adw.NavigationPage):
 
     def set_category_counts(self, counts: Dict[FontCategory, int]):
         for label, category in self.items.items():
-            label.set_subtitle(f"{counts[category]} fonts")
+            label.set_subtitle(f"{counts.get(category, 0)} fonts")
 
         self.all_fonts_label.set_subtitle(f"{sum(counts.values())} fonts")
 
@@ -67,6 +71,7 @@ class Sidebar(Adw.NavigationPage):
 
     def on_search_button_toggled(self, button: Gtk.ToggleButton):
         if button.get_active():
+            self.emit("search_started")
             self.sidebar_widget.set_selected(Gtk.INVALID_LIST_POSITION)
         else:
             if self.sidebar_widget.get_selected() == Gtk.INVALID_LIST_POSITION:
