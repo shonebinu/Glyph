@@ -6,6 +6,7 @@ import uharfbuzz as hb
 from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.pens.transformPen import TransformPen
+from fontTools.pens.boundsPen import BoundsPen
 
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
@@ -27,24 +28,39 @@ def generate_svg_preview(font_path: Path, text: str, output_svg_path: Path):
         hb.shape(hb_font, buf)
 
         glyph_set = font.getGlyphSet()
-        svg_pen = SVGPathPen(glyph_set)
 
+        bounds_pen = BoundsPen(glyph_set)
         ascender = font["hhea"].ascent
-        descender = font["hhea"].descent
         cursor_x = 0
 
+        for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
+            glyph = glyph_set[font.getGlyphName(info.codepoint)]
+            x = cursor_x + pos.x_offset
+            y = ascender + pos.y_offset
+            t_pen = TransformPen(bounds_pen, (1, 0, 0, -1, x, y))
+            glyph.draw(t_pen)
+            cursor_x += pos.x_advance
+
+        if bounds_pen.bounds is None:
+            return False
+
+        x_min, y_min, x_max, y_max = bounds_pen.bounds
+
+        svg_pen = SVGPathPen(glyph_set)
+        cursor_x = 0
         for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
             glyph = glyph_set[font.getGlyphName(info.codepoint)]
 
             x = cursor_x + pos.x_offset
             y = ascender + pos.y_offset
-            flip_pen = TransformPen(svg_pen, (1, 0, 0, -1, x, y))
+
+            flip_pen = TransformPen(svg_pen, (1, 0, 0, -1, x - x_min, y - y_min))
 
             glyph.draw(flip_pen)
             cursor_x += pos.x_advance
 
-        view_width = cursor_x
-        view_height = ascender - descender
+        view_width = x_max - x_min
+        view_height = y_max - y_min
 
         svg = f'<svg viewBox="0 0 {view_width} {view_height}" xmlns="http://www.w3.org/2000/svg">'
         svg += f'<path d="{svg_pen.getCommands()}" fill="currentColor" /></svg>'
