@@ -21999,7 +21999,7 @@
         "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/karlatamilinclined/KarlaTamilInclined-Bold.ttf"
       }
     ],
-    "preview": "previews/karlatamilinclined.svg",
+    "preview": null,
     "is_variable": false
   },
   {
@@ -22024,7 +22024,7 @@
         "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/karlatamilupright/KarlaTamilUpright-Bold.ttf"
       }
     ],
-    "preview": "previews/karlatamilupright.svg",
+    "preview": null,
     "is_variable": false
   },
   {
@@ -22398,7 +22398,7 @@
         "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/khmer/Khmer.ttf"
       }
     ],
-    "preview": "previews/khmer.svg",
+    "preview": null,
     "is_variable": false
   },
   {
@@ -37294,7 +37294,7 @@
         "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/phetsarath/Phetsarath-Bold.ttf"
       }
     ],
-    "preview": "previews/phetsarath.svg",
+    "preview": null,
     "is_variable": false
   },
   {
