@@ -108,7 +108,7 @@ class FontsView(Adw.NavigationPage):
             for font_item, result in zip(batch, results):
                 if isinstance(result, Exception):
                     print(f"Skipping {font_item.family}: {result}")
-                    # TODO: don't skip, show preview failed
+                    # TODO: don't skip, show preview failed and show a reload btn
                     continue
 
                 self.private_font_map.add_font_file(result)

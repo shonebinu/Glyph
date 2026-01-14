@@ -1,8 +1,8 @@
-name: Daily google fonts index update
+name: Weekly Google Fonts Update
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 
 permissions:

@@ -2,6 +2,10 @@ import json
 import re
 from pathlib import Path
 import argparse
+import uharfbuzz as hb
+from fontTools.ttLib import TTFont
+from fontTools.pens.svgPathPen import SVGPathPen
+
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 RAW_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
