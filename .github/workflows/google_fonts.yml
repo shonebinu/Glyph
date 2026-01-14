@@ -1,8 +1,8 @@
-name: Weekly Google Fonts Update
+name: Generate Google fonts index with previews
 
 on:
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: "0 0 * * 0" # every sunday midnight
   workflow_dispatch:
 
 permissions:
@@ -14,22 +14,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+        ref: "fonts"
 
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+          cache: "pip"
+      - run: pip install -r requirements.txt
 
-      - name: Sparse checkout google/fonts metadatas
+      - name: Download Google fonts
         run: |
           git clone --filter=blob:none --no-checkout --depth 1 https://github.com/google/fonts.git google_fonts
           cd google_fonts
-          git sparse-checkout init --no-cone
-          git sparse-checkout set "ofl/*/METADATA.pb" "apache/*/METADATA.pb" "ufl/*/METADATA.pb"
+          git sparse-checkout init --cone
+          git sparse-checkout set ofl/ apache/ ufl/
           git checkout
           cd ..
 
       - name: Run indexing script
-        run: python generate_google_fonts_index.py ./google_fonts -o google_fonts_index.json
+        run: python generate.py ./google_fonts
 
       - name: Commit and push changes
         run: |
@@ -38,11 +41,11 @@ jobs:
 
           rm -rf google_fonts
 
-          git add google_fonts_index.json
+          git add fonts.json previews/
 
           if ! git diff --cached --exit-code --quiet; then
             git commit -m "Update font index: $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git push
+            git push origin fonts
           else
-            echo "No changes detected in fonts index files."
+            echo "No changes detected."
           fi
