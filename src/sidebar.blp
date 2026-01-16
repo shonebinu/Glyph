@@ -35,44 +35,12 @@ template $Sidebar: Adw.NavigationPage {
     content: Adw.Sidebar sidebar_widget {
       Adw.SidebarSection {
         Adw.SidebarItem all_fonts_label {
-          title: _("All fonts");
-          subtitle: "...";
-          icon-name: "font-x-generic-symbolic";
+          title: _("All Fonts");
         }
       }
 
-      Adw.SidebarSection {
+      Adw.SidebarSection categories_section {
         title: _("Categories");
-
-        Adw.SidebarItem sans_serif_label {
-          title: _("Sans Serif");
-          subtitle: "...";
-          icon-name: "display-symbolic";
-        }
-
-        Adw.SidebarItem display_label {
-          title: _("Display");
-          subtitle: "...";
-          icon-name: "newspaper-symbolic";
-        }
-
-        Adw.SidebarItem serif_label {
-          title: _("Serif");
-          subtitle: "...";
-          icon-name: "printer2-symbolic";
-        }
-
-        Adw.SidebarItem handwriting_label {
-          title: _("Handwriting");
-          subtitle: "...";
-          icon-name: "pencil-symbolic";
-        }
-
-        Adw.SidebarItem monospace_label {
-          title: _("Monospace");
-          subtitle: "...";
-          icon-name: "terminal-symbolic";
-        }
       }
     };
   };

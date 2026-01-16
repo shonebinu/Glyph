@@ -2,7 +2,6 @@ using Gtk 4.0;
 using Adw 1;
 
 template $FontsView: Adw.NavigationPage {
-  title: _("All Fonts");
   tag: "content";
 
   child: Adw.ToolbarView {
@@ -12,45 +11,6 @@ template $FontsView: Adw.NavigationPage {
     }
 
     content: Adw.ViewStack stack {
-      Adw.ViewStackPage {
-        name: "loading";
-
-        child: Box {
-          orientation: vertical;
-          halign: center;
-          valign: center;
-
-          Adw.Spinner {
-            halign: center;
-            valign: center;
-            width-request: 120;
-            height-request: 120;
-          }
-
-          Label {
-            label: _("Loading fonts");
-
-            styles [
-              "title-2",
-            ]
-          }
-
-          Label {
-            margin-top: 12;
-            label: _("This could take a moment depending on your internet speed");
-          }
-        };
-      }
-
-      Adw.ViewStackPage {
-        name: "network_error";
-
-        child: Adw.StatusPage {
-          icon-name: "network-error-symbolic";
-          title: _("No Internet Connection");
-        };
-      }
-
       Adw.ViewStackPage {
         name: "results";
 

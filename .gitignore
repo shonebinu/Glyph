@@ -1,3 +1,5 @@
 venv
-
+.venv
+env
+.env
 /subprojects/blueprint-compiler
