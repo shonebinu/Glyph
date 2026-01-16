@@ -21,7 +21,7 @@ class GlyphWindow(Adw.ApplicationWindow):
         )
 
         self.fonts_manager = FontsManager()
-        self.fonts_view.set_fonts_manager(self.fonts_manager)
+        self.fonts_view.load_preview_fonts(self.fonts_manager.get_previews_ttc())
 
         self.sidebar.set_categories(self.fonts_manager.get_category_counts())
 

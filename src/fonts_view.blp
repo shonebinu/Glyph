@@ -1,5 +1,6 @@
 using Gtk 4.0;
 using Adw 1;
+using Gio 2.0;
 
 template $FontsView: Adw.NavigationPage {
   tag: "content";
@@ -10,17 +11,36 @@ template $FontsView: Adw.NavigationPage {
       show-title: true;
     }
 
-    content: Adw.ViewStack stack {
-      Adw.ViewStackPage {
-        name: "results";
+    content: Gtk.ScrolledWindow {
+      hscrollbar-policy: never;
+      propagate-natural-height: true;
+      vexpand: true;
 
-        child: Gtk.ScrolledWindow scrolled_window {
-          hscrollbar-policy: never;
-          propagate-natural-height: true;
+      ListView {
+        show-separators: true;
 
-          ListBox list_box {
-            show-separators: true;
+        factory: BuilderListItemFactory {
+          template ListItem {
+            child: Box {
+              orientation: vertical;
+              spacing: 8;
+              margin-start: 8;
+              margin-end: 8;
+              margin-top: 8;
+              margin-bottom: 8;
+
+              Label name_label {
+                halign: start;
+                label: bind (template.item as <$FontItem>).family;
+              }
+            };
           }
+        };
+
+        model: NoSelection {
+          model: Gio.ListStore list_store {
+            item-type: typeof<$FontItem>;
+          };
         };
       }
     };
