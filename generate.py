@@ -1,74 +1,32 @@
+import argparse
 import json
 import re
 from pathlib import Path
-import argparse
-import uharfbuzz as hb
-from fontTools.ttLib import TTFont
-from fontTools.pens.svgPathPen import SVGPathPen
-from fontTools.pens.transformPen import TransformPen
-from fontTools.pens.boundsPen import BoundsPen
 
+from fontTools.subset import Options, Subsetter
+from fontTools.ttLib import TTFont
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
 
 OUTPUT_JSON_PATH = "fonts.json"
-OUTPUT_PREVIEWS_FOLDER_PATH = "previews"
+OUTPUT_SUBSETS_FOLDER_PATH = "subsets"
 
 
-def generate_svg_preview(font_path: Path, text: str, output_svg_path: Path):
+def generate_subset_ttf(font_path: Path, text: str, output_ttf_path: Path):
     try:
-        font = TTFont(font_path)
-        with open(font_path, "rb") as f:
-            hb_font = hb.Font(hb.Face(f.read()))
+        subsetter = Subsetter(options=Options())
+        subsetter.populate(text=text)
 
-        buf = hb.Buffer()
-        buf.add_str(text)
-        buf.guess_segment_properties()
-        hb.shape(hb_font, buf)
+        font = TTFont(font_path, lazy=True)
+        subsetter.subset(font)
 
-        glyph_set = font.getGlyphSet()
+        font.save(output_ttf_path)
+        font.close()
 
-        bounds_pen = BoundsPen(glyph_set)
-        ascender = font["hhea"].ascent
-        cursor_x = 0
-
-        for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
-            glyph = glyph_set[font.getGlyphName(info.codepoint)]
-            x = cursor_x + pos.x_offset
-            y = ascender + pos.y_offset
-            t_pen = TransformPen(bounds_pen, (1, 0, 0, -1, x, y))
-            glyph.draw(t_pen)
-            cursor_x += pos.x_advance
-
-        if bounds_pen.bounds is None:
-            return False
-
-        x_min, y_min, x_max, y_max = bounds_pen.bounds
-
-        svg_pen = SVGPathPen(glyph_set)
-        cursor_x = 0
-        for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
-            glyph = glyph_set[font.getGlyphName(info.codepoint)]
-
-            x = cursor_x + pos.x_offset
-            y = ascender + pos.y_offset
-
-            flip_pen = TransformPen(svg_pen, (1, 0, 0, -1, x - x_min, y - y_min))
-
-            glyph.draw(flip_pen)
-            cursor_x += pos.x_advance
-
-        view_width = x_max - x_min
-        view_height = y_max - y_min
-
-        svg = f'<svg viewBox="0 0 {view_width} {view_height}" xmlns="http://www.w3.org/2000/svg">'
-        svg += f'<path d="{svg_pen.getCommands()}" /></svg>'
-
-        output_svg_path.write_text(svg, encoding="utf-8")
         return True
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error generating subset: {e}")
         return False
 
 
@@ -121,12 +79,14 @@ def parse_metadata(metadata_path: Path, license_type: str):
 
     if preview_font:
         font_path = family_dir / preview_font
-        previews_folder = Path(OUTPUT_PREVIEWS_FOLDER_PATH)
+        subsets_folder = Path(OUTPUT_SUBSETS_FOLDER_PATH)
         svg_filename = f"{family_dir.name}.svg"
-        svg_dest = previews_folder / svg_filename
+        svg_dest = subsets_folder / svg_filename
 
-        if generate_svg_preview(font_path, family, svg_dest):
-            preview_rel_path = f"{previews_folder.name}/{svg_filename}"
+        if generate_subset_ttf(
+            font_path, "The quick brown fox jumps over the lazy dog.", svg_dest
+        ):
+            preview_rel_path = f"{subsets_folder.name}/{svg_filename}"
 
     return {
         "family": family,
@@ -141,7 +101,7 @@ def parse_metadata(metadata_path: Path, license_type: str):
 
 
 def main(gfonts_path: Path):
-    Path(OUTPUT_PREVIEWS_FOLDER_PATH).mkdir(exist_ok=True)
+    Path(OUTPUT_SUBSETS_FOLDER_PATH).mkdir(exist_ok=True)
 
     db = []
 
