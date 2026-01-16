@@ -1,38 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/io/github/shonebinu/Glyph">
-    <file preprocess="xml-stripblanks">window.ui</file>
-    <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
-    <file preprocess="xml-stripblanks">sidebar.ui</file>
-    <file preprocess="xml-stripblanks">fonts_view.ui</file>
+    <gresource prefix="/io/github/shonebinu/Glyph">
+        <file preprocess="xml-stripblanks">window.ui</file>
+        <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
+        <file preprocess="xml-stripblanks">sidebar.ui</file>
+        <file preprocess="xml-stripblanks">fonts_view.ui</file>
 
-    <file
-            preprocess="xml-stripblanks"
-        >icons/scalable/categories/font-x-generic-symbolic.svg</file>
-
-    <file
-            preprocess="xml-stripblanks"
-        >icons/scalable/categories/display-symbolic.svg</file>
-
-    <file
-            preprocess="xml-stripblanks"
-        >icons/scalable/categories/newspaper-symbolic.svg</file>
-
-    <file
-            preprocess="xml-stripblanks"
-        >icons/scalable/categories/printer2-symbolic.svg</file>
-
-    <file
-            preprocess="xml-stripblanks"
-        >icons/scalable/categories/pencil-symbolic.svg</file>
-
-    <file
-            preprocess="xml-stripblanks"
-        >icons/scalable/categories/terminal-symbolic.svg</file>
-
-    <file
+        <file
             preprocess="xml-stripblanks"
             alias="appdata.xml"
         >../data/io.github.shonebinu.Glyph.metainfo.xml</file>
-  </gresource>
+    </gresource>
 </gresources>
