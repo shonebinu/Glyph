@@ -1,4 +1,4 @@
-name: Generate Google fonts index with preview subsets
+name: Generate Google fonts index with preview fonts collection
 
 on:
   schedule:
@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip"
-      - run: pip install -r requirements.txt
+      - run: pip install fonttools
 
       - name: Download Google fonts
         run: |
@@ -42,7 +42,7 @@ jobs:
 
           rm -rf google_fonts
 
-          git add fonts.json subsets/
+          git add fonts.json previews.ttc
 
           if ! git diff --cached --exit-code --quiet; then
             git commit -m "Update font index: $(date -u +'%Y-%m-%d %H:%M UTC')"
