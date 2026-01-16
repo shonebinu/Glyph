@@ -63,7 +63,7 @@ def generate_svg_preview(font_path: Path, text: str, output_svg_path: Path):
         view_height = y_max - y_min
 
         svg = f'<svg viewBox="0 0 {view_width} {view_height}" xmlns="http://www.w3.org/2000/svg">'
-        svg += f'<path d="{svg_pen.getCommands()}" fill="currentColor" /></svg>'
+        svg += f'<path d="{svg_pen.getCommands()}" /></svg>'
 
         output_svg_path.write_text(svg, encoding="utf-8")
         return True
