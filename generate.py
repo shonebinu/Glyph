@@ -1,36 +1,41 @@
-import argparse
 import json
 import re
 from pathlib import Path
+import argparse
+from typing import List
+from fontTools.ttLib import TTFont, TTCollection
+from fontTools.subset import Subsetter, Options
 
-from fontTools.subset import Options, Subsetter
-from fontTools.ttLib import TTFont
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
 
 OUTPUT_JSON_PATH = "fonts.json"
-OUTPUT_SUBSETS_FOLDER_PATH = "subsets"
+OUTPUT_TTC_PATH = "previews.ttc"
 
 
-def generate_subset_ttf(font_path: Path, text: str, output_ttf_path: Path):
-    try:
-        subsetter = Subsetter(options=Options())
-        subsetter.populate(text=text)
+def generate_combined_subsets_ttc(files: List[Path], text: str, output: Path):
+    fonts = []
+    for ttf in files:
+        try:
+            subsetter = Subsetter(options=Options())
+            subsetter.populate(text=text)
+            font = TTFont(ttf, lazy=True)
+            subsetter.subset(font)
 
-        font = TTFont(font_path, lazy=True)
-        subsetter.subset(font)
+            fonts.append(font)
+        except Exception as e:
+            print(f"Skipping subsetting {ttf}: {e}")
+            continue
 
-        font.save(output_ttf_path)
-        font.close()
+    ttc = TTCollection()
+    ttc.fonts = fonts
+    ttc.save(output)
 
-        return True
-    except Exception as e:
-        print(f"Error generating subset: {e}")
-        return False
+    return len(fonts)
 
 
-def parse_metadata(metadata_path: Path, license_type: str):
+def parse_metadata(metadata_path: Path):
     def get_value(key: str):
         match = re.search(rf'^{key}:\s*"(.*?)"', content, re.M)
         return match.group(1) if match else ""
@@ -60,50 +65,40 @@ def parse_metadata(metadata_path: Path, license_type: str):
             font_files.append(
                 {
                     "style": style,
-                    "weight": weight,
+                    "weight": int(weight),
                     "filename": filename,
-                    "url": f"{FONT_FILE_BASE_URL}/{license_type}/{family_dir.name}/{filename}",
+                    "url": f"{FONT_FILE_BASE_URL}/{license.lower()}/{family_dir.name}/{filename}",
                 }
             )
 
-    preview_font = None
-    preview_rel_path = None
-
-    for item in font_files:
-        if item["style"] == "normal" and item["weight"] == "400":
-            preview_font = item["filename"]
-            break
-
-    if not preview_font and font_files:
-        preview_font = font_files[0]["filename"]
-
-    if preview_font:
-        font_path = family_dir / preview_font
-        subsets_folder = Path(OUTPUT_SUBSETS_FOLDER_PATH)
-        subset_filename = f"{family_dir.name}.ttf"
-        subset_dest = subsets_folder / subset_filename
-
-        if generate_subset_ttf(
-            font_path, "The quick brown fox jumps over the lazy dog.", subset_dest
-        ):
-            preview_rel_path = f"{subsets_folder.name}/{subset_filename}"
-
-    return {
+    metadata = {
         "family": family,
         "designer": designer,
         "license": license,
         "category": category,
         "subsets": subsets,
-        "font_urls": font_files,
-        "preview_subset": preview_rel_path,
+        "font_files": font_files,
         "is_variable": "axes {" in content,
     }
 
+    best_file = next(
+        (
+            item["filename"]
+            for item in font_files
+            if item["style"] == "normal" and item["weight"] == 400
+        ),
+        font_files[0]["filename"] if font_files else None,
+    )
+
+    best_file_path = family_dir / best_file if best_file else None
+
+    return metadata, best_file_path
+
 
 def main(gfonts_path: Path):
-    Path(OUTPUT_SUBSETS_FOLDER_PATH).mkdir(exist_ok=True)
-
     db = []
+    best_files = []
+    ttc_count = 0
 
     for folder in LICENSE_FOLDERS:
         license_path = gfonts_path / folder
@@ -113,10 +108,13 @@ def main(gfonts_path: Path):
 
         for metadata_path in license_path.glob("*/METADATA.pb"):
             try:
-                family_data = parse_metadata(metadata_path, folder)
+                family_data, best_file = parse_metadata(metadata_path)
                 db.append(family_data)
+
+                if best_file:
+                    best_files.append(best_file)
             except Exception as e:
-                print(f"Skipping {metadata_path}: {e}")
+                print(f"Skipping metadata extraction {metadata_path}: {e}")
                 continue
 
     db.sort(key=lambda f: f["family"].lower())
@@ -126,18 +124,28 @@ def main(gfonts_path: Path):
         encoding="utf-8",
     )
 
-    print(f"Done! Indexed {len(db)} families.")
+    ttc_count = generate_combined_subsets_ttc(
+        best_files,
+        "The quick brown fox jumps over the lazy dog.",
+        Path(OUTPUT_TTC_PATH),
+    )
+
+    print(
+        f"Done! Indexed {len(db)} families. {OUTPUT_TTC_PATH} includes {ttc_count} fonts subset."
+    )
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Index Google Fonts.")
+    parser = argparse.ArgumentParser(
+        description="Index Google Fonts and generate preview fonts collection."
+    )
 
     parser.add_argument(
-        "gfonts_path",
+        "google_fonts_path",
         type=Path,
         help="Path to the root of the google fonts repository",
     )
 
     args = parser.parse_args()
 
-    main(args.gfonts_path)
+    main(args.google_fonts_path)
