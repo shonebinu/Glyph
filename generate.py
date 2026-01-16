@@ -80,13 +80,13 @@ def parse_metadata(metadata_path: Path, license_type: str):
     if preview_font:
         font_path = family_dir / preview_font
         subsets_folder = Path(OUTPUT_SUBSETS_FOLDER_PATH)
-        svg_filename = f"{family_dir.name}.svg"
-        svg_dest = subsets_folder / svg_filename
+        subset_filename = f"{family_dir.name}.ttf"
+        subset_dest = subsets_folder / subset_filename
 
         if generate_subset_ttf(
-            font_path, "The quick brown fox jumps over the lazy dog.", svg_dest
+            font_path, "The quick brown fox jumps over the lazy dog.", subset_dest
         ):
-            preview_rel_path = f"{subsets_folder.name}/{svg_filename}"
+            preview_rel_path = f"{subsets_folder.name}/{subset_filename}"
 
     return {
         "family": family,
@@ -95,7 +95,7 @@ def parse_metadata(metadata_path: Path, license_type: str):
         "category": category,
         "subsets": subsets,
         "font_urls": font_files,
-        "preview": preview_rel_path,
+        "preview_subset": preview_rel_path,
         "is_variable": "axes {" in content,
     }
 
