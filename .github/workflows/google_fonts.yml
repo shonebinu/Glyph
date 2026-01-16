@@ -1,4 +1,4 @@
-name: Generate Google fonts index with previews
+name: Generate Google fonts index with preview subsets
 
 on:
   schedule:
@@ -42,7 +42,7 @@ jobs:
 
           rm -rf google_fonts
 
-          git add fonts.json previews/
+          git add fonts.json subsets/
 
           if ! git diff --cached --exit-code --quiet; then
             git commit -m "Update font index: $(date -u +'%Y-%m-%d %H:%M UTC')"
