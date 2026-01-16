@@ -111,6 +111,21 @@
       ]
     },
     {
+      "name": "glyph-fonts-data",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p ${FLATPAK_DEST}/share/glyph/",
+        "cp -r fonts.json previews.ttc ${FLATPAK_DEST}/share/glyph/"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/shonebinu/Glyph.git",
+          "branch": "fonts"
+        }
+      ]
+    },
+    {
       "name": "glyph",
       "builddir": true,
       "buildsystem": "meson",
