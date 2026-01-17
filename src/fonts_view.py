@@ -49,7 +49,7 @@ class FontsView(Adw.NavigationPage):
             halign=Gtk.Align.START, ellipsize=Pango.EllipsizeMode.END
         )
 
-        # TODO: apply this in list view for faster
+        # TODO: apply this in list view for faster, then switch to builder factory
         preview_label.set_font_map(self.private_font_map)
 
         box.append(family_label)
@@ -65,10 +65,10 @@ class FontsView(Adw.NavigationPage):
         preview_label = box.get_last_child()
 
         family_label.set_text(item.family)
-        markup = (
-            f"<span font_family='{item.family}' size='xx-large'>"
-            "The quick brown fox jumps over the lazy dog."
-            "</span>"
-        )
 
-        preview_label.set_markup(markup)
+        preview_label.set_text("The quick brown fox jumps over the lazy dog.")
+
+        attrs = Pango.AttrList.new()
+        attrs.insert(Pango.attr_family_new(item.family))
+        attrs.insert(Pango.attr_size_new(18 * Pango.SCALE))
+        preview_label.set_attributes(attrs)
