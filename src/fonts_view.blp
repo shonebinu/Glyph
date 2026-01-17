@@ -14,27 +14,13 @@ template $FontsView: Adw.NavigationPage {
     content: Gtk.ScrolledWindow {
       hscrollbar-policy: never;
       propagate-natural-height: true;
-      vexpand: true;
 
       ListView {
         show-separators: true;
 
-        factory: BuilderListItemFactory {
-          template ListItem {
-            child: Box {
-              orientation: vertical;
-              spacing: 8;
-              margin-start: 8;
-              margin-end: 8;
-              margin-top: 8;
-              margin-bottom: 8;
-
-              Label name_label {
-                halign: start;
-                label: bind (template.item as <$FontItem>).family;
-              }
-            };
-          }
+        factory: SignalListItemFactory {
+          setup => $on_setup();
+          bind => $on_bind();
         };
 
         model: NoSelection {
