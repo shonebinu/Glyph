@@ -18,6 +18,7 @@ class FontItem(GObject.Object):
 class FontsView(Adw.NavigationPage):
     __gtype_name__ = "FontsView"
 
+    list_view: Gtk.ListView = Gtk.Template.Child()
     list_store: Gio.ListStore = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
@@ -28,6 +29,7 @@ class FontsView(Adw.NavigationPage):
     def load_preview_fonts(self, file_path: Path):
         # TODO: make this async and then show loading state, after that load fonts
         self.private_font_map.add_font_file(str(file_path))
+        self.list_view.set_font_map(self.private_font_map)
 
     def show_fonts(self, fonts: List[FontMetadata]):
         items = [FontItem(font.family) for font in fonts]
@@ -49,9 +51,6 @@ class FontsView(Adw.NavigationPage):
             halign=Gtk.Align.START, ellipsize=Pango.EllipsizeMode.END
         )
 
-        # TODO: apply this in list view for faster, then switch to builder factory
-        preview_label.set_font_map(self.private_font_map)
-
         box.append(family_label)
         box.append(preview_label)
         list_item.set_child(box)
@@ -66,9 +65,10 @@ class FontsView(Adw.NavigationPage):
 
         family_label.set_text(item.family)
 
-        preview_label.set_text("The quick brown fox jumps over the lazy dog.")
-
         attrs = Pango.AttrList.new()
         attrs.insert(Pango.attr_family_new(item.family))
         attrs.insert(Pango.attr_size_new(18 * Pango.SCALE))
+        attrs.insert(Pango.attr_fallback_new(False))
+
+        preview_label.set_text("The quick brown fox jumps over the lazy dog.")
         preview_label.set_attributes(attrs)
