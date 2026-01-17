@@ -13,7 +13,6 @@ template $FontsView: Adw.NavigationPage {
 
     content: Gtk.ScrolledWindow {
       hscrollbar-policy: never;
-      propagate-natural-height: true;
 
       ListView list_view {
         show-separators: true;
@@ -21,6 +20,7 @@ template $FontsView: Adw.NavigationPage {
         factory: SignalListItemFactory {
           setup => $on_setup();
           bind => $on_bind();
+          unbind => $on_unbind();
         };
 
         model: NoSelection {

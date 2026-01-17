@@ -24,7 +24,6 @@ class FontItem(GObject.Object):
 class FontsView(Adw.NavigationPage):
     __gtype_name__ = "FontsView"
 
-    list_view: Gtk.ListView = Gtk.Template.Child()
     list_store: Gio.ListStore = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
@@ -51,7 +50,9 @@ class FontsView(Adw.NavigationPage):
             margin_end=8,
         )
 
-        family_label = Gtk.Label(halign=Gtk.Align.START)
+        box.set_size_request(-1, 72)
+
+        family_label = Gtk.Label(halign=Gtk.Align.START, css_classes=["caption"])
         preview_label = Gtk.Label(
             label="The quick brown fox jumps over the lazy dog.",
             halign=Gtk.Align.START,
@@ -62,13 +63,16 @@ class FontsView(Adw.NavigationPage):
         box.append(preview_label)
         list_item.set_child(box)
 
+        list_item.f_label = family_label
+        list_item.p_label = preview_label
+
     @Gtk.Template.Callback()
     def on_bind(self, _, list_item):
         item = list_item.get_item()
-        box = list_item.get_child()
 
-        family_label = box.get_first_child()
-        preview_label = box.get_last_child()
+        list_item.f_label.set_text(item.family)
+        list_item.p_label.set_attributes(item.attrs)
 
-        family_label.set_text(item.family)
-        preview_label.set_attributes(item.attrs)
+    @Gtk.Template.Callback()
+    def on_unbind(self, _, list_item):
+        return
