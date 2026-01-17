@@ -75,4 +75,4 @@ class FontsView(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def on_unbind(self, _, list_item):
-        return
+        list_item.p_label.set_attributes(None)
