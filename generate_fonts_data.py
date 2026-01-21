@@ -4,7 +4,7 @@ from pathlib import Path
 import argparse
 from typing import List
 from fontTools.ttLib import TTFont, TTCollection
-from fontTools.subset import Subsetter, Options
+from fontTools.subset import Subsetter
 
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
@@ -20,7 +20,7 @@ def generate_combined_subsets_ttc(files: List[Path], text: str, output: Path):
         try:
             subsetter = Subsetter()
             subsetter.populate(text=text)
-            font = TTFont(ttf)
+            font = TTFont(ttf, lazy=True)
             subsetter.subset(font)
 
             fonts.append(font)

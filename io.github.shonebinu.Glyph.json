@@ -78,7 +78,7 @@
       ]
     },
     {
-      "name": "glyph-fonts-data",
+      "name": "glyph-fonts_data",
       "buildsystem": "simple",
       "build-commands": [
         "mkdir -p ${FLATPAK_DEST}/share/glyph/",
