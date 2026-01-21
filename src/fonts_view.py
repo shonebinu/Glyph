@@ -7,24 +7,17 @@ from .fonts_manager import FontMetadata
 class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
-    family = GObject.Property(type=str)
-
     def __init__(self, family):
         super().__init__()
         self.family = family
 
-        self._attrs = None
+        desc = Pango.FontDescription.new()
+        desc.set_family(self.family)
+        desc.set_size(24 * Pango.SCALE)
 
-    def get_attributes(self):
-        if self._attrs is None:
-            desc = Pango.FontDescription.new()
-            desc.set_family(self.family)
-            desc.set_size(18 * Pango.SCALE)
-
-            self._attrs = Pango.AttrList.new()
-            self._attrs.insert(Pango.attr_font_desc_new(desc))
-            self._attrs.insert(Pango.attr_fallback_new(False))
-        return self._attrs
+        self.attrs = Pango.AttrList.new()
+        self.attrs.insert(Pango.attr_font_desc_new(desc))
+        self.attrs.insert(Pango.attr_fallback_new(False))
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")
@@ -51,11 +44,11 @@ class FontsView(Adw.NavigationPage):
     def on_setup(self, _, list_item):
         box = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            spacing=8,
-            margin_top=8,
-            margin_bottom=8,
-            margin_start=8,
-            margin_end=8,
+            spacing=6,
+            margin_top=6,
+            margin_bottom=6,
+            margin_start=6,
+            margin_end=6,
         )
 
         family_label = Gtk.Label(halign=Gtk.Align.START, css_classes=["caption"])
@@ -74,16 +67,12 @@ class FontsView(Adw.NavigationPage):
         box.append(preview_ins)
         list_item.set_child(box)
 
-        list_item.f_label = family_label
-        list_item.p_ins = preview_ins
+        list_item.family_label = family_label
+        list_item.preview_ins = preview_ins
 
     @Gtk.Template.Callback()
     def on_bind(self, _, list_item):
         item = list_item.get_item()
 
-        list_item.f_label.set_text(item.family)
-        list_item.p_ins.set_attributes(item.get_attributes())
-
-    @Gtk.Template.Callback()
-    def on_unbind(self, _, list_item):
-        list_item.p_ins.set_attributes(None)
+        list_item.family_label.set_text(item.family)
+        list_item.preview_ins.set_attributes(item.attrs)

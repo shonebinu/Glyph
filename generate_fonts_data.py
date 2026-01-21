@@ -2,6 +2,7 @@ import json
 import re
 import argparse
 import io
+import requests
 import concurrent.futures
 from pathlib import Path
 from typing import List
@@ -11,6 +12,8 @@ from fontTools.subset import Subsetter
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
+
+GFONTS_METADATA = "https://fonts.google.com/metadata/fonts"  # to get popularity
 
 OUTPUT_JSON_PATH = "fonts.json"
 OUTPUT_TTC_PATH = "previews.ttc"
@@ -125,6 +128,8 @@ def main(gfonts_path: Path):
     best_files = []
     ttc_count = 0
 
+    gfonts_metadata = requests.get(GFONTS_METADATA).json()["familyMetadataList"]
+
     for folder in LICENSE_FOLDERS:
         license_path = gfonts_path / folder
 
@@ -134,15 +139,27 @@ def main(gfonts_path: Path):
         for metadata_path in license_path.glob("*/METADATA.pb"):
             try:
                 family_data, best_file = parse_metadata(metadata_path)
-                db.append(family_data)
 
-                if best_file:
-                    best_files.append(best_file)
+                match = next(
+                    (
+                        f
+                        for f in gfonts_metadata
+                        if f["family"] == family_data["family"]
+                    ),
+                    None,
+                )
+
+                if match:
+                    family_data["popularity"] = match["popularity"]
+                    db.append(family_data)
+
+                    if best_file:
+                        best_files.append(best_file)
             except Exception as e:
                 print(f"Skipping metadata extraction {metadata_path}: {e}")
                 continue
 
-    db.sort(key=lambda f: f["family"].lower())
+    db.sort(key=lambda f: f["popularity"])
 
     Path(OUTPUT_JSON_PATH).write_text(
         json.dumps(db, indent=2, ensure_ascii=False),
