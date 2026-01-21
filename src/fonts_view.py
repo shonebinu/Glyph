@@ -8,16 +8,23 @@ class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
     family = GObject.Property(type=str)
-    attrs = GObject.Property(type=Pango.AttrList)
 
     def __init__(self, family):
         super().__init__()
         self.family = family
 
-        self.attrs = Pango.AttrList.new()
-        self.attrs.insert(Pango.attr_family_new(family))
-        self.attrs.insert(Pango.attr_size_new(18 * Pango.SCALE))
-        self.attrs.insert(Pango.attr_fallback_new(False))
+        self._attrs = None
+
+    def get_attributes(self):
+        if self._attrs is None:
+            desc = Pango.FontDescription.new()
+            desc.set_family(self.family)
+            desc.set_size(18 * Pango.SCALE)
+
+            self._attrs = Pango.AttrList.new()
+            self._attrs.insert(Pango.attr_font_desc_new(desc))
+            self._attrs.insert(Pango.attr_fallback_new(False))
+        return self._attrs
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")
@@ -29,6 +36,7 @@ class FontsView(Adw.NavigationPage):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        # TODO: use a custom map
         self.font_map = PangoCairo.FontMap.get_default()
 
     def load_preview_fonts(self, file_path: Path):
@@ -50,29 +58,31 @@ class FontsView(Adw.NavigationPage):
             margin_end=8,
         )
 
-        box.set_size_request(-1, 72)
-
         family_label = Gtk.Label(halign=Gtk.Align.START, css_classes=["caption"])
-        preview_label = Gtk.Label(
-            label="The quick brown fox jumps over the lazy dog.",
-            halign=Gtk.Align.START,
-            ellipsize=Pango.EllipsizeMode.END,
+
+        text = "The quick brown fox jumps over the lazy dog."
+        preview_ins = Gtk.Inscription(
+            text=text,
+            height_request=60,
+            nat_chars=len(text),
+            nat_lines=1,
+            text_overflow=Gtk.InscriptionOverflow.ELLIPSIZE_END,
         )
 
         box.append(family_label)
-        box.append(preview_label)
+        box.append(preview_ins)
         list_item.set_child(box)
 
         list_item.f_label = family_label
-        list_item.p_label = preview_label
+        list_item.p_ins = preview_ins
 
     @Gtk.Template.Callback()
     def on_bind(self, _, list_item):
         item = list_item.get_item()
 
         list_item.f_label.set_text(item.family)
-        list_item.p_label.set_attributes(item.attrs)
+        list_item.p_ins.set_attributes(item.get_attributes())
 
     @Gtk.Template.Callback()
     def on_unbind(self, _, list_item):
-        list_item.p_label.set_attributes(None)
+        list_item.p_ins.set_attributes(None)
