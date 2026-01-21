@@ -1,7 +1,9 @@
 import json
 import re
-from pathlib import Path
 import argparse
+import io
+import concurrent.futures
+from pathlib import Path
 from typing import List
 from fontTools.ttLib import TTFont, TTCollection
 from fontTools.subset import Subsetter
@@ -14,23 +16,46 @@ OUTPUT_JSON_PATH = "fonts.json"
 OUTPUT_TTC_PATH = "previews.ttc"
 
 
-def generate_combined_subsets_ttc(files: List[Path], text: str, output: Path):
-    fonts = []
-    for ttf in files:
-        try:
-            subsetter = Subsetter()
-            subsetter.populate(text=text)
-            font = TTFont(ttf, lazy=True)
+def subset_single_font(ttf_path: Path, text: str):
+    try:
+        subsetter = Subsetter()
+        subsetter.populate(text=text)
+
+        with TTFont(ttf_path, lazy=True) as font:
             subsetter.subset(font)
 
-            fonts.append(font)
-        except Exception as e:
-            print(f"Skipping subsetting {ttf}: {e}")
-            continue
+            buf = io.BytesIO()
+            font.save(buf)
+            return buf.getvalue(), ttf_path
+    except Exception as e:
+        print(f"Skipping {ttf_path.name}: {e}")
+        return None, ttf_path
+
+
+def generate_combined_subsets_ttc_parallel(files: List[Path], text: str, output: Path):
+    fonts = []
+    failed_paths = []
+
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        future_to_ttf = {
+            executor.submit(subset_single_font, ttf, text): ttf for ttf in files
+        }
+
+        for future in concurrent.futures.as_completed(future_to_ttf):
+            font_bytes, original_path = future.result()
+            if font_bytes:
+                fonts.append(TTFont(io.BytesIO(font_bytes)))
+            else:
+                failed_paths.append(original_path)
 
     ttc = TTCollection()
     ttc.fonts = fonts
     ttc.save(output)
+
+    print(f"\n{len(failed_paths)} files failed to subset:")
+
+    for path in failed_paths:
+        print(path)
 
     return len(fonts)
 
@@ -124,14 +149,14 @@ def main(gfonts_path: Path):
         encoding="utf-8",
     )
 
-    ttc_count = generate_combined_subsets_ttc(
+    ttc_count = generate_combined_subsets_ttc_parallel(
         best_files,
         "The quick brown fox jumps over the lazy dog.",
         Path(OUTPUT_TTC_PATH),
     )
 
     print(
-        f"Done! Indexed {len(db)} families. {OUTPUT_TTC_PATH} includes {ttc_count} fonts subset."
+        f"\nDone! Indexed {len(db)} families. {OUTPUT_TTC_PATH} includes {ttc_count} fonts subset."
     )
 
 
