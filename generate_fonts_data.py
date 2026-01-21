@@ -18,9 +18,9 @@ def generate_combined_subsets_ttc(files: List[Path], text: str, output: Path):
     fonts = []
     for ttf in files:
         try:
-            subsetter = Subsetter(options=Options())
+            subsetter = Subsetter()
             subsetter.populate(text=text)
-            font = TTFont(ttf, lazy=True)
+            font = TTFont(ttf)
             subsetter.subset(font)
 
             fonts.append(font)
