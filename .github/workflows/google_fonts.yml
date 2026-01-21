@@ -17,6 +17,12 @@ jobs:
         with:
           ref: "fonts"
 
+      - uses: actions/checkout@v5
+        with:
+          ref: "main"
+          path: "script"
+          sparse-checkout: "generate_fonts_data.py"
+
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
@@ -32,14 +38,14 @@ jobs:
           cd ..
 
       - name: Run indexing script
-        run: python generate.py ./google_fonts
+        run: python script/generate_fonts_data.py ./google_fonts
 
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          rm -rf google_fonts
+          rm -rf google_fonts script
 
           git add fonts.json previews.ttc
 
