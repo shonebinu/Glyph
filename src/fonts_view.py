@@ -67,6 +67,7 @@ class FontsView(Adw.NavigationPage):
             nat_chars=len(text),
             nat_lines=1,
             text_overflow=Gtk.InscriptionOverflow.ELLIPSIZE_END,
+            wrap_mode=Pango.WrapMode.NONE,
         )
 
         box.append(family_label)
