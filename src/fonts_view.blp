@@ -17,10 +17,40 @@ template $FontsView: Adw.NavigationPage {
       ListView {
         show-separators: true;
 
-        factory: SignalListItemFactory {
-          setup => $on_setup();
-          bind => $on_bind();
-          unbind => $on_unbind();
+        factory: BuilderListItemFactory {
+          template ListItem {
+            child: Box {
+              orientation: horizontal;
+              spacing: 12;
+              margin-top: 12;
+              margin-bottom: 6;
+              margin-start: 12;
+              margin-end: 24;
+
+              Box {
+                orientation: vertical;
+                spacing: 2;
+                hexpand: true;
+
+                Label {
+                  label: bind (template.item as <$FontItem>).family;
+                  halign: start;
+                }
+
+                Inscription {
+                  markup: bind (template.item as <$FontItem>).preview_markup;
+                  height-request: 72;
+                  wrap-mode: none;
+                  text-overflow: ellipsize_end;
+                }
+              }
+
+              Button {
+                label: _("Install");
+                valign: center;
+              }
+            };
+          }
         };
 
         model: NoSelection {
