@@ -13,7 +13,7 @@ class FontItem(GObject.Object):
 
         desc = Pango.FontDescription.new()
         desc.set_family(self.family)
-        desc.set_size(24 * Pango.SCALE)
+        desc.set_size(18 * Pango.SCALE)
 
         self.attrs = Pango.AttrList.new()
         self.attrs.insert(Pango.attr_font_desc_new(desc))
@@ -56,7 +56,7 @@ class FontsView(Adw.NavigationPage):
         text = "The quick brown fox jumps over the lazy dog."
         preview_ins = Gtk.Inscription(
             text=text,
-            height_request=60,
+            height_request=72,
             nat_chars=len(text),
             nat_lines=1,
             text_overflow=Gtk.InscriptionOverflow.ELLIPSIZE_END,
