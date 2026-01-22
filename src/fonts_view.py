@@ -42,16 +42,24 @@ class FontsView(Adw.NavigationPage):
 
     @Gtk.Template.Callback()
     def on_setup(self, _, list_item):
-        box = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            spacing=6,
-            margin_top=6,
+        main_box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=12,
+            margin_top=12,
             margin_bottom=6,
-            margin_start=6,
-            margin_end=6,
+            margin_start=12,
+            margin_end=24,
         )
 
-        family_label = Gtk.Label(halign=Gtk.Align.START, css_classes=["caption"])
+        text_column = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=2,
+            hexpand=True,
+        )
+
+        family_label = Gtk.Label(
+            halign=Gtk.Align.START,
+        )
 
         text = "The quick brown fox jumps over the lazy dog."
         preview_ins = Gtk.Inscription(
@@ -60,15 +68,25 @@ class FontsView(Adw.NavigationPage):
             nat_chars=len(text),
             nat_lines=1,
             text_overflow=Gtk.InscriptionOverflow.ELLIPSIZE_END,
-            wrap_mode=Pango.WrapMode.NONE,
+        )
+        # TODO: set markup instead of attrs
+
+        text_column.append(family_label)
+        text_column.append(preview_ins)
+
+        install_btn = Gtk.Button(
+            label="Install",
+            valign=Gtk.Align.CENTER,
         )
 
-        box.append(family_label)
-        box.append(preview_ins)
-        list_item.set_child(box)
+        main_box.append(text_column)
+        main_box.append(install_btn)
+
+        list_item.set_child(main_box)
 
         list_item.family_label = family_label
         list_item.preview_ins = preview_ins
+        list_item.install_btn = install_btn
 
     @Gtk.Template.Callback()
     def on_bind(self, _, list_item):

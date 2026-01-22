@@ -15,8 +15,6 @@ template $FontsView: Adw.NavigationPage {
       hscrollbar-policy: never;
 
       ListView {
-        show-separators: true;
-
         factory: SignalListItemFactory {
           setup => $on_setup();
           bind => $on_bind();
