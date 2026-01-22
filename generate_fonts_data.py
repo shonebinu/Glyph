@@ -1,19 +1,26 @@
+# https://googlefonts.github.io/gf-guide/metadata.html
+
 import json
-import re
 import argparse
 import io
 import concurrent.futures
 from pathlib import Path
-from typing import List
+from typing import List, Tuple
 from fontTools.ttLib import TTFont, TTCollection
 from fontTools.subset import Subsetter
-
+from google.protobuf import text_format
+from gftools import fonts_public_pb2
+from google.protobuf.json_format import MessageToDict
+from gflanguages import LoadLanguages
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
 
 OUTPUT_JSON_PATH = "fonts.json"
 OUTPUT_TTC_PATH = "previews.ttc"
+
+
+gflanguages = LoadLanguages()
 
 
 def subset_single_font(ttf_path: Path, text: str):
@@ -26,27 +33,30 @@ def subset_single_font(ttf_path: Path, text: str):
 
             buf = io.BytesIO()
             font.save(buf)
-            return buf.getvalue(), ttf_path
+            return buf.getvalue()
     except Exception as e:
         print(f"Skipping {ttf_path.name}: {e}")
-        return None, ttf_path
+        return None
 
 
-def generate_combined_subsets_ttc_parallel(files: List[Path], text: str, output: Path):
+def generate_combined_subsets_ttc_parallel(
+    subsets_sample: List[Tuple[Path, str]], output: Path
+):
     fonts = []
     failed_paths = []
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         future_to_ttf = {
-            executor.submit(subset_single_font, ttf, text): ttf for ttf in files
+            executor.submit(subset_single_font, ttf, text): ttf
+            for ttf, text in subsets_sample
         }
 
         for future in concurrent.futures.as_completed(future_to_ttf):
-            font_bytes, original_path = future.result()
+            font_bytes = future.result()
             if font_bytes:
                 fonts.append(TTFont(io.BytesIO(font_bytes)))
             else:
-                failed_paths.append(original_path)
+                failed_paths.append(future_to_ttf[future])
 
     ttc = TTCollection()
     ttc.fonts = fonts
@@ -60,70 +70,68 @@ def generate_combined_subsets_ttc_parallel(files: List[Path], text: str, output:
     return len(fonts)
 
 
-def parse_metadata(metadata_path: Path):
-    def get_value(key: str):
-        match = re.search(rf'^{key}:\s*"(.*?)"', content, re.M)
-        return match.group(1) if match else ""
+def load_metadata(path: Path):
+    message = fonts_public_pb2.FamilyProto()
+    text_format.Parse(path.read_text(), message, allow_unknown_field=True)
+    return MessageToDict(message, preserving_proto_field_name=True)
 
-    content = metadata_path.read_text(encoding="utf-8")
+
+def get_best_sample_string(metadata):
+    if "sample_text" in metadata and "styles" in metadata["sample_text"]:
+        return metadata["sample_text"]["styles"]
+
+    if "languages" in metadata and metadata["languages"]:
+        for lang_code in metadata["languages"]:
+            if lang_code in gflanguages and gflanguages[lang_code].sample_text.styles:
+                return gflanguages[lang_code].sample_text.styles
+
+    if "primary_script" in metadata:
+        target_script = metadata["primary_script"]
+        for lang_info in gflanguages.values():
+            if lang_info.script == target_script and lang_info.sample_text.styles:
+                return lang_info.sample_text.styles
+
+    return "The quick brown fox jumps over the lazy dog."
+
+
+def parse_metadata(metadata_path: Path):
+    metadata = load_metadata(metadata_path)
+
     family_dir = metadata_path.parent
 
-    family = get_value("name")
-    category = get_value("category")
-    designer = get_value("designer")
-    license = get_value("license")
-    subsets = re.findall(r'^subsets: "(.*?)"', content, re.M)
+    font_files = metadata["fonts"]
 
-    font_blocks = re.findall(r"fonts\s*\{(.*?)\}", content, re.S)
-    font_files = []
-
-    for block in font_blocks:
-        file_match = re.search(r'filename: "(.*?)"', block)
-        style_match = re.search(r'style: "(.*?)"', block)
-        weight_match = re.search(r"weight: (\d+)", block)
-
-        if file_match and style_match and weight_match:
-            filename = file_match.group(1)
-            style = style_match.group(1)
-            weight = weight_match.group(1)
-
-            font_files.append(
-                {
-                    "style": style,
-                    "weight": int(weight),
-                    "filename": filename,
-                    "url": f"{FONT_FILE_BASE_URL}/{license.lower()}/{family_dir.name}/{filename}",
-                }
-            )
+    sample_string = get_best_sample_string(metadata)
 
     metadata = {
-        "family": family,
-        "designer": designer,
-        "license": license,
-        "category": category,
-        "subsets": subsets,
-        "font_files": font_files,
-        "is_variable": "axes {" in content,
+        "family": metadata["name"],
+        "designer": metadata["designer"],
+        "license": metadata["license"],
+        "category": metadata["category"],
+        "font_files": [
+            f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
+            for font in font_files
+        ],
+        "sample_string": sample_string,
     }
 
-    best_file = next(
+    sample_file = next(
         (
             item["filename"]
             for item in font_files
             if item["style"] == "normal" and item["weight"] == 400
         ),
-        font_files[0]["filename"] if font_files else None,
+        font_files[0]["filename"],
     )
 
-    best_file_path = family_dir / best_file if best_file else None
+    sample_file_path = family_dir / sample_file
 
-    return metadata, best_file_path
+    return metadata, sample_file_path, sample_string
 
 
 def main(gfonts_path: Path):
-    db = []
-    best_files = []
-    ttc_count = 0
+    metadatas = []
+    subsets_samples = []
 
     for folder in LICENSE_FOLDERS:
         license_path = gfonts_path / folder
@@ -133,30 +141,30 @@ def main(gfonts_path: Path):
 
         for metadata_path in license_path.glob("*/METADATA.pb"):
             try:
-                family_data, best_file = parse_metadata(metadata_path)
-                db.append(family_data)
+                family_data, sample_file_path, sample_string = parse_metadata(
+                    metadata_path
+                )
+                metadatas.append(family_data)
+                subsets_samples.append((sample_file_path, sample_string))
 
-                if best_file:
-                    best_files.append(best_file)
             except Exception as e:
                 print(f"Skipping metadata extraction {metadata_path}: {e}")
                 continue
 
-    db.sort(key=lambda f: f["family"].lower())
+    metadatas.sort(key=lambda f: f["family"].lower())
 
     Path(OUTPUT_JSON_PATH).write_text(
-        json.dumps(db, indent=2, ensure_ascii=False),
+        json.dumps(metadatas, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
     ttc_count = generate_combined_subsets_ttc_parallel(
-        best_files,
-        "The quick brown fox jumps over the lazy dog",
+        subsets_samples,
         Path(OUTPUT_TTC_PATH),
     )
 
     print(
-        f"\nDone! Indexed {len(db)} families. {OUTPUT_TTC_PATH} includes {ttc_count} fonts subset."
+        f"\nDone! Indexed {len(metadatas)} families. {OUTPUT_TTC_PATH} includes {ttc_count or 0} fonts subset."
     )
 
 

@@ -45,7 +45,7 @@ template $FontsView: Adw.NavigationPage {
                   markup: bind (template.item as <$FontItem>).preview_markup;
                   height-request: 72;
                   wrap-mode: none;
-                  text-overflow: ellipsize_end;
+                  text-overflow: clip;
                 }
               }
 
