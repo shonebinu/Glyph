@@ -37924,10 +37924,7 @@
     "license": "OFL",
     "category": "HANDWRITING",
     "subsets": [
-      "latin",
-      "latin-ext",
-      "menu",
-      "vietnamese"
+      "menu"
     ],
     "font_files": [
       {
@@ -37945,10 +37942,7 @@
     "license": "OFL",
     "category": "HANDWRITING",
     "subsets": [
-      "latin",
-      "latin-ext",
-      "menu",
-      "vietnamese"
+      "menu"
     ],
     "font_files": [
       {
