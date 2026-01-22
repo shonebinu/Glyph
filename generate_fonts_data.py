@@ -151,7 +151,7 @@ def main(gfonts_path: Path):
 
     ttc_count = generate_combined_subsets_ttc_parallel(
         best_files,
-        "The quick brown fox jumps over the lazy dog.",
+        "The quick brown fox jumps over the lazy dog",
         Path(OUTPUT_TTC_PATH),
     )
 
