@@ -11,14 +11,6 @@ class FontItem(GObject.Object):
         super().__init__()
         self.family = family
 
-        desc = Pango.FontDescription.new()
-        desc.set_family(self.family)
-        desc.set_size(18 * Pango.SCALE)
-
-        self.attrs = Pango.AttrList.new()
-        self.attrs.insert(Pango.attr_font_desc_new(desc))
-        self.attrs.insert(Pango.attr_fallback_new(False))
-
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")
 class FontsView(Adw.NavigationPage):
@@ -69,7 +61,6 @@ class FontsView(Adw.NavigationPage):
             nat_lines=1,
             text_overflow=Gtk.InscriptionOverflow.ELLIPSIZE_END,
         )
-        # TODO: set markup instead of attrs
 
         text_column.append(family_label)
         text_column.append(preview_ins)
@@ -93,4 +84,6 @@ class FontsView(Adw.NavigationPage):
         item = list_item.get_item()
 
         list_item.family_label.set_text(item.family)
-        list_item.preview_ins.set_attributes(item.attrs)
+        list_item.preview_ins.set_markup(
+            f'<span font_family="{item.family}" size="x-large" fallback="false">The quick brown fox jumps over the lazy dog.</span>'
+        )
