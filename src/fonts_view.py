@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import List
-from gi.repository import Adw, Gtk, PangoCairo, GObject, Gio, Pango
+from gi.repository import Adw, Gtk, PangoCairo, GObject, Gio
 from .fonts_manager import FontMetadata
 
 
@@ -15,7 +15,7 @@ class FontItem(GObject.Object):
 
     @GObject.Property(type=str)
     def preview_markup(self):
-        return f'<span font_family="{self.family}" size="x-large" fallback="false">The quick brown fox jumps over the lazy dog.</span>'
+        return f'<span font_family="{self.family}" size="xx-large" fallback="false">The quick brown fox jumps over the lazy dog</span>'
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")

@@ -35,6 +35,10 @@ template $FontsView: Adw.NavigationPage {
                 Label {
                   label: bind (template.item as <$FontItem>).family;
                   halign: start;
+
+                  css-classes: [
+                    "heading",
+                  ];
                 }
 
                 Inscription {
