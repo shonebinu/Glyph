@@ -51,12 +51,18 @@ def generate_preview_subsets_ttc_parallel(
             for ttf_path, preview_string in preview_samples
         }
 
+        total = len(future_to_ttf)
+        completed = 0
+
         for future in concurrent.futures.as_completed(future_to_ttf):
+            completed += 1
             font_bytes = future.result()
             if font_bytes:
                 fonts.append(TTFont(io.BytesIO(font_bytes)))
             else:
                 failed_paths.append(future_to_ttf[future])
+
+            print(f"{completed} out of {total} done subsetting")
 
     ttc = TTCollection()
     ttc.fonts = fonts
@@ -103,7 +109,7 @@ def get_best_preview_string(metadata):
 
 # for some font files, setting the family name isn't working for preview.
 def get_preview_family_name(ttf_path: Path):
-    with TTFont(ttf_path) as font:
+    with TTFont(ttf_path, lazy=True) as font:
         return font["name"].getBestFullName()
 
 
@@ -122,7 +128,7 @@ def parse_metadata(metadata_path: Path):
             for item in font_files
             if item["style"] == "normal" and item["weight"] == 400
         ),
-        font_files[0]["filename"],
+        font_files[-1]["filename"],  # get the boldest as the fallback
     )
 
     sample_file_path = family_dir / sample_file
@@ -150,6 +156,8 @@ def main(gfonts_path: Path):
     metadatas = []
     preview_samples = []
 
+    metadatas_total = 0
+
     for folder in LICENSE_FOLDERS:
         license_path = gfonts_path / folder
 
@@ -157,6 +165,8 @@ def main(gfonts_path: Path):
             continue
 
         for metadata_path in license_path.glob("*/METADATA.pb"):
+            metadatas_total += 1
+
             try:
                 family_data, sample_file_path, preview_string = parse_metadata(
                     metadata_path
@@ -181,7 +191,7 @@ def main(gfonts_path: Path):
     )
 
     print(
-        f"\nDone! Indexed {len(metadatas)} families. {OUTPUT_TTC_PATH} includes {ttc_count or 0} fonts subset."
+        f"\nDone! Indexed {len(metadatas)} out of {metadatas_total} families. {OUTPUT_TTC_PATH} includes {ttc_count or 0} fonts subset."
     )
 
 
