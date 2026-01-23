@@ -101,6 +101,12 @@ def get_best_preview_string(metadata):
     return "The quick brown fox jumps over the lazy dog."
 
 
+# Pango(GTK) needs the font files full name to show the font properly
+def get_preview_family_name(ttf_path: Path):
+    with TTFont(ttf_path) as font:
+        return font["name"].getBestFullName()
+
+
 def parse_metadata(metadata_path: Path):
     metadata = load_metadata(metadata_path)
 
@@ -109,22 +115,6 @@ def parse_metadata(metadata_path: Path):
     font_files = metadata["fonts"]
 
     preview_string = get_best_preview_string(metadata)
-
-    metadata = {
-        "family": metadata["name"],
-        "display_name": metadata["display_name"]
-        if "display_name" in metadata
-        else metadata["name"],
-        "designer": metadata["designer"],
-        "license": metadata["license"],
-        "category": metadata["category"],
-        "subsets": metadata["subsets"],
-        "font_files": [
-            f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
-            for font in font_files
-        ],
-        "preview_string": preview_string,
-    }
 
     sample_file = next(
         (
@@ -136,6 +126,22 @@ def parse_metadata(metadata_path: Path):
     )
 
     sample_file_path = family_dir / sample_file
+
+    metadata = {
+        "family_name": metadata["display_name"]
+        if "display_name" in metadata
+        else metadata["name"],
+        "designer": metadata["designer"],
+        "license": metadata["license"],
+        "category": metadata["category"],
+        "subsets": metadata["subsets"],
+        "font_files": [
+            f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
+            for font in font_files
+        ],
+        "preview_family": get_preview_family_name(sample_file_path),
+        "preview_string": preview_string,
+    }
 
     return metadata, sample_file_path, preview_string
 
@@ -162,7 +168,7 @@ def main(gfonts_path: Path):
                 print(f"Skipping metadata extraction {metadata_path}: {e}")
                 continue
 
-    metadatas.sort(key=lambda f: f["family"].lower())
+    metadatas.sort(key=lambda f: f["family_name"].lower())
 
     Path(OUTPUT_JSON_PATH).write_text(
         json.dumps(metadatas, indent=2, ensure_ascii=False),
