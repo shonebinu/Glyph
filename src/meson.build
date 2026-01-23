@@ -6,7 +6,6 @@ blueprints = custom_target('blueprints',
   input: files(
     'shortcuts-dialog.blp',
     'window.blp',
-    'sidebar.blp',
     'fonts_view.blp',
   ),
   output: '.',
@@ -43,7 +42,6 @@ glyph_sources = [
   'main.py',
   'window.py',
   'fonts_manager.py',
-  'sidebar.py',
   'fonts_view.py',
 ]
 

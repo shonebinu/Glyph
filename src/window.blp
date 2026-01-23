@@ -2,21 +2,51 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GlyphWindow: Adw.ApplicationWindow {
-  title: _("Glyph");
-  default-width: 1125;
-  default-height: 750;
+  title: _("Glyph - All Fonts");
+  default-width: 900;
+  default-height: 720;
 
-  Adw.Breakpoint {
-    condition ("max-width: 400sp")
+  content: Adw.ToolbarView {
+    styles [
+      "view",
+    ]
 
-    setters {
-      split_view.collapsed: true;
+    [top]
+    Adw.HeaderBar {
+      ToggleButton search_button {
+        icon-name: "edit-find-symbolic";
+      }
+
+      // TODO: add search here w/ a revealer?
+
+      [end]
+      MenuButton {
+        primary: true;
+        icon-name: "open-menu-symbolic";
+        tooltip-text: _("Main Menu");
+        menu-model: primary_menu;
+      }
     }
-  }
-
-  content: Adw.NavigationSplitView split_view {
-    sidebar: $Sidebar sidebar {};
 
     content: $FontsView fonts_view {};
   };
+}
+
+menu primary_menu {
+  section {
+    item {
+      label: _("_Preferences");
+      action: "app.preferences";
+    }
+
+    item {
+      label: _("_Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("_About H");
+      action: "app.about";
+    }
+  }
 }

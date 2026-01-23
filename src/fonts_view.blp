@@ -1,68 +1,21 @@
 using Gtk 4.0;
-using Adw 1;
 using Gio 2.0;
 
-template $FontsView: Adw.NavigationPage {
-  tag: "content";
+template $FontsView: ScrolledWindow {
+  hscrollbar-policy: never;
 
-  child: Adw.ToolbarView {
-    [top]
-    Adw.HeaderBar {
-      show-title: true;
-    }
+  ListView {
+    show-separators: true;
 
-    content: Gtk.ScrolledWindow {
-      hscrollbar-policy: never;
-
-      ListView {
-        show-separators: true;
-
-        factory: BuilderListItemFactory {
-          template ListItem {
-            child: Box {
-              orientation: horizontal;
-              spacing: 12;
-              margin-top: 12;
-              margin-bottom: 6;
-              margin-start: 12;
-              margin-end: 24;
-
-              Box {
-                orientation: vertical;
-                spacing: 2;
-                hexpand: true;
-
-                Label {
-                  label: bind (template.item as <$FontItem>).family;
-                  halign: start;
-
-                  css-classes: [
-                    "heading",
-                  ];
-                }
-
-                Inscription {
-                  markup: bind (template.item as <$FontItem>).preview_markup;
-                  height-request: 72;
-                  wrap-mode: none;
-                  text-overflow: clip;
-                }
-              }
-
-              Button {
-                label: _("Install");
-                valign: center;
-              }
-            };
-          }
-        };
-
-        model: NoSelection {
-          model: Gio.ListStore list_store {
-            item-type: typeof<$FontItem>;
-          };
-        };
-      }
+    factory: SignalListItemFactory {
+      setup => $on_font_view_setup();
+      bind => $on_font_view_bind();
     };
-  };
+
+    model: NoSelection {
+      model: Gio.ListStore list_store {
+        item-type: typeof<$FontItem>;
+      };
+    };
+  }
 }
