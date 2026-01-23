@@ -87,9 +87,16 @@ def get_best_preview_string(metadata):
 
     if "primary_script" in metadata:
         target_script = metadata["primary_script"]
-        for lang_info in gflanguages.values():
-            if lang_info.script == target_script and lang_info.sample_text.styles:
-                return lang_info.sample_text.styles
+
+        script_languages = [
+            lang
+            for lang in gflanguages.values()
+            if lang.script == target_script and lang.sample_text.styles
+        ]
+
+        if script_languages:
+            most_popular = max(script_languages, key=lambda l: l.population)
+            return most_popular.sample_text.styles
 
     return "The quick brown fox jumps over the lazy dog."
 
