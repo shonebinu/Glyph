@@ -101,7 +101,7 @@ def get_best_preview_string(metadata):
     return "The quick brown fox jumps over the lazy dog."
 
 
-# Pango(GTK) needs the font files full name to show the font properly
+# for some font files, setting the family name isn't working for preview.
 def get_preview_family_name(ttf_path: Path):
     with TTFont(ttf_path) as font:
         return font["name"].getBestFullName()
