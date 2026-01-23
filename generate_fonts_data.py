@@ -39,16 +39,16 @@ def subset_single_font(ttf_path: Path, text: str):
         return None
 
 
-def generate_combined_subsets_ttc_parallel(
-    subsets_sample: List[Tuple[Path, str]], output: Path
+def generate_preview_subsets_ttc_parallel(
+    preview_samples: List[Tuple[Path, str]], output: Path
 ):
     fonts = []
     failed_paths = []
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         future_to_ttf = {
-            executor.submit(subset_single_font, ttf, text): ttf
-            for ttf, text in subsets_sample
+            executor.submit(subset_single_font, ttf_path, preview_string): ttf_path
+            for ttf_path, preview_string in preview_samples
         }
 
         for future in concurrent.futures.as_completed(future_to_ttf):
@@ -76,7 +76,7 @@ def load_metadata(path: Path):
     return MessageToDict(message, preserving_proto_field_name=True)
 
 
-def get_best_sample_string(metadata):
+def get_best_preview_string(metadata):
     if "sample_text" in metadata and "styles" in metadata["sample_text"]:
         return metadata["sample_text"]["styles"]
 
@@ -101,7 +101,7 @@ def parse_metadata(metadata_path: Path):
 
     font_files = metadata["fonts"]
 
-    sample_string = get_best_sample_string(metadata)
+    preview_string = get_best_preview_string(metadata)
 
     metadata = {
         "family": metadata["name"],
@@ -112,7 +112,7 @@ def parse_metadata(metadata_path: Path):
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
         ],
-        "sample_string": sample_string,
+        "preview_string": preview_string,
     }
 
     sample_file = next(
@@ -126,12 +126,12 @@ def parse_metadata(metadata_path: Path):
 
     sample_file_path = family_dir / sample_file
 
-    return metadata, sample_file_path, sample_string
+    return metadata, sample_file_path, preview_string
 
 
 def main(gfonts_path: Path):
     metadatas = []
-    subsets_samples = []
+    preview_samples = []
 
     for folder in LICENSE_FOLDERS:
         license_path = gfonts_path / folder
@@ -141,11 +141,11 @@ def main(gfonts_path: Path):
 
         for metadata_path in license_path.glob("*/METADATA.pb"):
             try:
-                family_data, sample_file_path, sample_string = parse_metadata(
+                family_data, sample_file_path, preview_string = parse_metadata(
                     metadata_path
                 )
                 metadatas.append(family_data)
-                subsets_samples.append((sample_file_path, sample_string))
+                preview_samples.append((sample_file_path, preview_string))
 
             except Exception as e:
                 print(f"Skipping metadata extraction {metadata_path}: {e}")
@@ -158,8 +158,8 @@ def main(gfonts_path: Path):
         encoding="utf-8",
     )
 
-    ttc_count = generate_combined_subsets_ttc_parallel(
-        subsets_samples,
+    ttc_count = generate_preview_subsets_ttc_parallel(
+        preview_samples,
         Path(OUTPUT_TTC_PATH),
     )
 
