@@ -47,7 +47,7 @@ jobs:
 
           rm -rf google_fonts script
 
-          gzip previews.ttc
+          gzip  -f previews.ttc
 
           git add fonts.json previews.ttc.gz
 
