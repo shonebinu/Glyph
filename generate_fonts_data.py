@@ -117,6 +117,7 @@ def parse_metadata(metadata_path: Path):
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
+        "subsets": metadata["subsets"],
         "font_files": [
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
