@@ -111,7 +111,9 @@ def parse_metadata(metadata_path: Path):
     preview_string = get_best_preview_string(metadata)
 
     metadata = {
-        "family": metadata["name"],
+        "family": metadata["display_name"]
+        if "display_name" in metadata
+        else metadata["name"],
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
