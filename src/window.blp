@@ -7,10 +7,6 @@ template $GlyphWindow: Adw.ApplicationWindow {
   default-height: 720;
 
   content: Adw.ToolbarView {
-    styles [
-      "view",
-    ]
-
     [top]
     Adw.HeaderBar {
       ToggleButton search_button {
@@ -45,7 +41,7 @@ menu primary_menu {
     }
 
     item {
-      label: _("_About H");
+      label: _("_About Glyph");
       action: "app.about";
     }
   }

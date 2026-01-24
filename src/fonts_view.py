@@ -23,11 +23,11 @@ class FontsView(Gtk.ScrolledWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.custom_font_map = PangoCairo.FontMap.new()
+        self.previews_font_map = PangoCairo.FontMap.new()
 
     def load_preview_fonts(self, file_path: Path):
         # TODO: make this async and then show loading state, after that load fonts
-        self.custom_font_map.add_font_file(str(file_path))
+        self.previews_font_map.add_font_file(str(file_path))
 
     def show_fonts(self, fonts: List[FontMetadata]):
         items = [
@@ -52,7 +52,7 @@ class FontsView(Gtk.ScrolledWindow):
             hexpand=True,
         )
 
-        family_label = Gtk.Label(halign=Gtk.Align.START, css_classes=["heading"])
+        family_label = Gtk.Label(halign=Gtk.Align.START)
 
         preview_ins = Gtk.Inscription(
             height_request=72,
@@ -60,14 +60,16 @@ class FontsView(Gtk.ScrolledWindow):
             text_overflow=Gtk.InscriptionOverflow.CLIP,
         )
 
-        preview_ins.set_font_map(self.custom_font_map)
+        preview_ins.set_font_map(self.previews_font_map)
 
         font_box.append(family_label)
         font_box.append(preview_ins)
 
         install_btn = Gtk.Button(
-            label="Install",
+            icon_name="folder-download-symbolic",
+            css_classes=["flat"],
             valign=Gtk.Align.CENTER,
+            tooltip_text="Install font",
         )
 
         main_box.append(font_box)
@@ -84,7 +86,7 @@ class FontsView(Gtk.ScrolledWindow):
 
         list_item.family_label.set_text(item.family_name)
         list_item.preview_ins.set_markup(
-            f'<span font_family="{item.preview_family}" size="xx-large" fallback="false">{item.preview_string}</span>'
+            f'<span font_family="{item.preview_family}" size="x-large" fallback="false">{item.preview_string}</span>'
         )
 
 
