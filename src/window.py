@@ -14,9 +14,6 @@ class GlyphWindow(Adw.ApplicationWindow):
 
         self.fonts_manager = FontsManager()
 
-        fonts = self.fonts_manager.fonts
-        previews_ttc_path = self.fonts_manager.previews_ttc_path
+        self.fonts_view.load_preview_fonts(self.fonts_manager.previews_ttc_path)
 
-        self.fonts_view.load_preview_fonts(previews_ttc_path)
-
-        self.fonts_view.show_fonts(fonts)
+        self.fonts_view.show_fonts(self.fonts_manager.fonts)

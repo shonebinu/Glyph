@@ -27,6 +27,8 @@ class FontsView(Gtk.ScrolledWindow):
 
     def load_preview_fonts(self, file_path: Path):
         # TODO: make this async and then show loading state, after that load fonts
+        # TODO: use custom symbolic icons
+        # TODO: show more details dialog
         self.previews_font_map.add_font_file(str(file_path))
 
     def show_fonts(self, fonts: List[FontMetadata]):
