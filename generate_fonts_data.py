@@ -81,6 +81,12 @@ def get_best_preview_string(metadata):
     return "The quick brown fox jumps over the lazy dog."
 
 
+def get_preview_family_name(ttf_path: Path):
+    with TTFont(ttf_path, lazy=True) as font:
+        # for some reason some fonts cant be previewed with its family name
+        return font["name"].getBestFullName()
+
+
 def parse_metadata(metadata_path: Path):
     metadata = load_metadata(metadata_path)
     family_dir = metadata_path.parent
@@ -108,7 +114,7 @@ def parse_metadata(metadata_path: Path):
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
         ],
-        "preview_family": metadata["name"],
+        "preview_family": f"{metadata['name']}, {get_preview_family_name(sample_file_path)}",
         "preview_string": preview_string,
     }
 
