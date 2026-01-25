@@ -32,7 +32,6 @@ def generate_previews_ttc(preview_samples: List[Tuple[Path, str]]) -> int:
                     "hb-subset",
                     f"--text={preview_string}",
                     f"--output-file={output_temp_path}",
-                    "--layout-features=*",
                     str(ttf_path),
                 ],
                 capture_output=True,
