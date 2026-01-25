@@ -1,16 +1,18 @@
 # https://googlefonts.github.io/gf-guide/metadata.html
 
+import uuid
 import json
 import argparse
-import subprocess
-import tempfile
+import uharfbuzz as hb
 from pathlib import Path
-from typing import List, Optional, Tuple, Dict, Any
+from typing import List, Tuple, Dict, Any
 from fontTools.ttLib import TTFont, TTCollection
 from google.protobuf import text_format
 from gftools import fonts_public_pb2
 from google.protobuf.json_format import MessageToDict
 from gflanguages import LoadLanguages
+from io import BytesIO
+
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
@@ -21,55 +23,44 @@ OUTPUT_TTC_PATH = "previews.ttc"
 gflanguages = LoadLanguages()
 
 
-def get_family_name(font_path: str) -> Optional[str]:
-    # setting the metadata family name as font name isn't working for some fonts preview after subsetting
-    font = TTFont(font_path)
-    family = font["name"].getBestFamilyName()
-    return family
+def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
+    blob = hb.Blob.from_file_path(str(ttf_path))
+    face = hb.Face(blob)
+
+    subset_input = hb.SubsetInput()
+
+    for char in preview_string:
+        subset_input.unicode_set.add(ord(char))
+
+    subset_face = hb.subset(face, subset_input)
+
+    subset_blob = subset_face.blob
+    subset_data = subset_blob.data
+
+    return BytesIO(subset_data)
 
 
 def generate_previews_ttc(
     preview_samples: List[Tuple[str, Path, str]],
 ) -> Dict[str, str]:
     subsetted_fonts = []
-    family_name_map = {}
+    preview_family_map = {}
 
-    for index, (family_name, ttf_path, preview_string) in enumerate(preview_samples):
+    for id, ttf_path, preview_string in preview_samples:
         try:
-            with tempfile.NamedTemporaryFile(suffix=".ttf", delete=False) as tmp:
-                output_temp_path = tmp.name
+            font = TTFont(generate_subset(ttf_path, preview_string))
+            subsetted_fonts.append(font)
 
-            subprocess.run(
-                [
-                    "hb-subset",
-                    f"--text={preview_string}",
-                    f"--output-file={output_temp_path}",
-                    str(ttf_path),
-                ],
-                capture_output=True,
-                text=True,
-                check=True,
-            )
-
-            subsetted_fonts.append(output_temp_path)
-
-            family_name_map[family_name] = get_family_name(output_temp_path)
-
-            print(f"{index + 1} out of {len(preview_samples)} done subsetting")
+            # setting the metadata family name as font name isn't working for some fonts preview after subsetting
+            preview_family_map[id] = font["name"].getBestFamilyName()
         except Exception as e:
             print(f"Skipping font subsetting {str(ttf_path)}: {e}")
 
     ttc = TTCollection()
-    ttc.fonts = [TTFont(path) for path in subsetted_fonts]
+    ttc.fonts = subsetted_fonts
     ttc.save(OUTPUT_TTC_PATH)
 
-    # delete temp files
-    for file in subsetted_fonts:
-        fpath = Path(file)
-        if fpath.exists():
-            fpath.unlink()
-
-    return family_name_map
+    return preview_family_map
 
 
 def load_metadata(path: Path) -> Dict[Any, Any]:
@@ -119,12 +110,13 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
     sample_file_path = family_dir / sample_file
 
     metadata_out = {
-        "family_name": metadata.get("display_name", metadata["name"]),
+        "id": str(uuid.uuid4()),
+        "family": metadata.get("display_name", metadata["name"]),
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
         "subsets": metadata["subsets"],
-        "font_files": [
+        "files": [
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
         ],
@@ -134,13 +126,13 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
     return metadata_out, sample_file_path, preview_string
 
 
-def main(gfonts_path: Path) -> None:
+def main(google_fonts_path: Path) -> None:
     metadatas = []
     metadatas_total = 0
     preview_samples = []
 
     for folder in LICENSE_FOLDERS:
-        license_path = gfonts_path / folder
+        license_path = google_fonts_path / folder
         if not license_path.exists():
             continue
 
@@ -152,19 +144,19 @@ def main(gfonts_path: Path) -> None:
                 )
                 metadatas.append(family_data)
                 preview_samples.append(
-                    (family_data["family_name"], sample_file_path, preview_string)
+                    (family_data["id"], sample_file_path, preview_string)
                 )
             except Exception as e:
                 print(f"Skipping metadata extraction {str(metadata_path)}: {e}")
                 continue
 
-    metadatas.sort(key=lambda f: f["family_name"].lower())
+    metadatas.sort(key=lambda f: f["family"].lower())
 
-    family_name_map = generate_previews_ttc(preview_samples)
+    preview_family_map = generate_previews_ttc(preview_samples)
 
     for metadata in metadatas:
-        fn = metadata["family_name"]
-        metadata["preview_family"] = family_name_map.get(fn, None)
+        m_id = metadata["id"]
+        metadata["preview_family"] = preview_family_map.get(m_id, None)
 
     Path(OUTPUT_JSON_PATH).write_text(
         json.dumps(metadatas, indent=2, ensure_ascii=False),
@@ -173,7 +165,7 @@ def main(gfonts_path: Path) -> None:
 
     print(
         f"\nDone! Indexed {len(metadatas)} out of {metadatas_total} families. "
-        f"{OUTPUT_TTC_PATH} includes {len(family_name_map)} font subsets."
+        f"{OUTPUT_TTC_PATH} includes {len(preview_family_map)} font subsets."
     )
 
 
