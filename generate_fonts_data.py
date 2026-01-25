@@ -5,7 +5,7 @@ import argparse
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import List, Tuple, Dict
+from typing import List, Optional, Tuple, Dict, Any
 from fontTools.ttLib import TTFont, TTCollection
 from google.protobuf import text_format
 from gftools import fonts_public_pb2
@@ -21,17 +21,10 @@ OUTPUT_TTC_PATH = "previews.ttc"
 gflanguages = LoadLanguages()
 
 
-def get_family_name(font_path: str) -> str:
-    # setting the metadata family name as font name isn't working for some fonts(GTK,Pango).
-    # Hence using fontconfig(Pango uses this under the hood) to get the name directly instead of jumping through hoops.
-    result = subprocess.run(
-        ["fc-query", "--format=%{family},", font_path],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-
-    family = result.stdout.strip().split(",")[0]
+def get_family_name(font_path: str) -> Optional[str]:
+    # setting the metadata family name as font name isn't working for some fonts preview after subsetting
+    font = TTFont(font_path)
+    family = font["name"].getBestFamilyName()
     return family
 
 
@@ -70,6 +63,7 @@ def generate_previews_ttc(
     ttc.fonts = [TTFont(path) for path in subsetted_fonts]
     ttc.save(OUTPUT_TTC_PATH)
 
+    # delete temp files
     for file in subsetted_fonts:
         fpath = Path(file)
         if fpath.exists():
@@ -78,13 +72,13 @@ def generate_previews_ttc(
     return family_name_map
 
 
-def load_metadata(path: Path):
+def load_metadata(path: Path) -> Dict[Any, Any]:
     message = fonts_public_pb2.FamilyProto()
     text_format.Parse(path.read_text(), message, allow_unknown_field=True)
     return MessageToDict(message, preserving_proto_field_name=True)
 
 
-def get_best_preview_string(metadata):
+def get_best_preview_string(metadata) -> str:
     if "sample_text" in metadata and "styles" in metadata["sample_text"]:
         return metadata["sample_text"]["styles"]
 
@@ -107,7 +101,7 @@ def get_best_preview_string(metadata):
     return "The quick brown fox jumps over the lazy dog"
 
 
-def parse_metadata(metadata_path: Path):
+def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
     metadata = load_metadata(metadata_path)
     family_dir = metadata_path.parent
     font_files = metadata["fonts"]
@@ -140,10 +134,10 @@ def parse_metadata(metadata_path: Path):
     return metadata_out, sample_file_path, preview_string
 
 
-def main(gfonts_path: Path):
+def main(gfonts_path: Path) -> None:
     metadatas = []
-    preview_samples = []
     metadatas_total = 0
+    preview_samples = []
 
     for folder in LICENSE_FOLDERS:
         license_path = gfonts_path / folder
@@ -161,7 +155,7 @@ def main(gfonts_path: Path):
                     (family_data["family_name"], sample_file_path, preview_string)
                 )
             except Exception as e:
-                print(f"Skipping metadata extraction {metadata_path}: {e}")
+                print(f"Skipping metadata extraction {str(metadata_path)}: {e}")
                 continue
 
     metadatas.sort(key=lambda f: f["family_name"].lower())
