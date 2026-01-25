@@ -2,7 +2,6 @@ import json
 import argparse
 import subprocess
 import tempfile
-import unicodedata
 from pathlib import Path
 from typing import List, Tuple
 from fontTools.ttLib import TTFont, TTCollection
@@ -31,8 +30,9 @@ def generate_previews_ttc(preview_samples: List[Tuple[Path, str]]) -> int:
             subprocess.run(
                 [
                     "hb-subset",
-                    f"--text={unicodedata.normalize('NFD', preview_string)}",
+                    f"--text={preview_string}",
                     f"--output-file={output_temp_path}",
+                    "--layout-features=*",
                     str(ttf_path),
                 ],
                 capture_output=True,

@@ -89,7 +89,7 @@
         {
           "type": "git",
           "url": "https://github.com/shonebinu/Glyph.git",
-          "branch": "fonts"
+          "commit": "d5efc1129c96816297099ecd9f02d6a6617d63bd"
         }
       ]
     },
