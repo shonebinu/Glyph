@@ -40,6 +40,10 @@ class FontsView(Gtk.ScrolledWindow):
 
     @Gtk.Template.Callback()
     def on_font_view_setup(self, _, list_item):
+        list_item.set_selectable(False)
+        list_item.set_focusable(False)
+        list_item.set_activatable(False)
+
         main_box = Gtk.Box(
             spacing=24,
             margin_top=12,
