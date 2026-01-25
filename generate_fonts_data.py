@@ -23,20 +23,31 @@ OUTPUT_TTC_PATH = "previews.ttc"
 gflanguages = LoadLanguages()
 
 
+def get_required_glyph_ids(face: hb.Face, text: str) -> set:
+    font = hb.Font(face)
+    buf = hb.Buffer()
+    buf.add_str(text)
+    buf.guess_segment_properties()
+    hb.shape(font, buf)
+    return {info.codepoint for info in buf.glyph_infos}
+
+
 def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
     blob = hb.Blob.from_file_path(str(ttf_path))
     face = hb.Face(blob)
 
+    # we need to add the glyph ids as well for proper preview of complex non latin languages
+    gids = get_required_glyph_ids(face, preview_string)
+
     subset_input = hb.SubsetInput()
+    for gid in gids:
+        subset_input.glyph_set.add(gid)
 
     for char in preview_string:
         subset_input.unicode_set.add(ord(char))
 
     subset_face = hb.subset(face, subset_input)
-
-    subset_data = subset_face.blob.data
-
-    return BytesIO(subset_data)
+    return BytesIO(subset_face.blob.data)
 
 
 def generate_previews_ttc(
