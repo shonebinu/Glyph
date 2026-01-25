@@ -5,8 +5,8 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import List, Literal
 from enum import Enum
-from gi.repository import GLib
 from urllib.parse import urlparse
+from gi.repository import GLib
 
 
 class FontCategory(str, Enum):
@@ -19,14 +19,15 @@ class FontCategory(str, Enum):
 
 @dataclass
 class FontMetadata:
-    family_name: str
+    id: str
+    family: str
     designer: str
     license: Literal["APACHE2", "OFL", "UFL"]
     category: List[FontCategory]
-    font_files: List[str]
+    files: List[str]
     subsets: List[str]
-    preview_family: str
     preview_string: str
+    preview_family: str
 
 
 class FontsManager:
@@ -39,10 +40,10 @@ class FontsManager:
 
         self.previews_ttc_path = self._data_dir / "previews.ttc"
 
-    async def install_font(self, family_name: str):
-        font = next((font for font in self.fonts if font.family_name == family_name))
+    async def install_font(self, id: str):
+        font = next((font for font in self.fonts if font.id == id))
 
-        font_files = font.font_files
+        font_files = font.files
 
         user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
         user_font_dir.mkdir(parents=True, exist_ok=True)

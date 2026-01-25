@@ -7,9 +7,9 @@ from .fonts_manager import FontMetadata
 class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
-    def __init__(self, family_name, preview_family, preview_string):
+    def __init__(self, family, preview_family, preview_string):
         super().__init__()
-        self.family_name = family_name
+        self.family = family
         self.preview_family = preview_family
         self.preview_string = preview_string
 
@@ -33,7 +33,7 @@ class FontsView(Gtk.ScrolledWindow):
 
     def show_fonts(self, fonts: List[FontMetadata]):
         items = [
-            FontItem(font.family_name, font.preview_family, font.preview_string)
+            FontItem(font.family, font.preview_family, font.preview_string)
             for font in fonts
         ]
         self.list_store.splice(0, self.list_store.get_n_items(), items)
@@ -90,7 +90,7 @@ class FontsView(Gtk.ScrolledWindow):
     def on_font_view_bind(self, _, list_item):
         item = list_item.get_item()
 
-        list_item.family_label.set_text(item.family_name)
+        list_item.family_label.set_text(item.family)
         list_item.preview_ins.set_markup(
             f'<span font_family="{item.preview_family}" size="x-large" fallback="false">{item.preview_string}</span>'
         )
