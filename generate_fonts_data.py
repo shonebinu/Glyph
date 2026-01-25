@@ -2,6 +2,7 @@ import json
 import argparse
 import subprocess
 import tempfile
+import unicodedata
 from pathlib import Path
 from typing import List, Tuple
 from fontTools.ttLib import TTFont, TTCollection
@@ -30,7 +31,7 @@ def generate_previews_ttc(preview_samples: List[Tuple[Path, str]]) -> int:
             subprocess.run(
                 [
                     "hb-subset",
-                    f"--text={preview_string}",
+                    f"--text={unicodedata.normalize('NFD', preview_string)}",
                     f"--output-file={output_temp_path}",
                     str(ttf_path),
                 ],
@@ -78,7 +79,7 @@ def get_best_preview_string(metadata):
             most_popular = max(script_languages, key=lambda l: l.population)
             return most_popular.sample_text.styles
 
-    return "The quick brown fox jumps over the lazy dog."
+    return "The quick brown fox jumps over the lazy dog"
 
 
 def get_preview_family_name(ttf_path: Path):
