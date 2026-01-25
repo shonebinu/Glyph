@@ -34,8 +34,7 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
 
     subset_face = hb.subset(face, subset_input)
 
-    subset_blob = subset_face.blob
-    subset_data = subset_blob.data
+    subset_data = subset_face.blob.data
 
     return BytesIO(subset_data)
 

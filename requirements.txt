@@ -3,6 +3,7 @@ fonttools
 gftools
 protobuf
 gflanguages
+uharfbuzz
 
 # dev deps
 httpx # bundled w/ flatpak
