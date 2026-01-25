@@ -1,3 +1,5 @@
+# https://googlefonts.github.io/gf-guide/metadata.html
+
 import json
 import argparse
 import subprocess
@@ -20,6 +22,8 @@ gflanguages = LoadLanguages()
 
 
 def get_family_name(font_path: str) -> str:
+    # setting the metadata family name as font name isn't working for some fonts(GTK,Pango).
+    # Hence using fontconfig(Pango uses this under the hood) to get the name directly instead of jumping through hoops.
     result = subprocess.run(
         ["fc-query", "--format=%{family},", font_path],
         capture_output=True,
