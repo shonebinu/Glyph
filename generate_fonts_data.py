@@ -3,7 +3,7 @@ import argparse
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from fontTools.ttLib import TTFont, TTCollection
 from google.protobuf import text_format
 from gftools import fonts_public_pb2
@@ -19,10 +19,25 @@ OUTPUT_TTC_PATH = "previews.ttc"
 gflanguages = LoadLanguages()
 
 
-def generate_previews_ttc(preview_samples: List[Tuple[Path, str]]) -> int:
-    subsetted_fonts = []
+def get_family_name(font_path: str) -> str:
+    result = subprocess.run(
+        ["fc-query", "--format=%{family},", font_path],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
 
-    for index, (ttf_path, preview_string) in enumerate(preview_samples):
+    family = result.stdout.strip().split(",")[0]
+    return family
+
+
+def generate_previews_ttc(
+    preview_samples: List[Tuple[str, Path, str]],
+) -> Dict[str, str]:
+    subsetted_fonts = []
+    family_name_map = {}
+
+    for index, (family_name, ttf_path, preview_string) in enumerate(preview_samples):
         try:
             with tempfile.NamedTemporaryFile(suffix=".ttf", delete=False) as tmp:
                 output_temp_path = tmp.name
@@ -41,6 +56,8 @@ def generate_previews_ttc(preview_samples: List[Tuple[Path, str]]) -> int:
 
             subsetted_fonts.append(output_temp_path)
 
+            family_name_map[family_name] = get_family_name(output_temp_path)
+
             print(f"{index + 1} out of {len(preview_samples)} done subsetting")
         except Exception as e:
             print(f"Skipping font subsetting {str(ttf_path)}: {e}")
@@ -49,7 +66,12 @@ def generate_previews_ttc(preview_samples: List[Tuple[Path, str]]) -> int:
     ttc.fonts = [TTFont(path) for path in subsetted_fonts]
     ttc.save(OUTPUT_TTC_PATH)
 
-    return len(subsetted_fonts)
+    for file in subsetted_fonts:
+        fpath = Path(file)
+        if fpath.exists():
+            fpath.unlink()
+
+    return family_name_map
 
 
 def load_metadata(path: Path):
@@ -81,12 +103,6 @@ def get_best_preview_string(metadata):
     return "The quick brown fox jumps over the lazy dog"
 
 
-def get_preview_family_name(ttf_path: Path):
-    with TTFont(ttf_path, lazy=True) as font:
-        # for some reason some fonts cant be previewed with its family name
-        return font["name"].getBestFullName()
-
-
 def parse_metadata(metadata_path: Path):
     metadata = load_metadata(metadata_path)
     family_dir = metadata_path.parent
@@ -114,7 +130,6 @@ def parse_metadata(metadata_path: Path):
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
         ],
-        "preview_family": f"{metadata['name']}, {get_preview_family_name(sample_file_path)}",
         "preview_string": preview_string,
     }
 
@@ -138,23 +153,29 @@ def main(gfonts_path: Path):
                     metadata_path
                 )
                 metadatas.append(family_data)
-                preview_samples.append((sample_file_path, preview_string))
+                preview_samples.append(
+                    (family_data["family_name"], sample_file_path, preview_string)
+                )
             except Exception as e:
                 print(f"Skipping metadata extraction {metadata_path}: {e}")
                 continue
 
     metadatas.sort(key=lambda f: f["family_name"].lower())
 
+    family_name_map = generate_previews_ttc(preview_samples)
+
+    for metadata in metadatas:
+        fn = metadata["family_name"]
+        metadata["preview_family"] = family_name_map.get(fn, None)
+
     Path(OUTPUT_JSON_PATH).write_text(
         json.dumps(metadatas, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
-    ttc_count = generate_previews_ttc(preview_samples)
-
     print(
         f"\nDone! Indexed {len(metadatas)} out of {metadatas_total} families. "
-        f"{OUTPUT_TTC_PATH} includes {ttc_count} font subsets."
+        f"{OUTPUT_TTC_PATH} includes {len(family_name_map)} font subsets."
     )
 
 
