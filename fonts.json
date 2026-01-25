@@ -14,7 +14,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/42dotsans/42dotSans[wght].ttf"
     ],
-    "preview_family": "42dot Sans Light",
+    "preview_family": "42dot Sans",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -354,7 +354,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/agudisplay/AguDisplay[MORF].ttf"
     ],
-    "preview_family": "Agu Display Uzo",
+    "preview_family": "Agu Display",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -471,7 +471,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/akshar/Akshar[wght].ttf"
     ],
-    "preview_family": "Akshar Light",
+    "preview_family": "Akshar",
     "preview_string": "चूंकि मानव परिवार के सभी सदस्यों के जन्मजात गौरव और समान"
   },
   {
@@ -507,7 +507,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/alansans/AlanSans[wght].ttf"
     ],
-    "preview_family": "Alan Sans Light",
+    "preview_family": "Alan Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -1097,7 +1097,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/alumnisans/AlumniSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/alumnisans/AlumniSans-Italic[wght].ttf"
     ],
-    "preview_family": "Alumni Sans Thin",
+    "preview_family": "Alumni Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -1207,7 +1207,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/alumnisanssc/AlumniSansSC[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/alumnisanssc/AlumniSansSC-Italic[wght].ttf"
     ],
-    "preview_family": "Alumni Sans SC Thin",
+    "preview_family": "Alumni Sans SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -1466,7 +1466,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekbangla/AnekBangla[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Bangla Medium",
+    "preview_family": "Anek Bangla",
     "preview_string": "যেহেতু মানব পরিবারের সকল সদস্যের সমান ও অবিচ্ছেদ্য অধিকারসমূহ"
   },
   {
@@ -1485,7 +1485,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekdevanagari/AnekDevanagari[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Devanagari Medium",
+    "preview_family": "Anek Devanagari",
     "preview_string": "चूंकि मानव परिवार के सभी सदस्यों के जन्मजात गौरव और समान"
   },
   {
@@ -1504,7 +1504,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekgujarati/AnekGujarati[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Gujarati Medium",
+    "preview_family": "Anek Gujarati",
     "preview_string": "કેમ કે માનવકુટુંબના દરેક સભ્યની પરંપરાપ્રાપ્ત પ્રતિષ્ઠાને અને"
   },
   {
@@ -1523,7 +1523,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekgurmukhi/AnekGurmukhi[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Gurmukhi Medium",
+    "preview_family": "Anek Gurmukhi",
     "preview_string": "ਜਦ ਕਿ ਮਨੁੱਖੀ ਪਰਿਵਾਰ ਦੇ ਸਾਰੇ ਮੈਂਬਰਾਂ ਦੀ ਧੁਰ ਅੰਦਰਲੀ ਅੰਤਰੀਵ ਸ਼ਾਨ"
   },
   {
@@ -1542,7 +1542,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekkannada/AnekKannada[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Kannada Medium",
+    "preview_family": "Anek Kannada",
     "preview_string": "ಎಲ್ಲಾ ಮಾನವರೂ ಸ್ವತಂತ್ರರಾಗಿಯೇ ಜನಿಸಿದ್ದಾರೆ. ಹಾಗೂ ಘನತೆ ಮತ್ತು ಹಕ್ಕುಗಳಲ್ಲಿ"
   },
   {
@@ -1561,7 +1561,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/aneklatin/AnekLatin[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Latin Medium",
+    "preview_family": "Anek Latin",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -1580,7 +1580,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekmalayalam/AnekMalayalam[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Malayalam Medium",
+    "preview_family": "Anek Malayalam",
     "preview_string": "മനുഷ്യ സമുദായത്തിൻ്റെ ജന്മസിദ്ധമായ അന്തസ്സും സമാവകാശവും ലോകത്തിൽ"
   },
   {
@@ -1599,7 +1599,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anekodia/AnekOdia[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Odia Medium",
+    "preview_family": "Anek Odia",
     "preview_string": "ସବୁ ମନୁଷ୍ୟ ଜନ୍ମକାଳରୁ ସ୍ୱାଧୀନ. ସେମାନଙ୍କର ମର୍ଯ୍ୟାଦା ଓ ଅଧିକାର ସମାନ."
   },
   {
@@ -1618,7 +1618,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anektamil/AnekTamil[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Tamil Medium",
+    "preview_family": "Anek Tamil",
     "preview_string": "மனிதக் குடும்பத்தினைச் சேர்ந்த யாவரதும் உள்ளார்ந்த மரியாதையையும், அவர்கள்"
   },
   {
@@ -1637,7 +1637,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anektelugu/AnekTelugu[wdth,wght].ttf"
     ],
-    "preview_family": "Anek Telugu Medium",
+    "preview_family": "Anek Telugu",
     "preview_string": "మానవకుటంబమునందలి వ్యక్తులందరికిని గల ఆజన్మసిద్ధమైన ప్రతిపత్తిని,"
   },
   {
@@ -1885,7 +1885,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anybody/Anybody[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/anybody/Anybody-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Anybody Thin",
+    "preview_family": "Anybody",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -2015,7 +2015,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/archivo/Archivo[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/archivo/Archivo-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Archivo SemiBold",
+    "preview_family": "Archivo",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -2135,7 +2135,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/arima/Arima[wght].ttf"
     ],
-    "preview_family": "Arima Thin",
+    "preview_family": "Arima",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -2434,7 +2434,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/assistant/Assistant[wght].ttf"
     ],
-    "preview_family": "Assistant ExtraLight",
+    "preview_family": "Assistant",
     "preview_string": "כל בני אדם נולדו בני חורין ושווים בערכם ובזכויותיהם"
   },
   {
@@ -2452,7 +2452,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/astasans/AstaSans[wght].ttf"
     ],
-    "preview_family": "Asta Sans Light",
+    "preview_family": "Asta Sans",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -2553,7 +2553,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegiblemono/AtkinsonHyperlegibleMono[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegiblemono/AtkinsonHyperlegibleMono-Italic[wght].ttf"
     ],
-    "preview_family": "Atkinson Hyperlegible Mono ExtraLight",
+    "preview_family": "Atkinson Hyperlegible Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -2804,7 +2804,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/azeretmono/AzeretMono[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/azeretmono/AzeretMono-Italic[wght].ttf"
     ],
-    "preview_family": "Azeret Mono Thin",
+    "preview_family": "Azeret Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4062,7 +4062,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshoulders/BigShoulders[opsz,wght].ttf"
     ],
-    "preview_family": "Big Shoulders Thin",
+    "preview_family": "Big Shoulders",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4081,7 +4081,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersdisplay/BigShouldersDisplay[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Display Thin",
+    "preview_family": "Big Shoulders Display",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4100,7 +4100,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersdisplaysc/BigShouldersDisplaySC[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Display SC Thin",
+    "preview_family": "Big Shoulders Display SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4119,7 +4119,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersinline/BigShouldersInline[opsz,wght].ttf"
     ],
-    "preview_family": "Big Shoulders Inline Thin",
+    "preview_family": "Big Shoulders Inline",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4138,7 +4138,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersinlinedisplay/BigShouldersInlineDisplay[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Inline Display Thin",
+    "preview_family": "Big Shoulders Inline Display",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4157,7 +4157,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersinlinedisplaysc/BigShouldersInlineDisplaySC[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Inline Display SC Thin",
+    "preview_family": "Big Shoulders Inline Display SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4176,7 +4176,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersinlinetext/BigShouldersInlineText[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Inline Text Thin",
+    "preview_family": "Big Shoulders Inline Text",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4195,7 +4195,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersinlinetextsc/BigShouldersInlineTextSC[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Inline Text SC Thin",
+    "preview_family": "Big Shoulders Inline Text SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4214,7 +4214,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersstencil/BigShouldersStencil[opsz,wght].ttf"
     ],
-    "preview_family": "Big Shoulders Stencil Thin",
+    "preview_family": "Big Shoulders Stencil",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4233,7 +4233,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersstencildisplay/BigShouldersStencilDisplay[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Stencil Display Thin",
+    "preview_family": "Big Shoulders Stencil Display",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4252,7 +4252,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersstencildisplaysc/BigShouldersStencilDisplaySC[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Stencil Display SC Thin",
+    "preview_family": "Big Shoulders Stencil Display SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4271,7 +4271,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersstenciltext/BigShouldersStencilText[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Stencil Text Thin",
+    "preview_family": "Big Shoulders Stencil Text",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4290,7 +4290,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshouldersstenciltextsc/BigShouldersStencilTextSC[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Stencil Text SC Thin",
+    "preview_family": "Big Shoulders Stencil Text SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4309,7 +4309,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshoulderstext/BigShouldersText[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Text Thin",
+    "preview_family": "Big Shoulders Text",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4328,7 +4328,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshoulderstextsc/BigShouldersTextSC[wght].ttf"
     ],
-    "preview_family": "Big Shoulders Text SC Thin",
+    "preview_family": "Big Shoulders Text SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4418,7 +4418,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/biorhyme/BioRhyme[wdth,wght].ttf"
     ],
-    "preview_family": "BioRhyme ExtraBold",
+    "preview_family": "BioRhyme",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -4742,7 +4742,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter-Italic[wght].ttf"
     ],
-    "preview_family": "Bitter Thin",
+    "preview_family": "Bitter",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -5280,7 +5280,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bricolagegrotesque/BricolageGrotesque[opsz,wdth,wght].ttf"
     ],
-    "preview_family": "Bricolage Grotesque 96pt ExtraBold",
+    "preview_family": "Bricolage Grotesque",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -5301,7 +5301,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/briemhand/BriemHand[wght].ttf"
     ],
-    "preview_family": "Briem Hand Thin",
+    "preview_family": "Briem Hand",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -5413,7 +5413,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/buda/Buda-Light.ttf"
     ],
-    "preview_family": "Buda Light",
+    "preview_family": "Buda",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -5469,7 +5469,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/bungeecolor/BungeeColor-Regular.ttf"
     ],
-    "preview_family": "Bungee Color Regular",
+    "preview_family": "Bungee Color",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -6289,7 +6289,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/catamaran/Catamaran[wght].ttf"
     ],
-    "preview_family": "Catamaran Thin",
+    "preview_family": "Catamaran",
     "preview_string": "மனிதக் குடும்பத்தினைச் சேர்ந்த யாவரதும் உள்ளார்ந்த மரியாதையையும், அவர்கள்"
   },
   {
@@ -6800,7 +6800,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chirongoroundtc/ChironGoRoundTC[wght].ttf"
     ],
-    "preview_family": "Chiron GoRound TC ExtraLight",
+    "preview_family": "Chiron GoRound TC",
     "preview_string": "鑑於人類社會個成員儕有個固有尊嚴脫仔平等個脫仔勿移個權利承認，是世界自由、正義脫仔和平個基礎"
   },
   {
@@ -6826,7 +6826,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chironheihk/ChironHeiHK[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chironheihk/ChironHeiHK-Italic[wght].ttf"
     ],
-    "preview_family": "Chiron Hei HK ExtraLight",
+    "preview_family": "Chiron Hei HK",
     "preview_string": "鑑於人類社會個成員儕有個固有尊嚴脫仔平等個脫仔勿移個權利承認，是世界自由、正義脫仔和平個基礎"
   },
   {
@@ -6851,7 +6851,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chironsunghk/ChironSungHK[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chironsunghk/ChironSungHK-Italic[wght].ttf"
     ],
-    "preview_family": "Chiron Sung HK ExtraLight",
+    "preview_family": "Chiron Sung HK",
     "preview_string": "鑑於人類社會個成員儕有個固有尊嚴脫仔平等個脫仔勿移個權利承認，是世界自由、正義脫仔和平個基礎"
   },
   {
@@ -6871,7 +6871,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chivo/Chivo[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chivo/Chivo-Italic[wght].ttf"
     ],
-    "preview_family": "Chivo Medium",
+    "preview_family": "Chivo",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -6892,7 +6892,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chivomono/ChivoMono[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/chivomono/ChivoMono-Italic[wght].ttf"
     ],
-    "preview_family": "Chivo Mono Medium",
+    "preview_family": "Chivo Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -7264,7 +7264,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/commissioner/Commissioner[FLAR,VOLM,slnt,wght].ttf"
     ],
-    "preview_family": "Commissioner Thin",
+    "preview_family": "Commissioner",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -7467,7 +7467,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorant/Cormorant[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorant/Cormorant-Italic[wght].ttf"
     ],
-    "preview_family": "Cormorant Light",
+    "preview_family": "Cormorant",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -7489,7 +7489,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/CormorantGaramond-Italic[wght].ttf"
     ],
-    "preview_family": "Cormorant Garamond Light",
+    "preview_family": "Cormorant Garamond",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -7511,7 +7511,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantinfant/CormorantInfant[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantinfant/CormorantInfant-Italic[wght].ttf"
     ],
-    "preview_family": "Cormorant Infant Light",
+    "preview_family": "Cormorant Infant",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -8070,7 +8070,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/darkergrotesque/DarkerGrotesque[wght].ttf"
     ],
-    "preview_family": "Darker Grotesque Light",
+    "preview_family": "Darker Grotesque",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -8487,7 +8487,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/DMSans[opsz,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/DMSans-Italic[opsz,wght].ttf"
     ],
-    "preview_family": "DM Sans 9pt Regular",
+    "preview_family": "DM Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -8673,7 +8673,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/dosis/Dosis[wght].ttf"
     ],
-    "preview_family": "Dosis ExtraLight",
+    "preview_family": "Dosis",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -8711,7 +8711,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/doto/Doto[ROND,wght].ttf"
     ],
-    "preview_family": "Doto Black",
+    "preview_family": "Doto",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9203,7 +9203,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/elmssans/ElmsSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/elmssans/ElmsSans-Italic[wght].ttf"
     ],
-    "preview_family": "Elms Sans Thin",
+    "preview_family": "Elms Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9296,7 +9296,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/encodesans/EncodeSans[wdth,wght].ttf"
     ],
-    "preview_family": "Encode Sans Condensed Thin",
+    "preview_family": "Encode Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9369,7 +9369,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/encodesanssc/EncodeSansSC[wdth,wght].ttf"
     ],
-    "preview_family": "Encode Sans SC Condensed Thin",
+    "preview_family": "Encode Sans SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9538,7 +9538,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/epundasans/EpundaSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/epundasans/EpundaSans-Italic[wght].ttf"
     ],
-    "preview_family": "Epunda Sans Light",
+    "preview_family": "Epunda Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9557,7 +9557,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/epundaslab/EpundaSlab[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/epundaslab/EpundaSlab-Italic[wght].ttf"
     ],
-    "preview_family": "Epunda Slab Light",
+    "preview_family": "Epunda Slab",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9686,7 +9686,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/exo/Exo[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/exo/Exo-Italic[wght].ttf"
     ],
-    "preview_family": "Exo Thin",
+    "preview_family": "Exo",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -9985,7 +9985,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/faustina/Faustina[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/faustina/Faustina-Italic[wght].ttf"
     ],
-    "preview_family": "Faustina Light",
+    "preview_family": "Faustina",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10093,7 +10093,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/Figtree[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/Figtree-Italic[wght].ttf"
     ],
-    "preview_family": "Figtree Light",
+    "preview_family": "Figtree",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10154,7 +10154,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/firacode/FiraCode[wght].ttf"
     ],
-    "preview_family": "Fira Code Light",
+    "preview_family": "Fira Code",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10473,7 +10473,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/foldit/Foldit[wght].ttf"
     ],
-    "preview_family": "Foldit Thin",
+    "preview_family": "Foldit",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10629,7 +10629,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/Fraunces[SOFT,WONK,opsz,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/Fraunces-Italic[SOFT,WONK,opsz,wght].ttf"
     ],
-    "preview_family": "Fraunces Black",
+    "preview_family": "Fraunces",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10684,7 +10684,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/fredoka/Fredoka[wdth,wght].ttf"
     ],
-    "preview_family": "Fredoka Light",
+    "preview_family": "Fredoka",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10832,7 +10832,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/funneldisplay/FunnelDisplay[wght].ttf"
     ],
-    "preview_family": "Funnel Display Light",
+    "preview_family": "Funnel Display",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -10851,7 +10851,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/funnelsans/FunnelSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/funnelsans/FunnelSans-Italic[wght].ttf"
     ],
-    "preview_family": "Funnel Sans Light",
+    "preview_family": "Funnel Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -11211,7 +11211,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/gemunulibre/GemunuLibre[wght].ttf"
     ],
-    "preview_family": "Gemunu Libre ExtraLight",
+    "preview_family": "Gemunu Libre",
     "preview_string": "ලෝකයේ පවත්නා නිදහස, යුක්තිය සහ සාමය යන්නෙහි පදනම මිනිස් පවුලේ"
   },
   {
@@ -11232,7 +11232,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/genos/Genos[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/genos/Genos-Italic[wght].ttf"
     ],
-    "preview_family": "Genos Thin",
+    "preview_family": "Genos",
     "preview_string": "ᎬᏂᏳᏉ ᏗᏓᏂᎸᏨ ᎾᏍᎩ ᎠᏠᏯᏍᏗᏍᎩ ᎠᏢᏉᏙᏗ ᎠᎴ ᎾᏍᎩᏃ ᎢᎦᏘ"
   },
   {
@@ -11324,7 +11324,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/geologica/Geologica[CRSV,SHRP,slnt,wght].ttf"
     ],
-    "preview_family": "Geologica Thin",
+    "preview_family": "Geologica",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -11364,7 +11364,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/georama/Georama[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/georama/Georama-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Georama ExtraCondensed Thin",
+    "preview_family": "Georama",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -11666,7 +11666,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/glory/Glory[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/glory/Glory-Italic[wght].ttf"
     ],
-    "preview_family": "Glory Thin",
+    "preview_family": "Glory",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -11685,7 +11685,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/gluten/Gluten[slnt,wght].ttf"
     ],
-    "preview_family": "Gluten Thin",
+    "preview_family": "Gluten",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -11990,7 +11990,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/grandstander/Grandstander[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/grandstander/Grandstander-Italic[wght].ttf"
     ],
-    "preview_family": "Grandstander Thin",
+    "preview_family": "Grandstander",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -12669,7 +12669,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/headlandone/HeadlandOne-Regular.ttf"
     ],
-    "preview_family": "HeadlandOne",
+    "preview_family": "Headland One",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -12709,7 +12709,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/hedviglettersserif/HedvigLettersSerif[opsz].ttf"
     ],
-    "preview_family": "Hedvig Letters Serif 24pt Regular",
+    "preview_family": "Hedvig Letters Serif",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -12766,7 +12766,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/heptaslab/HeptaSlab[wght].ttf"
     ],
-    "preview_family": "Hepta Slab ExtraLight",
+    "preview_family": "Hepta Slab",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13140,7 +13140,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/hostgrotesk/HostGrotesk[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/hostgrotesk/HostGrotesk-Italic[wght].ttf"
     ],
-    "preview_family": "Host Grotesk Light",
+    "preview_family": "Host Grotesk",
     "preview_string": "Whereas recognition of the inherent dignity"
   },
   {
@@ -13179,7 +13179,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/hubotsans/HubotSans[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/hubotsans/HubotSans-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Hubot Sans Condensed ExtraLight",
+    "preview_family": "Hubot Sans",
     "preview_string": "Whereas recognition of the inherent dignity"
   },
   {
@@ -13616,7 +13616,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfelldoublepica/IMFELLDoublePica-Regular.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfelldoublepica/IMFELLDoublePica-Italic.ttf"
     ],
-    "preview_family": "IM FELL Double Pica",
+    "preview_family": "IM Fell Double Pica",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13633,7 +13633,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfelldoublepicasc/IMFeDPsc28P.ttf"
     ],
-    "preview_family": "IM FELL Double Pica SC",
+    "preview_family": "IM Fell Double Pica SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13651,7 +13651,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfelldwpica/IMFePIrm28P.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfelldwpica/IMFePIit28P.ttf"
     ],
-    "preview_family": "IM FELL DW Pica",
+    "preview_family": "IM Fell DW Pica",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13668,7 +13668,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfelldwpicasc/IMFePIsc28P.ttf"
     ],
-    "preview_family": "IM FELL DW Pica SC",
+    "preview_family": "IM Fell DW Pica SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13686,7 +13686,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellenglish/IMFeENrm28P.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellenglish/IMFeENit28P.ttf"
     ],
-    "preview_family": "IM FELL English",
+    "preview_family": "IM Fell English",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13703,7 +13703,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellenglishsc/IMFeENsc28P.ttf"
     ],
-    "preview_family": "IM FELL English SC",
+    "preview_family": "IM Fell English SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13721,7 +13721,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellfrenchcanon/IMFeFCrm28P.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellfrenchcanon/IMFeFCit28P.ttf"
     ],
-    "preview_family": "IM FELL French Canon",
+    "preview_family": "IM Fell French Canon",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13738,7 +13738,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellfrenchcanonsc/IMFeFCsc28P.ttf"
     ],
-    "preview_family": "IM FELL French Canon SC",
+    "preview_family": "IM Fell French Canon SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13756,7 +13756,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellgreatprimer/IMFeGPrm28P.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellgreatprimer/IMFeGPit28P.ttf"
     ],
-    "preview_family": "IM FELL Great Primer",
+    "preview_family": "IM Fell Great Primer",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13773,7 +13773,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imfellgreatprimersc/IMFeGPsc28P.ttf"
     ],
-    "preview_family": "IM FELL Great Primer SC",
+    "preview_family": "IM Fell Great Primer SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -13792,7 +13792,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/imbue/Imbue[opsz,wght].ttf"
     ],
-    "preview_family": "Imbue Thin",
+    "preview_family": "Imbue",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14103,7 +14103,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/intelonemono/IntelOneMono-Bold.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/intelonemono/IntelOneMono-BoldItalic.ttf"
     ],
-    "preview_family": "Intel One Mono Light",
+    "preview_family": "Intel One Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14788,7 +14788,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/josefinsans/JosefinSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/josefinsans/JosefinSans-Italic[wght].ttf"
     ],
-    "preview_family": "Josefin Sans Thin",
+    "preview_family": "Josefin Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14806,7 +14806,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/josefinslab/JosefinSlab[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/josefinslab/JosefinSlab-Italic[wght].ttf"
     ],
-    "preview_family": "Josefin Slab Thin",
+    "preview_family": "Josefin Slab",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14861,7 +14861,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/apache/jsmathcmbx10/jsMath-cmbx10.ttf"
     ],
-    "preview_family": "jsMath-cmbx10 cmbx10",
+    "preview_family": "jsMath cmbx10",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14878,7 +14878,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/apache/jsmathcmex10/jsMath-cmex10.ttf"
     ],
-    "preview_family": "jsMath-cmex10 cmex10",
+    "preview_family": "jsMath cmex10",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14895,7 +14895,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/apache/jsmathcmmi10/jsMath-cmmi10.ttf"
     ],
-    "preview_family": "jsMath-cmmi10 cmmi10",
+    "preview_family": "jsMath cmmi10",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14912,7 +14912,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/apache/jsmathcmr10/jsMath-cmr10.ttf"
     ],
-    "preview_family": "jsMath-cmr10 cmr10",
+    "preview_family": "jsMath cmr10",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14929,7 +14929,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/apache/jsmathcmsy10/jsMath-cmsy10.ttf"
     ],
-    "preview_family": "jsMath-cmsy10 cmsy10",
+    "preview_family": "jsMath cmsy10",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -14946,7 +14946,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/apache/jsmathcmti10/jsMath-cmti10.ttf"
     ],
-    "preview_family": "jsMath-cmti10 cmti10",
+    "preview_family": "jsMath cmti10",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -15062,7 +15062,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/jura/Jura[wght].ttf"
     ],
-    "preview_family": "Jura Light",
+    "preview_family": "Jura",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -15302,7 +15302,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/kalnia/Kalnia[wdth,wght].ttf"
     ],
-    "preview_family": "Kalnia Thin",
+    "preview_family": "Kalnia",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -15320,7 +15320,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/kalniaglaze/KalniaGlaze[wdth,wght].ttf"
     ],
-    "preview_family": "Kalnia Glaze Thin",
+    "preview_family": "Kalnia Glaze",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -16156,7 +16156,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/kreon/Kreon[wght].ttf"
     ],
-    "preview_family": "Kreon Light",
+    "preview_family": "Kreon",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -16621,7 +16621,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/leaguescript/LeagueScript-Regular.ttf"
     ],
-    "preview_family": "League Script League Script",
+    "preview_family": "League Script",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -16640,7 +16640,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/leaguespartan/LeagueSpartan[wght].ttf"
     ],
-    "preview_family": "League Spartan Thin",
+    "preview_family": "League Spartan",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -17240,7 +17240,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/librefranklin/LibreFranklin[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/librefranklin/LibreFranklin-Italic[wght].ttf"
     ],
-    "preview_family": "Libre Franklin Thin",
+    "preview_family": "Libre Franklin",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -17416,7 +17416,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/linefont/Linefont[wdth,wght].ttf"
     ],
-    "preview_family": "Linefont Thin",
+    "preview_family": "Linefont",
     "preview_string": "ĀŤĀŤĀŤĀŤĀŤĀŤĀŤŤĀĀŤŤĀĀŤŤĀĀŤŤĀĀŤŤĀĀŤŤŤŤĀĀĀĀŤŤŤŤĀĀĀĀŤŤŤŤĀĀŤŤŤŤĀĀĀĀŤŤŤŤŤŤŤŤĀĀĀĀĀĀĀĀŤŤŤŤŤŤŤŤĀĀĀĀ"
   },
   {
@@ -18056,7 +18056,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mplus1/MPLUS1[wght].ttf"
     ],
-    "preview_family": "M PLUS 1 Thin",
+    "preview_family": "M PLUS 1",
     "preview_string": "人類社会のすべての構成員の固有の尊厳と平等で譲ることのできない権利とを承認することは"
   },
   {
@@ -18127,7 +18127,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mplus2/MPLUS2[wght].ttf"
     ],
-    "preview_family": "M PLUS 2 Thin",
+    "preview_family": "M PLUS 2",
     "preview_string": "人類社会のすべての構成員の固有の尊厳と平等で譲ることのできない権利とを承認することは"
   },
   {
@@ -18177,7 +18177,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mplusrounded1c/MPLUSRounded1c-ExtraBold.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mplusrounded1c/MPLUSRounded1c-Black.ttf"
     ],
-    "preview_family": "Rounded Mplus 1c",
+    "preview_family": "M PLUS Rounded 1c",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -18498,7 +18498,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope[wght].ttf"
     ],
-    "preview_family": "Manrope ExtraLight",
+    "preview_family": "Manrope",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -18648,7 +18648,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/marhey/Marhey[wght].ttf"
     ],
-    "preview_family": "Marhey Light",
+    "preview_family": "Marhey",
     "preview_string": "لمّا كان الاعتراف بالكرامة المتأصلة في جميع"
   },
   {
@@ -18777,7 +18777,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/martianmono/MartianMono[wdth,wght].ttf"
     ],
-    "preview_family": "Martian Mono SemiExpanded Regular",
+    "preview_family": "Martian Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -18816,7 +18816,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/matangi/Matangi[wght].ttf"
     ],
-    "preview_family": "Matangi Light",
+    "preview_family": "Matangi",
     "preview_string": "चूंकि मानव परिवार के सभी सदस्यों के जन्मजात गौरव और समान"
   },
   {
@@ -19015,7 +19015,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/megrim/Megrim.ttf"
     ],
-    "preview_family": "Megrim Medium",
+    "preview_family": "Megrim",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -19131,7 +19131,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/merriweather/Merriweather[opsz,wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/merriweather/Merriweather-Italic[opsz,wdth,wght].ttf"
     ],
-    "preview_family": "Merriweather Light",
+    "preview_family": "Merriweather",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -19645,7 +19645,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mohave/Mohave[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mohave/Mohave-Italic[wght].ttf"
     ],
-    "preview_family": "Mohave Light",
+    "preview_family": "Mohave",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -19777,7 +19777,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/monasans/MonaSans[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/monasans/MonaSans-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Mona Sans ExtraLight",
+    "preview_family": "Mona Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -19925,7 +19925,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/montaguslab/MontaguSlab[opsz,wght].ttf"
     ],
-    "preview_family": "Montagu Slab Bold",
+    "preview_family": "Montagu Slab",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -19983,7 +19983,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/montserrat/Montserrat-Italic[wght].ttf"
     ],
-    "preview_family": "Montserrat Thin",
+    "preview_family": "Montserrat",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -20061,7 +20061,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/montserratunderline/MontserratUnderline[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/montserratunderline/MontserratUnderline-Italic[wght].ttf"
     ],
-    "preview_family": "Montserrat Underline Thin",
+    "preview_family": "Montserrat Underline",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -20207,7 +20207,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mozillaheadline/MozillaHeadline[wdth,wght].ttf"
     ],
-    "preview_family": "Mozilla Headline ExtraLight",
+    "preview_family": "Mozilla Headline",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -20225,7 +20225,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mozillatext/MozillaText[wght].ttf"
     ],
-    "preview_family": "Mozilla Text ExtraLight",
+    "preview_family": "Mozilla Text",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -20456,7 +20456,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/Mulish[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/mulish/Mulish-Italic[wght].ttf"
     ],
-    "preview_family": "Mulish ExtraLight",
+    "preview_family": "Mulish",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -20478,7 +20478,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/murecho/Murecho[wght].ttf"
     ],
-    "preview_family": "Murecho Thin",
+    "preview_family": "Murecho",
     "preview_string": "じんるい しゃかい の すべて の こうせいいん の こゆう の そんげん と びょうどう で ゆずる こと の できない けんり と を しょうにんする こと は"
   },
   {
@@ -20498,7 +20498,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/museomoderno/MuseoModerno[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/museomoderno/MuseoModerno-Italic[wght].ttf"
     ],
-    "preview_family": "MuseoModerno Thin",
+    "preview_family": "MuseoModerno",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -20637,7 +20637,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumgothic/NanumGothic-Bold.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumgothic/NanumGothic-ExtraBold.ttf"
     ],
-    "preview_family": "NanumGothic",
+    "preview_family": "Nanum Gothic",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -20656,7 +20656,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumgothiccoding/NanumGothicCoding-Regular.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumgothiccoding/NanumGothicCoding-Bold.ttf"
     ],
-    "preview_family": "NanumGothicCoding",
+    "preview_family": "Nanum Gothic Coding",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -20676,7 +20676,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanummyeongjo/NanumMyeongjo-Bold.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanummyeongjo/NanumMyeongjo-ExtraBold.ttf"
     ],
-    "preview_family": "NanumMyeongjo",
+    "preview_family": "Nanum Myeongjo",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -20694,7 +20694,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nanumpenscript/NanumPenScript-Regular.ttf"
     ],
-    "preview_family": "Nanum Pen",
+    "preview_family": "Nanum Pen Script",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -22347,7 +22347,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanshebrew/NotoSansHebrew[wdth,wght].ttf"
     ],
-    "preview_family": "Noto Sans Hebrew Thin",
+    "preview_family": "Noto Sans Hebrew",
     "preview_string": "כל בני אדם נולדו בני חורין ושווים בערכם ובזכויותיהם"
   },
   {
@@ -22368,7 +22368,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanshk/NotoSansHK[wght].ttf"
     ],
-    "preview_family": "Noto Sans HK Thin",
+    "preview_family": "Noto Sans HK",
     "preview_string": "人人生而自由，在尊嚴和權利上一律平等。他們賦有理性和良心，並應以弟兄關係的精神相對待。"
   },
   {
@@ -22465,7 +22465,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansjp/NotoSansJP[wght].ttf"
     ],
-    "preview_family": "Noto Sans JP Thin",
+    "preview_family": "Noto Sans JP",
     "preview_string": "人類社会のすべての構成員の固有の尊厳と平等で譲ることのできない権利とを承認することは"
   },
   {
@@ -22691,7 +22691,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanskr/NotoSansKR[wght].ttf"
     ],
-    "preview_family": "Noto Sans KR Thin",
+    "preview_family": "Noto Sans KR",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -23326,7 +23326,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosansnko_todelist/NotoSansNKo-Regular.ttf"
     ],
-    "preview_family": "Noto Sans NKo",
+    "preview_family": "Noto Sans N Ko",
     "preview_string": "ߞߣߐ߫ ߛߓߍߟߌ߫ ߞߊߡߊ߬ ߞߊ߬ ߞߐߕߐ߮ ߞߎߘߊ ߘߏ߫ ߘߊߦߟߍ߬ ߸ ߏ߬ ߞߐ߫"
   },
   {
@@ -24016,7 +24016,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC[wght].ttf"
     ],
-    "preview_family": "Noto Sans SC Thin",
+    "preview_family": "Noto Sans SC",
     "preview_string": "人人生而自由，在尊严和权利上一律平等。他们赋有理性和良心，并应以弟兄关系的精神相对待。"
   },
   {
@@ -24621,7 +24621,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanstc/NotoSansTC[wght].ttf"
     ],
-    "preview_family": "Noto Sans TC Thin",
+    "preview_family": "Noto Sans TC",
     "preview_string": "人人生而自由，在尊嚴和權利上一律平等。他們賦有理性和良心，並應以弟兄關係的精神相對待。"
   },
   {
@@ -25072,7 +25072,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifhentaigana/NotoSerifHentaigana[wght].ttf"
     ],
-    "preview_family": "Noto Serif Hentaigana ExtraLight",
+    "preview_family": "Noto Serif Hentaigana",
     "preview_string": "𛀆𛄆𛂡𛂉𛂺𛂳𛁹 𛁢𛃱𛂏𛃸𛄖 𛄉𛀗𛃧𛁟𛄀𛁗 𛁩𛂒𛁿𛃰𛃐"
   },
   {
@@ -25093,7 +25093,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifhk/NotoSerifHK[wght].ttf"
     ],
-    "preview_family": "Noto Serif HK ExtraLight",
+    "preview_family": "Noto Serif HK",
     "preview_string": "人人生而自由，在尊嚴和權利上一律平等。他們賦有理性和良心，並應以弟兄關係的精神相對待。"
   },
   {
@@ -25114,7 +25114,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifjp/NotoSerifJP[wght].ttf"
     ],
-    "preview_family": "Noto Serif JP ExtraLight",
+    "preview_family": "Noto Serif JP",
     "preview_string": "人類社会のすべての構成員の固有の尊厳と平等で譲ることのできない権利とを承認することは"
   },
   {
@@ -25211,7 +25211,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifkr/NotoSerifKR[wght].ttf"
     ],
-    "preview_family": "Noto Serif KR ExtraLight",
+    "preview_family": "Noto Serif KR",
     "preview_string": "모든 인류 구성원의 천부의 존엄성과 동등하고 양도할 수 없는 권리를 인정하는"
   },
   {
@@ -25310,7 +25310,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifnyiakengpuachuehmong/NotoSerifNyiakengPuachueHmong[wght].ttf"
     ],
-    "preview_family": "Noto Serif Hmong Nyiakeng",
+    "preview_family": "Noto Serif Nyiakeng Puachue Hmong",
     "preview_string": "𞄔𞄄𞄧𞄤𞄃𞄧𞄴𞄅𞄫𞄵𞄘𞄧𞄵𞄉𞄨𞄴 𞄀𞄧𞄲𞄤𞄎𞄪𞄳𞄘𞄬𞄲𞄚𞄄𞄲𞄫𞄃𞄄𞄦𞄰𞄤𞄊𞄦𞄰𞄜𞄤𞄵𞄨𞄋𞄨𞄴"
   },
   {
@@ -25406,7 +25406,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifsc/NotoSerifSC[wght].ttf"
     ],
-    "preview_family": "Noto Serif SC ExtraLight",
+    "preview_family": "Noto Serif SC",
     "preview_string": "人人生而自由，在尊严和权利上一律平等。他们赋有理性和良心，并应以弟兄关系的精神相对待。"
   },
   {
@@ -25580,7 +25580,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/notoseriftc/NotoSerifTC[wght].ttf"
     ],
-    "preview_family": "Noto Serif TC ExtraLight",
+    "preview_family": "Noto Serif TC",
     "preview_string": "人人生而自由，在尊嚴和權利上一律平等。他們賦有理性和良心，並應以弟兄關係的精神相對待。"
   },
   {
@@ -25676,7 +25676,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novacut/NovaCut.ttf"
     ],
-    "preview_family": "Nova Cut Book",
+    "preview_family": "Nova Cut",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25694,7 +25694,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novaflat/NovaFlat.ttf"
     ],
-    "preview_family": "Nova Flat Book",
+    "preview_family": "Nova Flat",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25713,7 +25713,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novamono/NovaMono.ttf"
     ],
-    "preview_family": "NovaMono",
+    "preview_family": "Nova Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25731,7 +25731,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novaoval/NovaOval.ttf"
     ],
-    "preview_family": "Nova Oval Book",
+    "preview_family": "Nova Oval",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25749,7 +25749,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novaround/NovaRound.ttf"
     ],
-    "preview_family": "Nova Round Book",
+    "preview_family": "Nova Round",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25784,7 +25784,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novaslim/NovaSlim.ttf"
     ],
-    "preview_family": "Nova Slim Book",
+    "preview_family": "Nova Slim",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25802,7 +25802,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/novasquare/NovaSquare.ttf"
     ],
-    "preview_family": "Nova Square Book",
+    "preview_family": "Nova Square",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25859,7 +25859,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nunito/Nunito-Italic[wght].ttf"
     ],
-    "preview_family": "Nunito ExtraLight",
+    "preview_family": "Nunito",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -25881,7 +25881,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nunitosans/NunitoSans[YTLC,opsz,wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/nunitosans/NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf"
     ],
-    "preview_family": "Nunito Sans 12pt ExtraLight",
+    "preview_family": "Nunito Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -26016,7 +26016,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ojuju/Ojuju[wght].ttf"
     ],
-    "preview_family": "Ojuju ExtraLight",
+    "preview_family": "Ojuju",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -26369,7 +26369,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/outfit/Outfit[wght].ttf"
     ],
-    "preview_family": "Outfit Thin",
+    "preview_family": "Outfit",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -26470,7 +26470,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/overpassmono/OverpassMono[wght].ttf"
     ],
-    "preview_family": "Overpass Mono Light",
+    "preview_family": "Overpass Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -26505,7 +26505,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/oxanium/Oxanium[wght].ttf"
     ],
-    "preview_family": "Oxanium ExtraLight",
+    "preview_family": "Oxanium",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -26763,7 +26763,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/parkinsans/Parkinsans[wght].ttf"
     ],
-    "preview_family": "Parkinsans Light",
+    "preview_family": "Parkinsans",
     "preview_string": "Whereas recognition of the inherent dignity"
   },
   {
@@ -26841,7 +26841,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/pathwayextreme/PathwayExtreme[opsz,wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/pathwayextreme/PathwayExtreme-Italic[opsz,wdth,wght].ttf"
     ],
-    "preview_family": "Pathway Extreme 8pt Thin",
+    "preview_family": "Pathway Extreme",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -27145,7 +27145,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/phudu/Phudu[wght].ttf"
     ],
-    "preview_family": "Phudu Light",
+    "preview_family": "Phudu",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -27169,7 +27169,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/piazzolla/Piazzolla[opsz,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/piazzolla/Piazzolla-Italic[opsz,wght].ttf"
     ],
-    "preview_family": "Piazzolla Thin",
+    "preview_family": "Piazzolla",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -27281,7 +27281,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/platypi/Platypi[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/platypi/Platypi-Italic[wght].ttf"
     ],
-    "preview_family": "Platypi Light",
+    "preview_family": "Platypi",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -27346,7 +27346,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/playfair/Playfair[opsz,wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/playfair/Playfair-Italic[opsz,wdth,wght].ttf"
     ],
-    "preview_family": "Playfair 5pt SemiExpanded Light",
+    "preview_family": "Playfair",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -29248,7 +29248,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/poetsenone/PoetsenOne-Regular.ttf"
     ],
-    "preview_family": "PoetsenOne",
+    "preview_family": "Poetsen One",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -29485,7 +29485,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/portersansblock/PorterSansBlock-Regular.ttf"
     ],
-    "preview_family": "Porter Sans Block Block",
+    "preview_family": "Porter Sans Block",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -29979,7 +29979,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/publicsans/PublicSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/publicsans/PublicSans-Italic[wght].ttf"
     ],
-    "preview_family": "Public Sans Thin",
+    "preview_family": "Public Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -30054,7 +30054,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/pushster/Pushster-Regular.ttf"
     ],
-    "preview_family": "Lobster",
+    "preview_family": "Pushster",
     "preview_string": "Whereas recognition of the inherent dignity"
   },
   {
@@ -30209,7 +30209,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/quicksand/Quicksand[wght].ttf"
     ],
-    "preview_family": "Quicksand Light",
+    "preview_family": "Quicksand",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -30407,7 +30407,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/raleway/Raleway[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/raleway/Raleway-Italic[wght].ttf"
     ],
-    "preview_family": "Raleway Thin",
+    "preview_family": "Raleway",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -30671,7 +30671,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/recursive/Recursive[CASL,CRSV,MONO,slnt,wght].ttf"
     ],
-    "preview_family": "Recursive Sans Linear Light",
+    "preview_family": "Recursive",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -30978,7 +30978,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/rem/REM[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/rem/REM-Italic[wght].ttf"
     ],
-    "preview_family": "REM Medium",
+    "preview_family": "REM",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -31242,7 +31242,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/robotoserif/RobotoSerif[GRAD,opsz,wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/robotoserif/RobotoSerif-Italic[GRAD,opsz,wdth,wght].ttf"
     ],
-    "preview_family": "Roboto Serif 20pt Regular",
+    "preview_family": "Roboto Serif",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -31356,7 +31356,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/rokkitt/Rokkitt[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/rokkitt/Rokkitt-Italic[wght].ttf"
     ],
-    "preview_family": "Rokkitt SemiBold",
+    "preview_family": "Rokkitt",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -31513,7 +31513,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/Rubik[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/Rubik-Italic[wght].ttf"
     ],
-    "preview_family": "Rubik Light",
+    "preview_family": "Rubik",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -32381,7 +32381,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/saira/Saira[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/saira/Saira-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Saira Thin",
+    "preview_family": "Saira",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -32435,7 +32435,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sairaextracondensed/SairaExtraCondensed-ExtraBold.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sairaextracondensed/SairaExtraCondensed-Black.ttf"
     ],
-    "preview_family": "Saira ExtraCondensed",
+    "preview_family": "Saira Extra Condensed",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -32462,7 +32462,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sairasemicondensed/SairaSemiCondensed-ExtraBold.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sairasemicondensed/SairaSemiCondensed-Black.ttf"
     ],
-    "preview_family": "Saira SemiCondensed",
+    "preview_family": "Saira Semi Condensed",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -32642,7 +32642,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sansitaswashed/SansitaSwashed[wght].ttf"
     ],
-    "preview_family": "Sansita Swashed Light",
+    "preview_family": "Sansita Swashed",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -32794,7 +32794,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/savate/Savate[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/savate/Savate-Italic[wght].ttf"
     ],
-    "preview_family": "Savate ExtraLight",
+    "preview_family": "Savate",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33256,7 +33256,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/shantellsans/ShantellSans[BNCE,INFM,SPAC,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/shantellsans/ShantellSans-Italic[BNCE,INFM,SPAC,wght].ttf"
     ],
-    "preview_family": "Shantell Sans Light",
+    "preview_family": "Shantell Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33559,7 +33559,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/signika/Signika[GRAD,wght].ttf"
     ],
-    "preview_family": "Signika Light",
+    "preview_family": "Signika",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33578,7 +33578,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/signikanegative/SignikaNegative[wght].ttf"
     ],
-    "preview_family": "Signika Negative Light",
+    "preview_family": "Signika Negative",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33618,7 +33618,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/signikasc/SignikaSC[wght].ttf"
     ],
-    "preview_family": "Signika SC Light",
+    "preview_family": "Signika SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33711,7 +33711,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sirinstencil/SirinStencil-Regular.ttf"
     ],
-    "preview_family": "SirinStencil",
+    "preview_family": "Sirin Stencil",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33954,7 +33954,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/smoochsans/SmoochSans[wght].ttf"
     ],
-    "preview_family": "Smooch Sans Thin",
+    "preview_family": "Smooch Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -33993,7 +33993,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/snpro/SNPro[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/snpro/SNPro-Italic[wght].ttf"
     ],
-    "preview_family": "SN Pro ExtraLight",
+    "preview_family": "SN Pro",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34266,7 +34266,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sono/Sono[MONO,wght].ttf"
     ],
-    "preview_family": "Sono ExtraLight",
+    "preview_family": "Sono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34340,7 +34340,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sourgummy/SourGummy[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sourgummy/SourGummy-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Sour Gummy Black",
+    "preview_family": "Sour Gummy",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34364,7 +34364,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcecodepro/SourceCodePro[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcecodepro/SourceCodePro-Italic[wght].ttf"
     ],
-    "preview_family": "Source Code Pro ExtraLight",
+    "preview_family": "Source Code Pro",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34388,7 +34388,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/SourceSans3[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/SourceSans3-Italic[wght].ttf"
     ],
-    "preview_family": "Source Sans 3 ExtraLight",
+    "preview_family": "Source Sans 3",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34430,7 +34430,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/SpaceGrotesk[wght].ttf"
     ],
-    "preview_family": "Space Grotesk Light",
+    "preview_family": "Space Grotesk",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34832,7 +34832,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/stacksansheadline/StackSansHeadline[wght].ttf"
     ],
-    "preview_family": "Stack Sans Headline ExtraLight",
+    "preview_family": "Stack Sans Headline",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34850,7 +34850,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/stacksansnotch/StackSansNotch[wght].ttf"
     ],
-    "preview_family": "Stack Sans Notch ExtraLight",
+    "preview_family": "Stack Sans Notch",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34868,7 +34868,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/stacksanstext/StackSansText[wght].ttf"
     ],
-    "preview_family": "Stack Sans Text ExtraLight",
+    "preview_family": "Stack Sans Text",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -34962,7 +34962,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sticknobills/StickNoBills[wght].ttf"
     ],
-    "preview_family": "Stick No Bills ExtraLight",
+    "preview_family": "Stick No Bills",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -35251,7 +35251,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sunflower/Sunflower-Medium.ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/sunflower/Sunflower-Bold.ttf"
     ],
-    "preview_family": "Sunflower Bold",
+    "preview_family": "Sunflower",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -35285,7 +35285,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/supermercadoone/SupermercadoOne-Regular.ttf"
     ],
-    "preview_family": "Supermercado",
+    "preview_family": "Supermercado One",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -35361,7 +35361,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/suse/SUSE[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/suse/SUSE-Italic[wght].ttf"
     ],
-    "preview_family": "SUSE Thin",
+    "preview_family": "SUSE",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -35381,7 +35381,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/susemono/SUSEMono[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/susemono/SUSEMono-Italic[wght].ttf"
     ],
-    "preview_family": "SUSE Mono Thin",
+    "preview_family": "SUSE Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -35763,7 +35763,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/teko/Teko[wght].ttf"
     ],
-    "preview_family": "Teko Light",
+    "preview_family": "Teko",
     "preview_string": "चूंकि मानव परिवार के सभी सदस्यों के जन्मजात गौरव और समान"
   },
   {
@@ -35879,7 +35879,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/texturina/Texturina[opsz,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/texturina/Texturina-Italic[opsz,wght].ttf"
     ],
-    "preview_family": "Texturina Medium",
+    "preview_family": "Texturina",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -36001,7 +36001,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/tiktoksans/TikTokSans[opsz,slnt,wdth,wght].ttf"
     ],
-    "preview_family": "TikTok Sans Light",
+    "preview_family": "TikTok Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -36432,7 +36432,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/tourney/Tourney[wdth,wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/tourney/Tourney-Italic[wdth,wght].ttf"
     ],
-    "preview_family": "Tourney Thin",
+    "preview_family": "Tourney",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -36544,7 +36544,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/trispace/Trispace[wdth,wght].ttf"
     ],
-    "preview_family": "Trispace Thin",
+    "preview_family": "Trispace",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -36903,7 +36903,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ancizarsans/AncizarSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ancizarsans/AncizarSans-Italic[wght].ttf"
     ],
-    "preview_family": "Ancizar Sans Thin",
+    "preview_family": "Ancizar Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -36923,7 +36923,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ancizarserif/AncizarSerif[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ancizarserif/AncizarSerif-Italic[wght].ttf"
     ],
-    "preview_family": "Ancizar Serif Light",
+    "preview_family": "Ancizar Serif",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37016,7 +37016,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/unifrakturcook/UnifrakturCook-Bold.ttf"
     ],
-    "preview_family": "UnifrakturCook Bold",
+    "preview_family": "UnifrakturCook",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37033,7 +37033,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf"
     ],
-    "preview_family": "UnifrakturMaguntia Book",
+    "preview_family": "UnifrakturMaguntia",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37224,7 +37224,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/varta/Varta[wght].ttf"
     ],
-    "preview_family": "Varta Light",
+    "preview_family": "Varta",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37279,7 +37279,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/vendsans/VendSans[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/vendsans/VendSans-Italic[wght].ttf"
     ],
-    "preview_family": "Vend Sans Light",
+    "preview_family": "Vend Sans",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37357,7 +37357,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/vibur/Vibur-Regular.ttf"
     ],
-    "preview_family": "Vibur Medium",
+    "preview_family": "Vibur",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37381,7 +37381,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/victormono/VictorMono[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/victormono/VictorMono-Italic[wght].ttf"
     ],
-    "preview_family": "Victor Mono Thin",
+    "preview_family": "Victor Mono",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -37700,7 +37700,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/wavefont/Wavefont[ROND,YELA,wght].ttf"
     ],
-    "preview_family": "Wavefont Thin",
+    "preview_family": "Wavefont",
     "preview_string": "čćŜĘķŌŎļĺļġđĦŊōōĤķňŅĦĽĜėċĥĭİŐĬĝęŉŉĿħĲŁŠŀğĭōĦŚĦĠŢČ"
   },
   {
@@ -38043,7 +38043,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/yaldevi/Yaldevi[wght].ttf"
     ],
-    "preview_family": "Yaldevi ExtraLight",
+    "preview_family": "Yaldevi",
     "preview_string": "ලෝකයේ පවත්නා නිදහස, යුක්තිය සහ සාමය යන්නෙහි පදනම මිනිස් පවුලේ"
   },
   {
@@ -38090,7 +38090,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/yanonekaffeesatz/YanoneKaffeesatz[wght].ttf"
     ],
-    "preview_family": "Yanone Kaffeesatz ExtraLight",
+    "preview_family": "Yanone Kaffeesatz",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -38383,7 +38383,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeau/Ysabeau[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeau/Ysabeau-Italic[wght].ttf"
     ],
-    "preview_family": "Ysabeau Bold",
+    "preview_family": "Ysabeau",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -38408,7 +38408,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeauinfant/YsabeauInfant[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeauinfant/YsabeauInfant-Italic[wght].ttf"
     ],
-    "preview_family": "Ysabeau Infant Bold",
+    "preview_family": "Ysabeau Infant",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -38433,7 +38433,7 @@
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeauoffice/YsabeauOffice[wght].ttf",
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeauoffice/YsabeauOffice-Italic[wght].ttf"
     ],
-    "preview_family": "Ysabeau Office Bold",
+    "preview_family": "Ysabeau Office",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -38457,7 +38457,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/ysabeausc/YsabeauSC[wght].ttf"
     ],
-    "preview_family": "Ysabeau SC Bold",
+    "preview_family": "Ysabeau SC",
     "preview_string": "The quick brown fox jumps over the lazy dog."
   },
   {
@@ -38710,7 +38710,7 @@
     "font_files": [
       "https://raw.githubusercontent.com/google/fonts/main/ofl/zcoolxiaowei/ZCOOLXiaoWei-Regular.ttf"
     ],
-    "preview_family": "站酷小薇体 常规",
+    "preview_family": "ZCOOL XiaoWei",
     "preview_string": "鉴于对人类家庭所有成员的固有尊严及其平等的和不移的权利的承认,乃是世界自由、正义与和平的基础"
   },
   {
