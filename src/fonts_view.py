@@ -41,7 +41,7 @@ class FontsView(Gtk.ScrolledWindow):
     @Gtk.Template.Callback()
     def on_font_view_setup(self, _, list_item):
         main_box = Gtk.Box(
-            spacing=18,
+            spacing=24,
             margin_top=12,
             margin_bottom=6,
             margin_start=18,
@@ -88,8 +88,9 @@ class FontsView(Gtk.ScrolledWindow):
 
         list_item.family_label.set_text(item.family_name)
         list_item.preview_ins.set_markup(
-            f'<span font_family="{item.preview_family}" size="x-large" fallback="false">{item.preview_string}</span>'
+            f'<span font_family="{item.preview_family}, {item.family_name}" size="x-large" fallback="false">{item.preview_string}</span>'
         )
 
 
 # TODO: create custom widget font item
+# pass font map to each list item, gio store
