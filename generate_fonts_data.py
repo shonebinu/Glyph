@@ -62,6 +62,7 @@ def generate_previews_ttc(
             subsetted_fonts.append(font)
 
             # setting the metadata family name as font name isn't working for some fonts preview after subsetting
+            # (maybe some name tables are dropped)
             preview_family_map[id] = font["name"].getBestFamilyName()
         except Exception as e:
             print(f"Skipping font subsetting {str(ttf_path)}: {e}")
@@ -121,7 +122,8 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
 
     metadata_out = {
         "id": str(uuid.uuid4()),
-        "family": metadata.get("display_name", metadata["name"]),
+        "family": metadata["name"],
+        "display_name": metadata.get("display_name", "name"),
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
