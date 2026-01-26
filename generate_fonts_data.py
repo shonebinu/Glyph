@@ -5,7 +5,7 @@ import json
 import argparse
 import uharfbuzz as hb
 from pathlib import Path
-from typing import List, Tuple, Dict, Any
+from typing import List, Set, Tuple, Dict, Any
 from fontTools.ttLib import TTFont, TTCollection
 from google.protobuf import text_format
 from gftools import fonts_public_pb2
@@ -22,10 +22,36 @@ OUTPUT_TTC_PATH = "previews.ttc"
 
 gflanguages = LoadLanguages()
 gfscripts = LoadScripts()
-SCRIPT_NAME_TO_ID = {script.name: code for code, script in gfscripts.items()}
+
+LANG_DATA = []
+for lang in gflanguages.values():
+    base = lang.exemplar_chars.base
+    if base:
+        LANG_DATA.append(
+            {
+                "id": lang.id,
+                "name": lang.preferred_name or lang.name,
+                "pop": lang.population,
+                "chars": {ord(c) for c in base if c not in " []{}"},
+            }
+        )
 
 
-def get_required_glyph_ids(face: hb.Face, text: str) -> set:
+def get_supported_languages(ttf_path: Path) -> Dict[str, str]:
+    with TTFont(ttf_path, lazy=True) as font:
+        cmap = font.getBestCmap()
+        font_unicodes = set(cmap.keys()) if cmap else set()
+
+    supported = sorted(
+        [l for l in LANG_DATA if l["chars"].issubset(font_unicodes)],
+        key=lambda x: x["pop"],
+        reverse=True,
+    )
+
+    return {l["id"]: l["name"] for l in supported}
+
+
+def get_required_glyph_ids(face: hb.Face, text: str) -> Set:
     font = hb.Font(face)
     buf = hb.Buffer()
     buf.add_str(text)
@@ -43,7 +69,6 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
 
     if 0 in gids:
         # 0 = missing character
-        # For some fonts, this could be solved by generating better preview string
         print(
             f"Some character in preview string '{preview_string}' doesn't exist in font {ttf_path}."
         )
@@ -94,38 +119,14 @@ def load_metadata(path: Path) -> Dict[Any, Any]:
     return MessageToDict(message, preserving_proto_field_name=True)
 
 
-def get_sample_by_subset_name(subset_name: str) -> str | None:
-    # this is hit or miss, but works for now
-    # metadatas subset field isnt one to one with iso scripts/langs
-    # all available subsets can be found in pip gfsubsets
-    # we could load all the fonts and find its unicode range to find script/language, but not worth it now
-    # could rethink after mpv
-    normalized_name = subset_name.replace("-", " ").title()
-    script_id = SCRIPT_NAME_TO_ID.get(normalized_name)
-
-    if not script_id:
-        return None
-
-    script_langs = [
-        l
-        for l in gflanguages.values()
-        if l.script == script_id and l.sample_text.tester
-    ]
-
-    if script_langs:
-        most_popular = max(script_langs, key=lambda l: l.population)
-        return most_popular.sample_text.tester
-    return None
-
-
-def get_best_preview_string(metadata) -> str:
+def get_best_preview_string(metadata, supported_langs) -> str:
     if "sample_text" in metadata and "tester" in metadata["sample_text"]:
         return metadata["sample_text"]["tester"]
 
     if "languages" in metadata and metadata["languages"]:
-        for lang_code in metadata["languages"]:
-            if lang_code in gflanguages and gflanguages[lang_code].sample_text.tester:
-                return gflanguages[lang_code].sample_text.tester
+        for lang_id in metadata["languages"]:
+            if lang_id in gflanguages and gflanguages[lang_id].sample_text.tester:
+                return gflanguages[lang_id].sample_text.tester
 
     if "primary_script" in metadata:
         target_script = metadata["primary_script"]
@@ -138,20 +139,9 @@ def get_best_preview_string(metadata) -> str:
             most_popular = max(script_languages, key=lambda l: l.population)
             return most_popular.sample_text.tester
 
-    subsets = metadata.get("subsets", [])
-
-    if "latin" in subsets or "latin-ext" in subsets:
-        sample = get_sample_by_subset_name("latin")
-        if sample:
-            return sample
-
-    for subset in subsets:
-        if subset in ["menu", "latin", "latin-ext"]:
-            continue
-
-        sample = get_sample_by_subset_name(subset)
-        if sample:
-            return sample
+    for lang_id in supported_langs:
+        if lang_id in gflanguages and gflanguages[lang_id].sample_text.tester:
+            return gflanguages[lang_id].sample_text.tester
 
     return "The quick brown fox jumps over the lazy dog"
 
@@ -160,7 +150,6 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
     metadata = load_metadata(metadata_path)
     family_dir = metadata_path.parent
     font_files = metadata["fonts"]
-    preview_string = get_best_preview_string(metadata)
 
     sample_file = next(
         (
@@ -173,6 +162,9 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
 
     sample_file_path = family_dir / sample_file
 
+    supported_languages = get_supported_languages(sample_file_path)
+    preview_string = get_best_preview_string(metadata, supported_languages)
+
     metadata_out = {
         "id": str(uuid.uuid4()),
         "family": metadata["name"],
@@ -180,7 +172,7 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
-        "subsets": [s for s in metadata["subsets"] if s != "menu"],
+        "languages": list(supported_languages.values()),
         "files": [
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
