@@ -1,6 +1,7 @@
 # https://googlefonts.github.io/gf-guide/metadata.html
 
 import uuid
+import re
 import json
 import argparse
 import uharfbuzz as hb
@@ -37,7 +38,13 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
     face = hb.Face(blob)
 
     # we need to add the glyph ids as well for proper preview of complex non latin languages
-    gids = get_required_glyph_ids(face, preview_string)
+    # remove whitespace chars, some fonts don't include it
+    gids = get_required_glyph_ids(face, re.sub(r"\s+", "", preview_string))
+
+    if 0 in gids:
+        # 0 = missing character
+        # For some fonts, this could be solved by generating better preview string
+        raise Exception("Every character in preview string doesn't exist in font.")
 
     subset_input = hb.SubsetInput()
     for gid in gids:
@@ -67,7 +74,9 @@ def generate_previews_ttc(
             # (maybe some name tables are dropped)
             preview_family_map[id] = font["name"].getBestFamilyName()
         except Exception as e:
-            print(f"Skipping font subsetting {str(ttf_path)}: {e}")
+            print(
+                f"Skipping font subsetting {str(ttf_path)} for '{preview_string}': {e}"
+            )
             preview_family_map[id] = None
 
     ttc = TTCollection()
@@ -130,7 +139,7 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
-        "subsets": metadata["subsets"],
+        "subsets": [s for s in metadata["subsets"] if s != "menu"],
         "files": [
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files
