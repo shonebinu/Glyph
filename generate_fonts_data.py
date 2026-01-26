@@ -95,9 +95,10 @@ def load_metadata(path: Path) -> Dict[Any, Any]:
 
 
 def get_sample_by_subset_name(subset_name: str) -> str | None:
+    # this is hit or miss, but works for now
     normalized_name = subset_name.replace("-", " ").title()
-
     script_id = SCRIPT_NAME_TO_ID.get(normalized_name)
+
     if not script_id:
         return None
 
