@@ -104,34 +104,34 @@ def get_sample_by_subset_name(subset_name: str) -> str | None:
     script_langs = [
         l
         for l in gflanguages.values()
-        if l.script == script_id and l.sample_text.styles
+        if l.script == script_id and l.sample_text.tester
     ]
 
     if script_langs:
         most_popular = max(script_langs, key=lambda l: l.population)
-        return most_popular.sample_text.styles
+        return most_popular.sample_text.tester
     return None
 
 
 def get_best_preview_string(metadata) -> str:
-    if "sample_text" in metadata and "styles" in metadata["sample_text"]:
-        return metadata["sample_text"]["styles"]
+    if "sample_text" in metadata and "tester" in metadata["sample_text"]:
+        return metadata["sample_text"]["tester"]
 
     if "languages" in metadata and metadata["languages"]:
         for lang_code in metadata["languages"]:
-            if lang_code in gflanguages and gflanguages[lang_code].sample_text.styles:
-                return gflanguages[lang_code].sample_text.styles
+            if lang_code in gflanguages and gflanguages[lang_code].sample_text.tester:
+                return gflanguages[lang_code].sample_text.tester
 
     if "primary_script" in metadata:
         target_script = metadata["primary_script"]
         script_languages = [
             lang
             for lang in gflanguages.values()
-            if lang.script == target_script and lang.sample_text.styles
+            if lang.script == target_script and lang.sample_text.tester
         ]
         if script_languages:
             most_popular = max(script_languages, key=lambda l: l.population)
-            return most_popular.sample_text.styles
+            return most_popular.sample_text.tester
 
     subsets = metadata.get("subsets", [])
 
