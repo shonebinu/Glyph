@@ -1,7 +1,6 @@
 # https://googlefonts.github.io/gf-guide/metadata.html
 
 import uuid
-import re
 import json
 import argparse
 import uharfbuzz as hb
@@ -11,7 +10,7 @@ from fontTools.ttLib import TTFont, TTCollection
 from google.protobuf import text_format
 from gftools import fonts_public_pb2
 from google.protobuf.json_format import MessageToDict
-from gflanguages import LoadLanguages
+from gflanguages import LoadLanguages, LoadScripts
 from io import BytesIO
 
 
@@ -22,6 +21,8 @@ OUTPUT_JSON_PATH = "fonts.json"
 OUTPUT_TTC_PATH = "previews.ttc"
 
 gflanguages = LoadLanguages()
+gfscripts = LoadScripts()
+SCRIPT_NAME_TO_ID = {script.name: code for code, script in gfscripts.items()}
 
 
 def get_required_glyph_ids(face: hb.Face, text: str) -> set:
@@ -38,13 +39,14 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
     face = hb.Face(blob)
 
     # we need to add the glyph ids as well for proper preview of complex non latin languages
-    # remove whitespace chars, some fonts don't include it
-    gids = get_required_glyph_ids(face, re.sub(r"\s+", "", preview_string))
+    gids = get_required_glyph_ids(face, preview_string)
 
     if 0 in gids:
         # 0 = missing character
         # For some fonts, this could be solved by generating better preview string
-        raise Exception("Every character in preview string doesn't exist in font.")
+        print(
+            f"Some character in preview string '{preview_string}' doesn't exist in font {ttf_path}."
+        )
 
     subset_input = hb.SubsetInput()
     for gid in gids:
@@ -92,6 +94,25 @@ def load_metadata(path: Path) -> Dict[Any, Any]:
     return MessageToDict(message, preserving_proto_field_name=True)
 
 
+def get_sample_by_subset_name(subset_name: str) -> str | None:
+    normalized_name = subset_name.replace("-", " ").title()
+
+    script_id = SCRIPT_NAME_TO_ID.get(normalized_name)
+    if not script_id:
+        return None
+
+    script_langs = [
+        l
+        for l in gflanguages.values()
+        if l.script == script_id and l.sample_text.styles
+    ]
+
+    if script_langs:
+        most_popular = max(script_langs, key=lambda l: l.population)
+        return most_popular.sample_text.styles
+    return None
+
+
 def get_best_preview_string(metadata) -> str:
     if "sample_text" in metadata and "styles" in metadata["sample_text"]:
         return metadata["sample_text"]["styles"]
@@ -111,6 +132,21 @@ def get_best_preview_string(metadata) -> str:
         if script_languages:
             most_popular = max(script_languages, key=lambda l: l.population)
             return most_popular.sample_text.styles
+
+    subsets = metadata.get("subsets", [])
+
+    if "latin" in subsets or "latin-ext" in subsets:
+        sample = get_sample_by_subset_name("latin")
+        if sample:
+            return sample
+
+    for subset in subsets:
+        if subset in ["menu", "latin", "latin-ext"]:
+            continue
+
+        sample = get_sample_by_subset_name(subset)
+        if sample:
+            return sample
 
     return "The quick brown fox jumps over the lazy dog"
 
@@ -135,7 +171,7 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
     metadata_out = {
         "id": str(uuid.uuid4()),
         "family": metadata["name"],
-        "display_name": metadata.get("display_name", "name"),
+        "display_name": metadata.get("display_name", metadata["name"]),
         "designer": metadata["designer"],
         "license": metadata["license"],
         "category": metadata["category"],
