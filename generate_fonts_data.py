@@ -96,6 +96,10 @@ def load_metadata(path: Path) -> Dict[Any, Any]:
 
 def get_sample_by_subset_name(subset_name: str) -> str | None:
     # this is hit or miss, but works for now
+    # metadatas subset field isnt one to one with iso scripts/langs
+    # all available subsets can be found in pip gfsubsets
+    # we could load all the fonts and find its unicode range to find script/language, but not worth it now
+    # could rethink after mpv
     normalized_name = subset_name.replace("-", " ").title()
     script_id = SCRIPT_NAME_TO_ID.get(normalized_name)
 
