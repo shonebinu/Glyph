@@ -7,11 +7,13 @@ from .fonts_manager import FontMetadata
 class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
-    def __init__(self, family, preview_family, preview_string):
+    def __init__(self, family, preview_family, preview_string, category):
         super().__init__()
         self.family = family
         self.preview_family = preview_family
         self.preview_string = preview_string
+
+        self.category = ", ".join([cat.replace("_", " ").title() for cat in category])
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")
@@ -33,7 +35,9 @@ class FontsView(Gtk.ScrolledWindow):
 
     def show_fonts(self, fonts: List[FontMetadata]):
         items = [
-            FontItem(font.family, font.preview_family, font.preview_string)
+            FontItem(
+                font.family, font.preview_family, font.preview_string, font.category
+            )
             for font in fonts
         ]
         self.list_store.splice(0, self.list_store.get_n_items(), items)
@@ -58,7 +62,12 @@ class FontsView(Gtk.ScrolledWindow):
             hexpand=True,
         )
 
+        buttons_box = Gtk.Box(spacing=12)
+
         family_label = Gtk.Label(halign=Gtk.Align.START)
+        category_label = Gtk.Label(
+            halign=Gtk.Align.START, css_classes=["dimmed", "caption"]
+        )
 
         preview_ins = Gtk.Inscription(
             height_request=72,
@@ -69,7 +78,15 @@ class FontsView(Gtk.ScrolledWindow):
         preview_ins.set_font_map(self.previews_font_map)
 
         font_box.append(family_label)
+        font_box.append(category_label)
         font_box.append(preview_ins)
+
+        detail_btn = Gtk.Button(
+            icon_name="info-outline-symbolic",
+            css_classes=["flat"],
+            valign=Gtk.Align.CENTER,
+            tooltip_text="Font details",
+        )
 
         install_btn = Gtk.Button(
             icon_name="folder-download-symbolic",
@@ -78,13 +95,17 @@ class FontsView(Gtk.ScrolledWindow):
             tooltip_text="Install font",
         )
 
+        buttons_box.append(detail_btn)
+        buttons_box.append(install_btn)
+
         main_box.append(font_box)
-        main_box.append(install_btn)
+        main_box.append(buttons_box)
 
         list_item.set_child(main_box)
 
         list_item.family_label = family_label
         list_item.preview_ins = preview_ins
+        list_item.category_label = category_label
 
     @Gtk.Template.Callback()
     def on_font_view_bind(self, _, list_item):
@@ -94,6 +115,7 @@ class FontsView(Gtk.ScrolledWindow):
         list_item.preview_ins.set_markup(
             f'<span font_family="{item.preview_family}" size="x-large" fallback="false">{item.preview_string}</span>'
         )
+        list_item.category_label.set_text(item.category)
 
 
 # TODO: create custom widget font item
