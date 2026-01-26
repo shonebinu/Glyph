@@ -7,13 +7,16 @@ from .fonts_manager import FontMetadata
 class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
-    def __init__(self, display_name, preview_family, preview_string, category):
+    def __init__(
+        self, display_name, preview_family, preview_string, category, installed
+    ):
         super().__init__()
         self.display_name = display_name
         self.preview_family = preview_family
         self.preview_string = preview_string
 
         self.category = ", ".join([cat.replace("_", " ").title() for cat in category])
+        self.installed = installed
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")
@@ -25,7 +28,10 @@ class FontsView(Gtk.ScrolledWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.previews_font_map = PangoCairo.FontMap.new()
+        self.previews_font_map = PangoCairo.FontMap.get_default()
+
+        families = self.previews_font_map.list_families()
+        self.installed_families = {f.get_name() for f in families}
 
     def load_preview_fonts(self, file_path: Path):
         # TODO: make this and json loading async and then show loading state, after that load fonts
@@ -40,6 +46,7 @@ class FontsView(Gtk.ScrolledWindow):
                 font.preview_family,
                 font.preview_string,
                 font.category,
+                font.family in self.installed_families,
             )
             for font in fonts
         ]
@@ -77,8 +84,6 @@ class FontsView(Gtk.ScrolledWindow):
             wrap_mode=Pango.WrapMode.NONE,
             text_overflow=Gtk.InscriptionOverflow.CLIP,
         )
-
-        preview_ins.set_font_map(self.previews_font_map)
 
         font_box.append(family_label)
         font_box.append(category_label)

@@ -44,7 +44,7 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
 
     if 0 in gids:
         # 0 = missing character
-        # For some fonts, this could be solved by generating better preview string
+        # For some fonts, this could be solved by generating better preview string or removing whitespaces in the preview string
         print(
             f"Some character in preview string '{preview_string}' doesn't exist in font {ttf_path}."
         )
