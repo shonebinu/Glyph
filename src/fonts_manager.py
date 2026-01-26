@@ -21,6 +21,7 @@ class FontCategory(str, Enum):
 class FontMetadata:
     id: str
     family: str
+    display_name: str
     designer: str
     license: Literal["APACHE2", "OFL", "UFL"]
     category: List[FontCategory]
