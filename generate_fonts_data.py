@@ -58,7 +58,9 @@ def generate_previews_ttc(
 
     for id, ttf_path, preview_string in preview_samples:
         try:
-            font = TTFont(generate_subset(ttf_path, preview_string))
+            subset_data = generate_subset(ttf_path, preview_string)
+
+            font = TTFont(subset_data)
             subsetted_fonts.append(font)
 
             # setting the metadata family name as font name isn't working for some fonts preview after subsetting
@@ -66,6 +68,7 @@ def generate_previews_ttc(
             preview_family_map[id] = font["name"].getBestFamilyName()
         except Exception as e:
             print(f"Skipping font subsetting {str(ttf_path)}: {e}")
+            preview_family_map[id] = None
 
     ttc = TTCollection()
     ttc.fonts = subsetted_fonts
@@ -149,7 +152,6 @@ def main(google_fonts_path: Path) -> None:
             continue
 
         for metadata_path in license_path.glob("*/METADATA.pb"):
-            metadatas_total += 1
             try:
                 family_data, sample_file_path, preview_string = parse_metadata(
                     metadata_path
@@ -161,24 +163,26 @@ def main(google_fonts_path: Path) -> None:
             except Exception as e:
                 print(f"Skipping metadata extraction {str(metadata_path)}: {e}")
                 continue
-
-    metadatas.sort(key=lambda f: f["family"].lower())
+            finally:
+                metadatas_total += 1
 
     preview_family_map = generate_previews_ttc(preview_samples)
 
     for metadata in metadatas:
         m_id = metadata["id"]
-        metadata["preview_family"] = preview_family_map.get(m_id, None)
+        metadata["preview_family"] = preview_family_map[m_id]
+
+    # remove fonts where we couldn't generate a proper subset
+    metadatas = [f for f in metadatas if f["preview_family"] is not None]
+
+    metadatas.sort(key=lambda f: f["family"].lower())
 
     Path(OUTPUT_JSON_PATH).write_text(
         json.dumps(metadatas, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
 
-    print(
-        f"\nDone! Indexed {len(metadatas)} out of {metadatas_total} families. "
-        f"{OUTPUT_TTC_PATH} includes {len(preview_family_map)} font subsets."
-    )
+    print(f"\nDone! Indexed {len(metadatas)} out of {metadatas_total} families. ")
 
 
 if __name__ == "__main__":
