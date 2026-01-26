@@ -20,6 +20,7 @@ FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
 OUTPUT_JSON_PATH = "fonts.json"
 OUTPUT_TTC_PATH = "previews.ttc"
 
+# https://github.com/googlefonts/lang
 gflanguages = LoadLanguages()
 gfscripts = LoadScripts()
 SCRIPT_NAME_TO_ID = {script.name: code for code, script in gfscripts.items()}
@@ -100,6 +101,7 @@ def get_sample_by_subset_name(subset_name: str) -> str | None:
     # all available subsets can be found in pip gfsubsets
     # we could load all the fonts and find its unicode range to find script/language, but not worth it now
     # could rethink after mpv
+    # a rough implementation on branch wip/list-languages
     normalized_name = subset_name.replace("-", " ").title()
     script_id = SCRIPT_NAME_TO_ID.get(normalized_name)
 
