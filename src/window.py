@@ -14,4 +14,7 @@ class GlyphWindow(Adw.ApplicationWindow):
 
         self.fonts_manager = FontsManager()
 
-        self.fonts_view.set_model(self.fonts_manager.store)
+        self.fonts_view.font_model = self.fonts_manager.store
+        # TODO: make this and json loading async and then show loading state, after that load fonts
+        # TODO: use custom symbolic icons
+        # TODO: show more details dialog

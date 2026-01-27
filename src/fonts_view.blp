@@ -101,6 +101,8 @@ template $FontsView: ScrolledWindow {
       }
     };
 
-    model: NoSelection selection_model {};
+    model: NoSelection {
+      model: bind template.font_model as <Gio.ListModel>;
+    };
   }
 }
