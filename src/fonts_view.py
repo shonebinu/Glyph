@@ -8,6 +8,7 @@ class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
     display_name = GObject.Property(type=str)
+    is_installed = GObject.Property(type=bool, default=False)
 
     def __init__(
         self,
@@ -30,7 +31,7 @@ class FontItem(GObject.Object):
 
     @GObject.Property(type=str)
     def preview_markup(self):
-        return f'<span font_family="{self.preview_family}" size="x-large" fallback="false">{self.preview_string}</span>'
+        return f'<span font_family="{self.preview_family}" size="xx-large" fallback="false">{self.preview_string}</span>'
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")

@@ -30,15 +30,38 @@ template $FontsView: ScrolledWindow {
               label: bind (template.item as <$FontItem>).display_name;
             }
 
-            Label {
-              halign: start;
+            Box {
+              spacing: 6;
 
-              styles [
-                "dimmed",
-                "caption",
-              ]
+              Label {
+                halign: start;
 
-              label: bind (template.item as <$FontItem>).category_label;
+                styles [
+                  "dimmed",
+                  "caption",
+                ]
+
+                label: bind (template.item as <$FontItem>).category_label;
+              }
+
+              Label {
+                label: "•";
+                visible: bind (template.item as <$FontItem>).is_installed;
+
+                styles [
+                  "dimmed",
+                ]
+              }
+
+              Label {
+                label: _("Installed");
+                visible: bind (template.item as <$FontItem>).is_installed;
+
+                styles [
+                  "accent",
+                  "caption-heading",
+                ]
+              }
             }
 
             Inscription {
