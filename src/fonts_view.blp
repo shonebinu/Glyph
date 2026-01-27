@@ -27,7 +27,7 @@ template $FontsView: ScrolledWindow {
 
             Label {
               halign: start;
-              label: bind (template.item as <$FontItem>).display_name;
+              label: bind (template.item as <$FontModel>).display_name;
             }
 
             Box {
@@ -41,12 +41,12 @@ template $FontsView: ScrolledWindow {
                   "caption",
                 ]
 
-                label: bind (template.item as <$FontItem>).category_label;
+                label: bind (template.item as <$FontModel>).category_label;
               }
 
               Label {
                 label: "•";
-                visible: bind (template.item as <$FontItem>).is_installed;
+                visible: bind (template.item as <$FontModel>).is_installed;
 
                 styles [
                   "dimmed",
@@ -55,7 +55,7 @@ template $FontsView: ScrolledWindow {
 
               Label {
                 label: _("Installed");
-                visible: bind (template.item as <$FontItem>).is_installed;
+                visible: bind (template.item as <$FontModel>).is_installed;
 
                 styles [
                   "accent",
@@ -68,7 +68,7 @@ template $FontsView: ScrolledWindow {
               height-request: 72;
               wrap-mode: none;
               text-overflow: clip;
-              markup: bind (template.item as <$FontItem>).preview_markup;
+              markup: bind (template.item as <$FontModel>).preview_markup;
             }
           }
 
@@ -103,7 +103,7 @@ template $FontsView: ScrolledWindow {
 
     model: NoSelection {
       model: Gio.ListStore list_store {
-        item-type: typeof<$FontItem>;
+        item-type: typeof<$FontModel>;
       };
     };
   }
