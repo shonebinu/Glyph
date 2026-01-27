@@ -121,7 +121,7 @@ class FontsView(Gtk.ScrolledWindow):
 
         list_item.family_label.set_text(item.display_name)
         list_item.preview_ins.set_markup(
-            f'<span font_family="{item.preview_family}" size="x-large">{item.preview_string}</span>'
+            f'<span font_family="{item.preview_family}" size="x-large" fallback="false">{item.preview_string}</span>'
         )
         list_item.category_label.set_text(item.category)
 
