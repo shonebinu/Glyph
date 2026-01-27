@@ -1,22 +1,36 @@
 from pathlib import Path
 from typing import List
-from gi.repository import Gtk, PangoCairo, GObject, Gio, Pango
-from .fonts_manager import FontMetadata
+from gi.repository import Gtk, PangoCairo, GObject, Gio
+from .fonts_manager import FontMetadata, FontCategory
 
 
 class FontItem(GObject.Object):
     __gtype_name__ = "FontItem"
 
+    display_name = GObject.Property(type=str)
+
     def __init__(
-        self, display_name, preview_family, preview_string, category, installed
+        self,
+        display_name: str,
+        preview_family: str,
+        preview_string: str,
+        category: List[FontCategory],
+        is_installed: bool,
     ):
         super().__init__()
         self.display_name = display_name
         self.preview_family = preview_family
         self.preview_string = preview_string
+        self.category = category
+        self.is_installed = is_installed
 
-        self.category = ", ".join([cat.replace("_", " ").title() for cat in category])
-        self.installed = installed
+    @GObject.Property(type=str)
+    def category_label(self):
+        return ", ".join([cat.replace("_", " ").title() for cat in self.category])
+
+    @GObject.Property(type=str)
+    def preview_markup(self):
+        return f'<span font_family="{self.preview_family}" size="x-large" fallback="false">{self.preview_string}</span>'
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts_view.ui")
@@ -28,18 +42,19 @@ class FontsView(Gtk.ScrolledWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.previews_font_map = PangoCairo.FontMap.get_default()
+        self.font_map = PangoCairo.FontMap.get_default()
 
-        families = self.previews_font_map.list_families()
+        families = self.font_map.list_families()
         self.installed_families = {f.get_name() for f in families}
 
     def load_preview_fonts(self, file_path: Path):
         # TODO: make this and json loading async and then show loading state, after that load fonts
         # TODO: use custom symbolic icons
         # TODO: show more details dialog
-        self.previews_font_map.add_font_file(str(file_path))
+        self.font_map.add_font_file(str(file_path))
 
     def show_fonts(self, fonts: List[FontMetadata]):
+        # TODO: return gio list items directly? instead of recreating
         items = [
             FontItem(
                 font.display_name,
@@ -51,80 +66,3 @@ class FontsView(Gtk.ScrolledWindow):
             for font in fonts
         ]
         self.list_store.splice(0, self.list_store.get_n_items(), items)
-
-    @Gtk.Template.Callback()
-    def on_font_view_setup(self, _, list_item):
-        list_item.set_selectable(False)
-        list_item.set_focusable(False)
-        list_item.set_activatable(False)
-
-        main_box = Gtk.Box(
-            spacing=24,
-            margin_top=12,
-            margin_bottom=6,
-            margin_start=18,
-            margin_end=24,
-        )
-
-        font_box = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            spacing=6,
-            hexpand=True,
-        )
-
-        buttons_box = Gtk.Box(spacing=12)
-
-        family_label = Gtk.Label(halign=Gtk.Align.START)
-        category_label = Gtk.Label(
-            halign=Gtk.Align.START, css_classes=["dimmed", "caption"]
-        )
-
-        preview_ins = Gtk.Inscription(
-            height_request=72,
-            wrap_mode=Pango.WrapMode.NONE,
-            text_overflow=Gtk.InscriptionOverflow.CLIP,
-        )
-
-        font_box.append(family_label)
-        font_box.append(category_label)
-        font_box.append(preview_ins)
-
-        detail_btn = Gtk.Button(
-            icon_name="info-outline-symbolic",
-            css_classes=["flat"],
-            valign=Gtk.Align.CENTER,
-            tooltip_text="Font details",
-        )
-
-        install_btn = Gtk.Button(
-            icon_name="folder-download-symbolic",
-            css_classes=["flat"],
-            valign=Gtk.Align.CENTER,
-            tooltip_text="Install font",
-        )
-
-        buttons_box.append(detail_btn)
-        buttons_box.append(install_btn)
-
-        main_box.append(font_box)
-        main_box.append(buttons_box)
-
-        list_item.set_child(main_box)
-
-        list_item.family_label = family_label
-        list_item.preview_ins = preview_ins
-        list_item.category_label = category_label
-
-    @Gtk.Template.Callback()
-    def on_font_view_bind(self, _, list_item):
-        item = list_item.get_item()
-
-        list_item.family_label.set_text(item.display_name)
-        list_item.preview_ins.set_markup(
-            f'<span font_family="{item.preview_family}" size="x-large" fallback="false">{item.preview_string}</span>'
-        )
-        list_item.category_label.set_text(item.category)
-
-
-# TODO: create custom widget font item
-# pass font map to each list item, gio store

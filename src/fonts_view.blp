@@ -7,9 +7,75 @@ template $FontsView: ScrolledWindow {
   ListView {
     show-separators: true;
 
-    factory: SignalListItemFactory {
-      setup => $on_font_view_setup();
-      bind => $on_font_view_bind();
+    factory: BuilderListItemFactory {
+      template ListItem {
+        selectable: false;
+        focusable: false;
+        activatable: false;
+
+        child: Box {
+          spacing: 24;
+          margin-top: 12;
+          margin-bottom: 6;
+          margin-start: 18;
+          margin-end: 24;
+
+          Box {
+            orientation: vertical;
+            spacing: 6;
+            hexpand: true;
+
+            Label {
+              halign: start;
+              label: bind (template.item as <$FontItem>).display_name;
+            }
+
+            Label {
+              halign: start;
+
+              styles [
+                "dimmed",
+                "caption",
+              ]
+
+              label: bind (template.item as <$FontItem>).category_label;
+            }
+
+            Inscription {
+              height-request: 72;
+              wrap-mode: none;
+              text-overflow: clip;
+              markup: bind (template.item as <$FontItem>).preview_markup;
+            }
+          }
+
+          Box {
+            spacing: 12;
+
+            Button {
+              icon-name: "info-outline-symbolic";
+
+              styles [
+                "flat",
+              ]
+
+              valign: center;
+              tooltip-text: _("Font details");
+            }
+
+            Button {
+              icon-name: "folder-download-symbolic";
+
+              styles [
+                "flat",
+              ]
+
+              valign: center;
+              tooltip-text: _("Install font");
+            }
+          }
+        };
+      }
     };
 
     model: NoSelection {
