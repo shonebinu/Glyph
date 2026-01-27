@@ -101,10 +101,6 @@ template $FontsView: ScrolledWindow {
       }
     };
 
-    model: NoSelection {
-      model: Gio.ListStore list_store {
-        item-type: typeof<$FontModel>;
-      };
-    };
+    model: NoSelection selection_model {};
   }
 }

@@ -9,7 +9,6 @@ class FontModel(GObject.Object):
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()
-        self.id = data["id"]
         self.family = data["family"]
         self.display_name = data["display_name"]
         self.designer = data["designer"]

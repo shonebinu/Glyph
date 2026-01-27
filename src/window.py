@@ -13,8 +13,5 @@ class GlyphWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.fonts_manager = FontsManager()
-        self.fonts_manager.font_map.add_font_file(
-            str(self.fonts_manager.previews_ttc_path)
-        )
 
-        self.fonts_view.show_fonts(self.fonts_manager.fonts)
+        self.fonts_view.set_model(self.fonts_manager.store)

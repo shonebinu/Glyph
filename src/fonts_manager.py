@@ -3,24 +3,29 @@ import httpx
 import json
 from pathlib import Path
 from urllib.parse import urlparse
-from gi.repository import GLib, PangoCairo
+from gi.repository import GLib, PangoCairo, Gio
 from .font_model import FontModel
 
 
 class FontsManager:
     def __init__(self):
-        self._data_dir = Path("/app/share/glyph")
-        self._fonts_json_path = self._data_dir / "fonts.json"
-        self.previews_ttc_path = self._data_dir / "previews.ttc"
+        self.store = Gio.ListStore.new(FontModel)
 
-        self.font_map = PangoCairo.FontMap.get_default()
-        installed_families = {f.get_name() for f in self.font_map.list_families()}
+        data_dir = Path("/app/share/glyph")
+        fonts_json_path = data_dir / "fonts.json"
+        previews_ttc_path = data_dir / "previews.ttc"
 
-        with self._fonts_json_path.open() as f:
-            self.fonts = [
+        font_map = PangoCairo.FontMap.get_default()
+        installed_families = {f.get_name() for f in font_map.list_families()}
+
+        with fonts_json_path.open() as f:
+            fonts = [
                 FontModel(font, font["family"] in installed_families)
                 for font in json.load(f)
             ]
+
+        font_map.add_font_file(str(previews_ttc_path))
+        self.store.splice(0, 0, fonts)
 
     async def install_font(self, font_item: FontModel):
         font_files = font_item.files
