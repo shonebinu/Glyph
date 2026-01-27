@@ -229,6 +229,9 @@ def main(google_fonts_path: Path) -> None:
 
     metadatas.sort(key=lambda f: f["family"].lower())
 
+    for metadata in metadatas:
+        metadata.pop("id")
+
     Path(OUTPUT_JSON_PATH).write_text(
         json.dumps(metadatas, indent=2, ensure_ascii=False),
         encoding="utf-8",
