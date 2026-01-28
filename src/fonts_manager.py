@@ -24,7 +24,10 @@ class FontsManager:
                 for font in json.load(f)
             ]
 
-        font_map.add_font_file(str(previews_ttc_path))
+        fonts_loaded = font_map.add_font_file(str(previews_ttc_path))
+        if not fonts_loaded:
+            raise Exception("Failed to load preview fonts")
+
         self.store.splice(0, 0, fonts)
 
     async def install_font(self, font_item: FontModel):
