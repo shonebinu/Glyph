@@ -18,3 +18,4 @@ class GlyphWindow(Adw.ApplicationWindow):
         # TODO: make this and json loading async and then show loading state, after that load fonts
         # TODO: use custom symbolic icons
         # TODO: show more details dialog
+        # TODO: a separate font row file. connectt with signals

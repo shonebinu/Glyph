@@ -9,5 +9,18 @@
             preprocess="xml-stripblanks"
             alias="appdata.xml"
         >../data/io.github.shonebinu.Glyph.metainfo.xml</file>
+
+        <file
+            preprocess="xml-stripblanks"
+        >icons/info-outline-symbolic.svg</file>
+        <file
+            preprocess="xml-stripblanks"
+        >icons/folder-download-symbolic.svg</file>
+        <file
+            preprocess="xml-stripblanks"
+        >icons/edit-find-symbolic.svg</file>
+        <file
+            preprocess="xml-stripblanks"
+        >icons/open-menu-symbolic.svg</file>
     </gresource>
 </gresources>
