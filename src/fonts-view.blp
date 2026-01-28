@@ -7,16 +7,9 @@ template $FontsView: ScrolledWindow {
   ListView {
     show-separators: true;
 
-    factory: BuilderListItemFactory {
-      template ListItem {
-        selectable: false;
-        focusable: false;
-        activatable: false;
-
-        child: $FontRow {
-          font_model: bind (template.item as <$FontModel>);
-        };
-      }
+    factory: SignalListItemFactory {
+      setup => $on_factory_setup();
+      bind => $on_factory_bind();
     };
 
     model: NoSelection {

@@ -8,13 +8,21 @@ class FontRow(Gtk.Box):
 
     font_model = GObject.Property(type=FontModel)
 
+    @GObject.Signal(arg_types=(FontModel,))
+    def detail_clicked(self, font_model: FontModel):
+        pass
+
+    @GObject.Signal(arg_types=(FontModel,))
+    def install_clicked(self, font_model: FontModel):
+        pass
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     @Gtk.Template.Callback()
-    def on_detail_clicked(self, button):
-        print(f"Details for: {self.font_model.display_name}")
+    def on_detail_clicked(self, _):
+        self.emit("detail-clicked", self.font_model)
 
     @Gtk.Template.Callback()
-    def on_install_clicked(self, button):
-        print(f"Installing: {self.font_model.display_name}")
+    def on_install_clicked(self, _):
+        self.emit("install-clicked", self.font_model)
