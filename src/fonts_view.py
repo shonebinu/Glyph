@@ -1,5 +1,4 @@
 from gi.repository import Gtk, Gio, GObject
-from .font_model import FontModel
 from .font_row import FontRow
 
 
