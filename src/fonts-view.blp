@@ -1,0 +1,26 @@
+using Gtk 4.0;
+using Gio 2.0;
+
+template $FontsView: ScrolledWindow {
+  hscrollbar-policy: never;
+
+  ListView {
+    show-separators: true;
+
+    factory: BuilderListItemFactory {
+      template ListItem {
+        selectable: false;
+        focusable: false;
+        activatable: false;
+
+        child: $FontRow {
+          font_model: bind (template.item as <$FontModel>);
+        };
+      }
+    };
+
+    model: NoSelection {
+      model: bind template.font_model as <Gio.ListModel>;
+    };
+  }
+}
