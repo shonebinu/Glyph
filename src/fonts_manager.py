@@ -16,8 +16,10 @@ class FontsManager:
         fonts_json_path = data_dir / "fonts.json"
         previews_ttc_path = data_dir / "previews.ttc"
 
-        font_map = PangoCairo.FontMap.get_default()
-        installed_families = {f.get_name() for f in font_map.list_families()}
+        self.custom_font_map = PangoCairo.FontMap.new()
+        installed_families = {
+            f.get_name() for f in self.custom_font_map.list_families()
+        }
 
         with fonts_json_path.open() as f:
             fonts = [
@@ -25,7 +27,7 @@ class FontsManager:
                 for font in json.load(f)
             ]
 
-        fonts_loaded = font_map.add_font_file(str(previews_ttc_path))
+        fonts_loaded = self.custom_font_map.add_font_file(str(previews_ttc_path))
         if not fonts_loaded:
             raise Exception("Failed to load preview fonts")
 

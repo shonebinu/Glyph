@@ -20,6 +20,8 @@ class FontsView(Gtk.ScrolledWindow):
 
     def set_fonts_manager(self, fonts_manager: FontsManager):
         self.fonts_manager = fonts_manager
+        self.custom_font_map = fonts_manager.custom_font_map
+        self.font_model = fonts_manager.store
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
@@ -30,6 +32,8 @@ class FontsView(Gtk.ScrolledWindow):
         row = FontRow()
         row.connect("detail-clicked", self.on_font_detail_clicked)
         row.connect("install-clicked", self.on_font_install_clicked)
+        row.set_font_map(self.custom_font_map)
+
         list_item.set_child(row)
 
     @Gtk.Template.Callback()
