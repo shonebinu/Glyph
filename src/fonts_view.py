@@ -2,6 +2,7 @@ from typing import cast
 from gi.repository import Gtk, Gio, GObject
 from .font_row import FontRow
 from .font_model import FontModel
+from .font_details_dialog import FontDetailsDialog
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")
@@ -12,6 +13,8 @@ class FontsView(Gtk.ScrolledWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.font_details_dialog = FontDetailsDialog()
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
@@ -32,7 +35,9 @@ class FontsView(Gtk.ScrolledWindow):
         row.font_model = model
 
     def on_font_detail_clicked(self, _, font_model: FontModel):
-        print(font_model.display_name)
+        self.font_details_dialog.font_model = font_model
+
+        self.font_details_dialog.present(self.get_root())  # type: ignore
 
     def on_font_install_clicked(self, _, font_model: FontModel):
         print(font_model.display_name)

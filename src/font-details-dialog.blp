@@ -1,0 +1,91 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $FontDetailsDialog: Adw.Dialog {
+    title: bind (template.font_model as <$FontModel>).display_name;
+    content-width: 500;
+
+    Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {}
+
+        Box {
+            orientation: vertical;
+            margin-top: 24;
+            margin-bottom: 24;
+            margin-start: 30;
+            margin-end: 30;
+
+            ListBox {
+                selection-mode: none;
+
+                styles [
+                    "boxed-list",
+                ]
+
+                Adw.ActionRow {
+                    title: _("Family");
+                    subtitle: bind (template.font_model as <$FontModel>).family;
+
+                    styles [
+                        "property",
+                    ]
+                }
+
+                Adw.ActionRow {
+                    title: _("Designer");
+                    subtitle: bind (template.font_model as <$FontModel>).designer;
+
+                    styles [
+                        "property",
+                    ]
+                }
+
+                Adw.ActionRow {
+                    title: _("License");
+                    subtitle: bind (template.font_model as <$FontModel>).license;
+
+                    styles [
+                        "property",
+                    ]
+                }
+
+                Adw.ActionRow {
+                    title: _("Category");
+                    subtitle: bind (template.font_model as <$FontModel>).category_label;
+
+                    styles [
+                        "property",
+                    ]
+                }
+
+                Adw.ActionRow {
+                    title: _("Subsets");
+                    subtitle: bind (template.font_model as <$FontModel>).subsets_label;
+
+                    styles [
+                        "property",
+                    ]
+                }
+
+                Adw.ActionRow {
+                    title: _("Font files");
+                    subtitle: bind (template.font_model as <$FontModel>).font_files_label;
+
+                    styles [
+                        "property",
+                    ]
+                }
+
+                Adw.ActionRow {
+                    title: _("Status");
+                    subtitle: bind (template.font_model as <$FontModel>).font_status;
+
+                    styles [
+                        "property",
+                    ]
+                }
+            }
+        }
+    }
+}

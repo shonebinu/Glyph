@@ -8,6 +8,7 @@ blueprints = custom_target('blueprints',
     'window.blp',
     'fonts-view.blp',
     'font-row.blp',
+    'font-details-dialog.blp',
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -46,6 +47,7 @@ glyph_sources = [
   'fonts_view.py',
   'font_model.py',
   'font_row.py',
+  'font_details_dialog.py',
 ]
 
 install_data(glyph_sources, install_dir: moduledir)

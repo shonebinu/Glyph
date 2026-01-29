@@ -227,7 +227,7 @@ def main(google_fonts_path: Path) -> None:
     # remove fonts where we couldn't generate a proper subset
     metadatas = [f for f in metadatas if f["preview_family"] is not None]
 
-    metadatas.sort(key=lambda f: f["family"].lower())
+    metadatas.sort(key=lambda f: f["display_name"].lower())
 
     for metadata in metadatas:
         metadata.pop("id")
