@@ -3,6 +3,8 @@ from gi.repository import Gtk, Gio, GObject
 from .font_row import FontRow
 from .font_model import FontModel
 from .font_details_dialog import FontDetailsDialog
+import asyncio
+from .fonts_manager import FontsManager
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")
@@ -15,6 +17,9 @@ class FontsView(Gtk.ScrolledWindow):
         super().__init__(**kwargs)
 
         self.font_details_dialog = FontDetailsDialog()
+
+    def set_fonts_manager(self, fonts_manager: FontsManager):
+        self.fonts_manager = fonts_manager
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
@@ -40,4 +45,8 @@ class FontsView(Gtk.ScrolledWindow):
         self.font_details_dialog.present(self.get_root())  # type: ignore
 
     def on_font_install_clicked(self, _, font_model: FontModel):
-        print(font_model.display_name)
+        asyncio.create_task(self.install_font(font_model))
+
+    async def install_font(self, font_model: FontModel):
+        await self.fonts_manager.install_font(font_model.files)
+        font_model.is_installed = True
