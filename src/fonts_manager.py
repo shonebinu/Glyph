@@ -1,4 +1,5 @@
 import asyncio
+from typing import List
 import httpx
 import json
 from pathlib import Path
@@ -30,9 +31,7 @@ class FontsManager:
 
         self.store.splice(0, 0, fonts)
 
-    async def install_font(self, font_item: FontModel):
-        font_files = font_item.files
-
+    async def install_font(self, font_files: List[str]):
         user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
         user_font_dir.mkdir(parents=True, exist_ok=True)
 
@@ -47,5 +46,3 @@ class FontsManager:
             filename = Path(urlparse(url).path).name
             path = user_font_dir / filename
             await asyncio.to_thread(path.write_bytes, resp.content)
-
-        font_item.is_installed = True
