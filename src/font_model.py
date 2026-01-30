@@ -48,7 +48,7 @@ class FontModel(GObject.Object):
     def set_install_status(self, installing: bool):
         if installing:
             self.is_installing = True
-            self.install_state_name = "spinner"
+            self.install_state_name = "installing"
         else:
             self.is_installing = False
-            self.install_state_name = "button"
+            self.install_state_name = "not_installing"
