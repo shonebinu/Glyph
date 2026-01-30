@@ -72,6 +72,7 @@ template $FontRow: Box {
 
         Button {
             icon-name: "folder-download-symbolic";
+            visible: bind (template.font_model as <$FontModel>).is_not_installing;
 
             styles [
                 "flat",

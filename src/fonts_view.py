@@ -54,9 +54,9 @@ class FontsView(Gtk.ScrolledWindow):
     async def install_font(self, font_model: FontModel):
         # TODO: implement installing state. accent color spinner
         # TODO: implement toast for success and errors
-        font_model.is_installing = True
+        font_model.set_install_status(True)
         await self.fonts_manager.install_font(font_model.files)
         font_model.is_installed = True
-        font_model.is_installing = False
+        font_model.set_install_status(False)
 
     # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?

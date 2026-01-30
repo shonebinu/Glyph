@@ -10,6 +10,7 @@ class FontModel(GObject.Object):
     license = GObject.Property(type=str)
     is_installed = GObject.Property(type=bool, default=False)
     is_installing = GObject.Property(type=bool, default=False)
+    is_not_installing = GObject.Property(type=bool, default=True)
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()
@@ -43,3 +44,11 @@ class FontModel(GObject.Object):
     @GObject.Property(type=str)
     def font_status(self):
         return "Installed" if self.is_installed else "Not installed"
+
+    def set_install_status(self, installing: bool):
+        if installing:
+            self.is_installing = True
+            self.is_not_installing = False
+        else:
+            self.is_installing = False
+            self.is_not_installing = True
