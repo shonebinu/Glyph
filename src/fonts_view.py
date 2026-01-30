@@ -5,6 +5,7 @@ from .font_model import FontModel
 from .font_details_dialog import FontDetailsDialog
 import asyncio
 from .fonts_manager import FontsManager
+import httpx
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")
@@ -72,10 +73,14 @@ class FontsView(Gtk.ScrolledWindow):
             font_model.set_install_status(installing=True)
             await self.fonts_manager.install_font(font_model.files)
             font_model.is_installed = True
-        except Exception as e:
-            print(f"Error installing font: {e}")
-            # TODO: implement toast for success and errors
+        except httpx.RequestError:
+            print("Error: Connectivity issue. Please check your internet connection.")
+        except httpx.HTTPStatusError as e:
+            print(f"Error: Server responded with status {e.response.status_code}.")
+        except Exception:
+            print("Error: Something went wrong while installing the font.")
         finally:
             font_model.set_install_status(installing=False)
 
+    # TODO: implement toast for success and errors
     # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?
