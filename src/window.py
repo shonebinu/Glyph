@@ -14,3 +14,7 @@ class GlyphWindow(Adw.ApplicationWindow):
 
         self.fonts_manager = FontsManager()
         self.fonts_view.set_fonts_manager(self.fonts_manager)
+
+        # TODO: implement smart search
+        # TODO: implement fetch latest fonts data
+        # TODO: implement filtering based on subset and categories (maybe license)
