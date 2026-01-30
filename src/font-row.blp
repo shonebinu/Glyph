@@ -12,28 +12,15 @@ template $FontRow: Box {
         spacing: 6;
         hexpand: true;
 
-        Label {
-            halign: start;
-            label: bind (template.font_model as <$FontModel>).display_name;
-        }
-
         Box {
-            spacing: 6;
-
             Label {
                 halign: start;
-
-                styles [
-                    "dimmed",
-                    "caption",
-                ]
-
-                label: bind (template.font_model as <$FontModel>).category_label;
+                label: bind (template.font_model as <$FontModel>).display_name;
             }
 
             Separator {
-                margin-start: 3;
-                margin-end: 3;
+                margin-start: 9;
+                margin-end: 9;
                 visible: bind (template.font_model as <$FontModel>).is_installed;
             }
 
@@ -46,6 +33,17 @@ template $FontRow: Box {
                     "caption-heading",
                 ]
             }
+        }
+
+        Label {
+            halign: start;
+
+            styles [
+                "dimmed",
+                "caption",
+            ]
+
+            label: bind (template.font_model as <$FontModel>).category_label;
         }
 
         Inscription {
