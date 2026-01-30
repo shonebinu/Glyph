@@ -10,7 +10,7 @@ class FontModel(GObject.Object):
     license = GObject.Property(type=str)
     is_installed = GObject.Property(type=bool, default=False)
     is_installing = GObject.Property(type=bool, default=False)
-    install_state_name = GObject.Property(type=str, default="button")
+    install_state_name = GObject.Property(type=str, default="not_installing")
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()
