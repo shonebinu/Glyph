@@ -13,24 +13,20 @@ template $FontRow: Box {
         hexpand: true;
 
         Box {
+            spacing: 6;
+
             Label {
                 halign: start;
                 label: bind (template.font_model as <$FontModel>).display_name;
             }
 
-            Separator {
-                margin-start: 9;
-                margin-end: 9;
+            Image {
                 visible: bind (template.font_model as <$FontModel>).is_installed;
-            }
-
-            Label {
-                label: _("Installed");
-                visible: bind (template.font_model as <$FontModel>).is_installed;
+                icon-name: "checkmark-symbolic";
+                tooltip-text: _("Installed");
 
                 styles [
                     "accent",
-                    "caption-heading",
                 ]
             }
         }
