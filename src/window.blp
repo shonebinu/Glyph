@@ -6,65 +6,67 @@ template $GlyphWindow: Adw.ApplicationWindow {
   default-width: 1000;
   default-height: 800;
 
-  content: Adw.ToolbarView {
-    styles [
-      "view",
-    ]
+  content: Adw.ToastOverlay toast_overlay {
+    Adw.ToolbarView {
+      styles [
+        "view",
+      ]
 
-    [top]
-    Adw.HeaderBar {
-      ToggleButton search_button {
-        icon-name: "edit-find-symbolic";
+      [top]
+      Adw.HeaderBar {
+        ToggleButton search_button {
+          icon-name: "edit-find-symbolic";
+        }
+
+        // TODO: add search here w/ a revealer?
+
+        [end]
+        MenuButton {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          tooltip-text: _("Main Menu");
+          menu-model: primary_menu;
+        }
       }
 
-      // TODO: add search here w/ a revealer?
+      content: Adw.ViewStack main_stack {
+        Adw.ViewStackPage {
+          name: "loading";
 
-      [end]
-      MenuButton {
-        primary: true;
-        icon-name: "open-menu-symbolic";
-        tooltip-text: _("Main Menu");
-        menu-model: primary_menu;
-      }
+          child: Box {
+            halign: center;
+            valign: center;
+            orientation: vertical;
+            spacing: 12;
+
+            Spinner {
+              spinning: true;
+              width-request: 64;
+              height-request: 64;
+            }
+
+            Label {
+              label: _("Loading Preview Fonts…");
+              margin-top: 12;
+
+              styles [
+                "title-1",
+              ]
+            }
+
+            Label {
+              label: _("This could take a moment.");
+            }
+          };
+        }
+
+        Adw.ViewStackPage {
+          name: "fonts_view";
+
+          child: $FontsView fonts_view {};
+        }
+      };
     }
-
-    content: Adw.ViewStack main_stack {
-      Adw.ViewStackPage {
-        name: "loading";
-
-        child: Box {
-          halign: center;
-          valign: center;
-          orientation: vertical;
-          spacing: 12;
-
-          Spinner {
-            spinning: true;
-            width-request: 64;
-            height-request: 64;
-          }
-
-          Label {
-            label: _("Loading Preview Fonts…");
-            margin-top: 12;
-
-            styles [
-              "title-1",
-            ]
-          }
-
-          Label {
-            label: _("This could take a moment.");
-          }
-        };
-      }
-
-      Adw.ViewStackPage {
-        name: "fonts_view";
-
-        child: $FontsView fonts_view {};
-      }
-    };
   };
 }
 

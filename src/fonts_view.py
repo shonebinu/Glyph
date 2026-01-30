@@ -12,6 +12,14 @@ import httpx
 class FontsView(Gtk.ScrolledWindow):
     __gtype_name__ = "FontsView"
 
+    @GObject.Signal(arg_types=(str,))
+    def installation_error(self, msg: str):
+        pass
+
+    @GObject.Signal(arg_types=(str,))
+    def installation_success(self, msg: str):
+        pass
+
     font_model = GObject.Property(type=Gio.ListModel)
 
     def __init__(self, **kwargs):
@@ -73,14 +81,23 @@ class FontsView(Gtk.ScrolledWindow):
             font_model.set_install_status(installing=True)
             await self.fonts_manager.install_font(font_model.files)
             font_model.is_installed = True
+            self.emit("installation-success", f"{font_model.family} font installed.")
         except httpx.RequestError:
-            print("Error: Connectivity issue. Please check your internet connection.")
+            self.emit(
+                "installation-error",
+                "Connectivity issue. Please check your internet connection.",
+            )
         except httpx.HTTPStatusError as e:
-            print(f"Error: Server responded with status {e.response.status_code}.")
+            self.emit(
+                "installation-error",
+                f"Error: Server responded with status {e.response.status_code}.",
+            )
         except Exception:
-            print("Error: Something went wrong while installing the font.")
+            self.emit(
+                "installation-error",
+                "Error: Something went wrong while installing the font.",
+            )
         finally:
             font_model.set_install_status(installing=False)
 
-    # TODO: implement toast for success and errors
     # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?

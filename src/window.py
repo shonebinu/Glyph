@@ -8,11 +8,19 @@ import asyncio
 class GlyphWindow(Adw.ApplicationWindow):
     __gtype_name__ = "GlyphWindow"
 
+    toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     main_stack: Adw.ViewStack = Gtk.Template.Child()
     fonts_view: FontsView = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.fonts_view.connect(
+            "installation-error", self.on_toast_notification_received
+        )
+        self.fonts_view.connect(
+            "installation-success", self.on_toast_notification_received
+        )
 
         asyncio.create_task(self.setup_async())
 
@@ -24,3 +32,6 @@ class GlyphWindow(Adw.ApplicationWindow):
         # TODO: implement smart search
         # TODO: implement fetch latest fonts data
         # TODO: implement filtering based on subset and categories (maybe license)
+
+    def on_toast_notification_received(self, _, msg: str):
+        self.toast_overlay.add_toast(Adw.Toast(title=msg))
