@@ -70,25 +70,34 @@ template $FontRow: Box {
             clicked => $on_detail_clicked();
         }
 
-        Button {
-            icon-name: "folder-download-symbolic";
-            visible: bind (template.font_model as <$FontModel>).is_not_installing;
+        Stack {
+            visible-child-name: bind (template.font_model as <$FontModel>).install_state_name;
 
-            styles [
-                "flat",
-            ]
+            StackPage {
+                name: "button";
 
-            valign: center;
-            tooltip-text: _("Install font");
-            clicked => $on_install_clicked();
-        }
+                child: Button {
+                    icon-name: "folder-download-symbolic";
 
-        Adw.Spinner {
-            visible: bind (template.font_model as <$FontModel>).is_installing;
+                    styles [
+                        "flat",
+                    ]
 
-            styles [
-                "accent",
-            ]
+                    valign: center;
+                    tooltip-text: _("Install font");
+                    clicked => $on_install_clicked();
+                };
+            }
+
+            StackPage {
+                name: "spinner";
+
+                child: Adw.Spinner {
+                    styles [
+                        "accent",
+                    ]
+                };
+            }
         }
     }
 }
