@@ -5,6 +5,7 @@ from .font_model import FontModel
 from .font_details_dialog import FontDetailsDialog
 import asyncio
 from .fonts_manager import FontsManager
+import time
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")
@@ -22,6 +23,7 @@ class FontsView(Gtk.ScrolledWindow):
         self.fonts_manager = fonts_manager
         self.custom_font_map = fonts_manager.custom_font_map
         self.font_model = fonts_manager.store
+        print(time.time())
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):

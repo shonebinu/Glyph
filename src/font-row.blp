@@ -74,7 +74,7 @@ template $FontRow: Box {
             visible-child-name: bind (template.font_model as <$FontModel>).install_state_name;
 
             StackPage {
-                name: "installing";
+                name: "not_installing";
 
                 child: Button {
                     icon-name: "folder-download-symbolic";
@@ -90,7 +90,7 @@ template $FontRow: Box {
             }
 
             StackPage {
-                name: "not_installing";
+                name: "installing";
 
                 child: Adw.Spinner {
                     valign: center;
