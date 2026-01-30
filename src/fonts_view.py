@@ -1,5 +1,5 @@
 from typing import cast
-from gi.repository import Gtk, Gio, GObject
+from gi.repository import Gtk, Gio, GObject, Adw
 from .font_row import FontRow
 from .font_model import FontModel
 from .font_details_dialog import FontDetailsDialog
@@ -49,14 +49,33 @@ class FontsView(Gtk.ScrolledWindow):
         self.font_details_dialog.present(self.get_root())  # type: ignore
 
     def on_font_install_clicked(self, _, font_model: FontModel):
-        asyncio.create_task(self.install_font(font_model))
+        asyncio.create_task(self.run_font_install_process(font_model))
 
-    async def install_font(self, font_model: FontModel):
-        # TODO: implement installing state. accent color spinner
-        # TODO: implement toast for success and errors
-        font_model.set_install_status(True)
-        await self.fonts_manager.install_font(font_model.files)
-        font_model.is_installed = True
-        font_model.set_install_status(False)
+    async def run_font_install_process(self, font_model: FontModel):
+        if font_model.is_installed:
+            dialog = Adw.AlertDialog(
+                heading="Reinstall Font",
+                body=f"The font `{font_model.family}` already exists in the system. Do you want to install it again?",
+                close_response="cancel",
+            )
+            dialog.add_response("cancel", "Cancel")
+            dialog.add_response("install", "Install")
+            dialog.set_response_appearance(
+                "install", Adw.ResponseAppearance.DESTRUCTIVE
+            )
+
+            response = await dialog.choose(self.get_root(), None)  # type: ignore
+            if response != "install":
+                return
+
+        try:
+            font_model.set_install_status(installing=True)
+            await self.fonts_manager.install_font(font_model.files)
+            font_model.is_installed = True
+        except Exception as e:
+            print(f"Error installing font: {e}")
+            # TODO: implement toast for success and errors
+        finally:
+            font_model.set_install_status(installing=False)
 
     # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?
