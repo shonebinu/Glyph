@@ -31,13 +31,10 @@ template $FontRow: Box {
                 label: bind (template.font_model as <$FontModel>).category_label;
             }
 
-            Label {
-                label: "•";
+            Separator {
+                margin-start: 3;
+                margin-end: 3;
                 visible: bind (template.font_model as <$FontModel>).is_installed;
-
-                styles [
-                    "dimmed",
-                ]
             }
 
             Label {
