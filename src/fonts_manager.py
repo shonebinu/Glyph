@@ -14,7 +14,7 @@ class FontsManager:
 
         data_dir = Path("/app/share/glyph")
         fonts_json_path = data_dir / "fonts.json"
-        self.previews_ttc_path = data_dir / "previews.ttc"
+        previews_ttc_path = data_dir / "previews.ttc"
 
         self.custom_font_map = PangoCairo.FontMap.new()
         installed_families = {
@@ -27,12 +27,11 @@ class FontsManager:
                 for font in json.load(f)
             ]
 
-        self.store.splice(0, 0, fonts)
-
-    def load_preview_fonts(self):
-        fonts_loaded = self.custom_font_map.add_font_file(str(self.previews_ttc_path))
+        fonts_loaded = self.custom_font_map.add_font_file(str(previews_ttc_path))
         if not fonts_loaded:
             raise Exception("Failed to load preview fonts")
+
+        self.store.splice(0, 0, fonts)
 
     async def install_font(self, font_files: List[str]):
         user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"

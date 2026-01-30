@@ -28,7 +28,43 @@ template $GlyphWindow: Adw.ApplicationWindow {
       }
     }
 
-    content: $FontsView fonts_view {};
+    content: Adw.ViewStack main_stack {
+      Adw.ViewStackPage {
+        name: "loading";
+
+        child: Box {
+          halign: center;
+          valign: center;
+          orientation: vertical;
+          spacing: 12;
+
+          Spinner {
+            spinning: true;
+            width-request: 64;
+            height-request: 64;
+          }
+
+          Label {
+            label: _("Loading Preview Fonts…");
+            margin-top: 12;
+
+            styles [
+              "title-1",
+            ]
+          }
+
+          Label {
+            label: _("This could take a moment.");
+          }
+        };
+      }
+
+      Adw.ViewStackPage {
+        name: "fonts_view";
+
+        child: $FontsView fonts_view {};
+      }
+    };
   };
 }
 
