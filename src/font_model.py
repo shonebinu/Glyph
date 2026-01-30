@@ -9,6 +9,7 @@ class FontModel(GObject.Object):
     designer = GObject.Property(type=str)
     license = GObject.Property(type=str)
     is_installed = GObject.Property(type=bool, default=False)
+    is_installing = GObject.Property(type=bool, default=False)
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()

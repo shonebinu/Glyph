@@ -1,4 +1,5 @@
 using Gtk 4.0;
+using Adw 1;
 
 template $FontRow: Box {
     spacing: 36;
@@ -13,20 +14,24 @@ template $FontRow: Box {
         hexpand: true;
 
         Box {
-            spacing: 6;
+            spacing: 9;
 
             Label {
                 halign: start;
                 label: bind (template.font_model as <$FontModel>).display_name;
             }
 
-            Image {
+            Separator {
                 visible: bind (template.font_model as <$FontModel>).is_installed;
-                icon-name: "checkmark-symbolic";
-                tooltip-text: _("Installed");
+            }
+
+            Label {
+                label: _("Installed");
+                visible: bind (template.font_model as <$FontModel>).is_installed;
 
                 styles [
                     "accent",
+                    "caption-heading",
                 ]
             }
         }
@@ -75,6 +80,14 @@ template $FontRow: Box {
             valign: center;
             tooltip-text: _("Install font");
             clicked => $on_install_clicked();
+        }
+
+        Adw.Spinner {
+            visible: bind (template.font_model as <$FontModel>).is_installing;
+
+            styles [
+                "accent",
+            ]
         }
     }
 }

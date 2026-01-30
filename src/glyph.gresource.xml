@@ -15,6 +15,5 @@
         <file preprocess="xml-stripblanks">icons/info-outline-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/folder-download-symbolic.svg</file>
         <file preprocess="xml-stripblanks">icons/edit-find-symbolic.svg</file>
-        <file preprocess="xml-stripblanks">icons/checkmark-symbolic.svg</file>
     </gresource>
 </gresources>
