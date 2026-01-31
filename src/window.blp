@@ -16,7 +16,8 @@ template $GlyphWindow: Adw.ApplicationWindow {
       Adw.HeaderBar {
         ToggleButton search_button {
           icon-name: "edit-find-symbolic";
-          tooltip-text: _("Search");
+          tooltip-text: _("Search fonts");
+          sensitive: false;
 
           ShortcutController {
             scope: managed;
@@ -38,9 +39,10 @@ template $GlyphWindow: Adw.ApplicationWindow {
       }
 
       [top]
-      SearchBar {
+      SearchBar search_bar {
         key-capture-widget: template;
         search-mode-enabled: bind search_button.active bidirectional;
+        sensitive: false;
 
         child: SearchEntry {
           placeholder-text: _("Search fonts");

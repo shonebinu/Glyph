@@ -11,6 +11,8 @@ class GlyphWindow(Adw.ApplicationWindow):
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     main_stack: Adw.ViewStack = Gtk.Template.Child()
     fonts_view: FontsView = Gtk.Template.Child()
+    search_button: Gtk.ToggleButton = Gtk.Template.Child()
+    search_bar: Gtk.SearchBar = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -28,6 +30,8 @@ class GlyphWindow(Adw.ApplicationWindow):
         self.fonts_manager = await asyncio.to_thread(FontsManager)
         self.fonts_view.set_fonts_manager(self.fonts_manager)
         self.main_stack.set_visible_child_name("fonts_view")
+        self.search_bar.set_sensitive(True)
+        self.search_button.set_sensitive(True)
 
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
