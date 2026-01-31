@@ -13,6 +13,8 @@ class FontsView(Gtk.ScrolledWindow):
     __gtype_name__ = "FontsView"
 
     search_query = GObject.Property(type=str)
+    list_view: Gtk.ListView = Gtk.Template.Child()
+    selection_model: Gtk.NoSelection = Gtk.Template.Child()
 
     @GObject.Signal(arg_types=(str,))
     def installation_error(self, msg: str):
@@ -33,6 +35,11 @@ class FontsView(Gtk.ScrolledWindow):
         self.fonts_manager = fonts_manager
         self.custom_font_map = fonts_manager.custom_font_map
         self.font_model = fonts_manager.store
+
+    def update_search_query(self, query):
+        self.search_query = query
+        if self.selection_model.get_n_items() > 0:
+            self.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
