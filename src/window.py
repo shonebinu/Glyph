@@ -29,9 +29,16 @@ class GlyphWindow(Adw.ApplicationWindow):
         self.fonts_view.set_fonts_manager(self.fonts_manager)
         self.main_stack.set_visible_child_name("fonts_view")
 
-        # TODO: implement smart search
-        # TODO: implement fetch latest fonts data
-        # TODO: implement filtering based on subset and categories (maybe license)
+    @Gtk.Template.Callback()
+    def on_search_changed(self, search_entry: Gtk.SearchEntry):
+        search_text = search_entry.get_text()
+        self.fonts_view.search_query = search_text
 
     def on_toast_notification_received(self, _, msg: str):
         self.toast_overlay.add_toast(Adw.Toast(title=msg))
+
+    # TODO: implement smart search based on subset, author etc
+    # TODO: scroll to top when search changed
+    # TODO: instead of cluttering model, use notify system or something for non data stuff
+    # TODO: implement fetch latest fonts data
+    # TODO: implement filtering based on subset and categories (maybe license)

@@ -42,8 +42,10 @@ template $GlyphWindow: Adw.ApplicationWindow {
         key-capture-widget: template;
         search-mode-enabled: bind search_button.active bidirectional;
 
-        child: SearchEntry search_entry {
+        child: SearchEntry {
           placeholder-text: _("Search fonts");
+          changed => $on_search_changed();
+          search-delay: 300;
         };
       }
 

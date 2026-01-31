@@ -12,6 +12,8 @@ import httpx
 class FontsView(Gtk.ScrolledWindow):
     __gtype_name__ = "FontsView"
 
+    search_query = GObject.Property(type=str)
+
     @GObject.Signal(arg_types=(str,))
     def installation_error(self, msg: str):
         pass
