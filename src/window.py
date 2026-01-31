@@ -41,4 +41,4 @@ class GlyphWindow(Adw.ApplicationWindow):
     # TODO: show no search result if none
     # TODO: instead of cluttering model, use notify system or something for non data stuff
     # TODO: implement fetch latest fonts data
-    # TODO: implement filtering based on subset and categories (maybe license)
+    # TODO: implement filtering based on subset and categories (maybe license), installed

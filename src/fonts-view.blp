@@ -19,13 +19,7 @@ template $FontsView: ScrolledWindow {
           search: bind template.search_query;
         };
 
-        model: SortListModel {
-          sorter: StringSorter {
-            expression: expr item as <$FontModel>.display_name;
-          };
-
-          model: bind template.font_model as <Gio.ListModel>;
-        };
+        model: bind template.font_model as <Gio.ListModel>;
       };
     };
   }
