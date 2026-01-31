@@ -36,11 +36,6 @@ class FontsView(Gtk.ScrolledWindow):
         self.custom_font_map = fonts_manager.custom_font_map
         self.font_model = fonts_manager.store
 
-    def update_search_query(self, query):
-        self.search_query = query
-        if self.selection_model.get_n_items() > 0:
-            self.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
-
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
         list_item.set_activatable(False)
@@ -108,5 +103,3 @@ class FontsView(Gtk.ScrolledWindow):
             )
         finally:
             font_model.set_install_status(installing=False)
-
-    # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?

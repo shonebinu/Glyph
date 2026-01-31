@@ -35,14 +35,18 @@ class GlyphWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
-        search_text = search_entry.get_text()
-        self.fonts_view.update_search_query(search_text)
+        self.fonts_view.search_query = search_entry.get_text()
+        if self.fonts_view.selection_model.get_n_items() > 0:
+            if self.main_stack.get_visible_child_name() != "fonts_view":
+                self.main_stack.set_visible_child_name("fonts_view")
+            self.fonts_view.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
+        else:
+            self.main_stack.set_visible_child_name("search_empty")
 
     def on_toast_notification_received(self, _, msg: str):
         self.toast_overlay.add_toast(Adw.Toast(title=msg))
 
     # TODO: implement smart search based on subset, author etc
-    # TODO: show no search result if none
-    # TODO: instead of cluttering model, use notify system or something for non data stuff
     # TODO: implement fetch latest fonts data
     # TODO: implement filtering based on subset and categories (maybe license), installed
+    # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?

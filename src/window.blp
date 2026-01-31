@@ -87,6 +87,16 @@ template $GlyphWindow: Adw.ApplicationWindow {
 
           child: $FontsView fonts_view {};
         }
+
+        Adw.ViewStackPage {
+          name: "search_empty";
+
+          child: Adw.StatusPage {
+            icon-name: "edit-find-symbolic";
+            title: _("No Fonts Found");
+            description: _("Try a different search term or check your spelling.");
+          };
+        }
       };
     }
   };
