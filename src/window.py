@@ -50,3 +50,4 @@ class GlyphWindow(Adw.ApplicationWindow):
     # TODO: implement fetch latest fonts data
     # TODO: implement filtering based on subset and categories (maybe license), installed
     # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?
+    # TODO: fix focus following after search
