@@ -16,9 +16,17 @@ template $GlyphWindow: Adw.ApplicationWindow {
       Adw.HeaderBar {
         ToggleButton search_button {
           icon-name: "edit-find-symbolic";
-        }
+          tooltip-text: _("Search");
 
-        // TODO: add search here w/ a revealer?
+          ShortcutController {
+            scope: managed;
+
+            Shortcut {
+              trigger: "<Control>f";
+              action: "activate";
+            }
+          }
+        }
 
         [end]
         MenuButton {
@@ -27,6 +35,16 @@ template $GlyphWindow: Adw.ApplicationWindow {
           tooltip-text: _("Main Menu");
           menu-model: primary_menu;
         }
+      }
+
+      [top]
+      SearchBar {
+        key-capture-widget: template;
+        search-mode-enabled: bind search_button.active bidirectional;
+
+        child: SearchEntry search_entry {
+          placeholder-text: _("Search fonts");
+        };
       }
 
       content: Adw.ViewStack main_stack {
