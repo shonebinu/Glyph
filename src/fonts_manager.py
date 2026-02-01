@@ -34,7 +34,7 @@ class FontsManager:
         self.store.splice(0, 0, fonts)
 
     async def install_font(self, font_files: List[str]):
-        user_font_dir = Path(GLib.get_user_data_dir()) / "fonts"
+        user_font_dir = Path("~/.local/share/fonts/").expanduser()
         user_font_dir.mkdir(parents=True, exist_ok=True)
 
         async with httpx.AsyncClient() as client:
