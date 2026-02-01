@@ -69,29 +69,40 @@
 
   <!-- Applications should set a brand color in both light and dark variants like so -->
   <branding>
-    <color type="primary" scheme_preference="light">#ff00ff</color>
-    <color type="primary" scheme_preference="dark">#993d3d</color>
+    <color type="primary" scheme_preference="light">#99c1f1</color>
+    <color type="primary" scheme_preference="dark">#1a5fb4</color>
   </branding>
 
   <screenshots>
     <screenshot type="default">
-      <image>https://example.org/example1.png</image>
-      <caption>A caption</caption>
+      <image>
+        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph.png</image>
+      <caption>Glyph home</caption>
     </screenshot>
     <screenshot>
-      <image>https://example.org/example2.png</image>
-      <caption>A caption</caption>
+      <image>
+        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph-details.png</image>
+      <caption>Font details dialog</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph-search.png</image>
+      <caption>Fonts search</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph-small.png</image>
+      <caption>Small screen size</caption>
     </screenshot>
   </screenshots>
 
   <releases>
-    <release version="1.0.1" date="2024-01-18">
-      <url type="details">https://example.org/changelog.html#version_1.0.1</url>
+    <release version="0.1.0" date="2026-02-01">
+      <!-- <url type="details">https://example.org/changelog.html#version_1.0.1</url> -->
       <description translate="no">
-        <p>Release description</p>
+        <p>Release v0.1.0</p>
         <ul>
-          <li>List of changes</li>
-          <li>List of changes</li>
+          <li>Initial release of the app</li>
         </ul>
       </description>
     </release>
