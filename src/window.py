@@ -51,3 +51,4 @@ class GlyphWindow(Adw.ApplicationWindow):
     # TODO: implement filtering based on subset and categories (maybe license), installed
     # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?
     # TODO: fix focus following after search
+    # TODO: let user delete fonts installed thru glyph?
