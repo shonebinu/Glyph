@@ -1,7 +1,7 @@
 {
   "id": "io.github.shonebinu.Glyph",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "master",
+  "runtime-version": "49",
   "sdk": "org.gnome.Sdk",
   "command": "glyph",
   "finish-args": [
@@ -100,7 +100,7 @@
       "sources": [
         {
           "type": "git",
-          "url": "file:///home/shone/Projects"
+          "url": "."
         }
       ]
     }
