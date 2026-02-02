@@ -4,7 +4,7 @@ import httpx
 import json
 from pathlib import Path
 from urllib.parse import urlparse
-from gi.repository import GLib, PangoCairo, Gio
+from gi.repository import PangoCairo, Gio
 from .font_model import FontModel
 
 
