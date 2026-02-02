@@ -34,6 +34,7 @@ class FontsManager:
         self.store.splice(0, 0, fonts)
 
     async def install_font(self, font_files: List[str]):
+        # do not try to use env vars or library(glib,os) dir methods here for proper working in flatpak for both dev and release
         user_font_dir = Path("~/.local/share/fonts/").expanduser()
         user_font_dir.mkdir(parents=True, exist_ok=True)
 

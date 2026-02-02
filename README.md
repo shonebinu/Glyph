@@ -36,6 +36,14 @@ Glyph is an app for installing fonts from [Google Fonts Github Repo](https://git
 
 You can clone this project and run it using [Gnome Builder](https://apps.gnome.org/Builder/). The Python libraries used in this project are defined inside [requirements.txt](./requirements.txt), which you may install if you want editor completions.
 
+**Note to myself**
+
+`"--filesystem=xdg-data/fonts:create"` will throw a linter error when publishing to Flathub, but at the same time, it is needed for proper development using GNOME builder/Foundry. (with the below permission alone, Pango/GTK isn't reading fonts from user fonts directory and is not able to write to the same for whatever reason while running it)
+
+Hence, use `"--filesystem=~/.local/share/fonts:create"` when publishing. This is working for published/built apps(not running from Gnome builder/foundry) but not for development.
+
+If someone could point out how to resolve this cleanly without any Flathub exceptions, help me :).
+
 ## Credits
 
 The entirety of the data used in this project is from [Google Fonts Github Repo](https://github.com/google/fonts).

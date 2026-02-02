@@ -10,7 +10,7 @@
     "--device=dri",
     "--socket=wayland",
     "--share=network",
-    "--filesystem=~/.local/share/fonts:create"
+    "--filesystem=xdg-data/fonts:create"
   ],
   "cleanup": [
     "/include",
