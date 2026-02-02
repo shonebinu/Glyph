@@ -18,6 +18,11 @@ template $FontRow: Box {
 
             Label {
                 halign: start;
+
+                styles [
+                    "heading",
+                ]
+
                 label: bind (template.font_model as <$FontModel>).display_name;
             }
 
@@ -40,11 +45,21 @@ template $FontRow: Box {
             halign: start;
 
             styles [
-                "dimmed",
                 "caption",
             ]
 
             label: bind (template.font_model as <$FontModel>).category_label;
+        }
+
+        Label {
+            halign: start;
+
+            styles [
+                "dimmed",
+                "caption",
+            ]
+
+            label: bind (template.font_model as <$FontModel>).subsets_label;
         }
 
         Inscription {
