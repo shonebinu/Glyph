@@ -27,8 +27,8 @@ class GlyphWindow(Adw.ApplicationWindow):
         asyncio.create_task(self.setup_async())
 
     async def setup_async(self):
-        self.fonts_manager = await asyncio.to_thread(FontsManager)
-        self.fonts_view.set_fonts_manager(self.fonts_manager)
+        fonts_manager = await asyncio.to_thread(FontsManager)
+        self.fonts_view.set_fonts_manager(fonts_manager)
         self.main_stack.set_visible_child_name("fonts_view")
         self.search_bar.set_sensitive(True)
         self.search_button.set_sensitive(True)
