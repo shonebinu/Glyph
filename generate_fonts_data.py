@@ -1,18 +1,18 @@
 # https://googlefonts.github.io/gf-guide/metadata.html
 
-import uuid
-import json
 import argparse
-import uharfbuzz as hb
-from pathlib import Path
-from typing import List, Tuple, Dict, Any
-from fontTools.ttLib import TTFont, TTCollection
-from google.protobuf import text_format
-from gftools import fonts_public_pb2
-from google.protobuf.json_format import MessageToDict
-from gflanguages import LoadLanguages, LoadScripts
+import json
+import uuid
 from io import BytesIO
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
 
+import uharfbuzz as hb
+from fontTools.ttLib import TTCollection, TTFont
+from gflanguages import LoadLanguages, LoadScripts
+from gftools import fonts_public_pb2
+from google.protobuf import text_format
+from google.protobuf.json_format import MessageToDict
 
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
 FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"

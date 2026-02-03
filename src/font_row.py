@@ -1,4 +1,5 @@
-from gi.repository import Gtk, GObject
+from gi.repository import GObject, Gtk
+
 from .font_model import FontModel
 
 

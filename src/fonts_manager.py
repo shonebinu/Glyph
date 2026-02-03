@@ -1,10 +1,12 @@
 import asyncio
-from typing import List
-import httpx
 import json
 from pathlib import Path
+from typing import List
 from urllib.parse import urlparse
-from gi.repository import PangoCairo, Gio
+
+import httpx
+from gi.repository import Gio, PangoCairo
+
 from .font_model import FontModel
 
 

@@ -1,11 +1,13 @@
-from typing import cast
-from gi.repository import Gtk, Gio, GObject, Adw
-from .font_row import FontRow
-from .font_model import FontModel
-from .font_details_dialog import FontDetailsDialog
 import asyncio
-from .fonts_manager import FontsManager
+from typing import cast
+
 import httpx
+from gi.repository import Adw, Gio, GObject, Gtk
+
+from .font_details_dialog import FontDetailsDialog
+from .font_model import FontModel
+from .font_row import FontRow
+from .fonts_manager import FontsManager
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")

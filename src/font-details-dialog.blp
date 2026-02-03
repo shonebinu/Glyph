@@ -2,93 +2,93 @@ using Gtk 4.0;
 using Adw 1;
 
 template $FontDetailsDialog: Adw.Dialog {
-    title: bind (template.font_model as <$FontModel>).display_name;
-    content-width: 500;
-    content-height: 600;
+  title: bind (template.font_model as <$FontModel>).display_name;
+  content-width: 500;
+  content-height: 600;
 
-    Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar {}
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
 
-        ScrolledWindow {
-            Box {
-                orientation: vertical;
-                margin-top: 24;
-                margin-bottom: 24;
-                margin-start: 30;
-                margin-end: 30;
+    ScrolledWindow {
+      Box {
+        orientation: vertical;
+        margin-top: 24;
+        margin-bottom: 24;
+        margin-start: 30;
+        margin-end: 30;
 
-                ListBox {
-                    selection-mode: none;
+        ListBox {
+          selection-mode: none;
 
-                    styles [
-                        "boxed-list",
-                    ]
+          styles [
+            "boxed-list",
+          ]
 
-                    Adw.ActionRow {
-                        title: _("Family");
-                        subtitle: bind (template.font_model as <$FontModel>).family;
+          Adw.ActionRow {
+            title: _("Family");
+            subtitle: bind (template.font_model as <$FontModel>).family;
 
-                        styles [
-                            "property",
-                        ]
-                    }
+            styles [
+              "property",
+            ]
+          }
 
-                    Adw.ActionRow {
-                        title: _("Designer");
-                        subtitle: bind (template.font_model as <$FontModel>).designer;
+          Adw.ActionRow {
+            title: _("Designer");
+            subtitle: bind (template.font_model as <$FontModel>).designer;
 
-                        styles [
-                            "property",
-                        ]
-                    }
+            styles [
+              "property",
+            ]
+          }
 
-                    Adw.ActionRow {
-                        title: _("License");
-                        subtitle: bind (template.font_model as <$FontModel>).license;
+          Adw.ActionRow {
+            title: _("License");
+            subtitle: bind (template.font_model as <$FontModel>).license;
 
-                        styles [
-                            "property",
-                        ]
-                    }
+            styles [
+              "property",
+            ]
+          }
 
-                    Adw.ActionRow {
-                        title: _("Category");
-                        subtitle: bind (template.font_model as <$FontModel>).category_label;
+          Adw.ActionRow {
+            title: _("Category");
+            subtitle: bind (template.font_model as <$FontModel>).category_label;
 
-                        styles [
-                            "property",
-                        ]
-                    }
+            styles [
+              "property",
+            ]
+          }
 
-                    Adw.ActionRow {
-                        title: _("Subsets");
-                        subtitle: bind (template.font_model as <$FontModel>).subsets_label;
+          Adw.ActionRow {
+            title: _("Subsets");
+            subtitle: bind (template.font_model as <$FontModel>).subsets_label;
 
-                        styles [
-                            "property",
-                        ]
-                    }
+            styles [
+              "property",
+            ]
+          }
 
-                    Adw.ActionRow {
-                        title: _("Files");
-                        subtitle: bind (template.font_model as <$FontModel>).font_files_label;
+          Adw.ActionRow {
+            title: _("Files");
+            subtitle: bind (template.font_model as <$FontModel>).font_files_label;
 
-                        styles [
-                            "property",
-                        ]
-                    }
+            styles [
+              "property",
+            ]
+          }
 
-                    Adw.ActionRow {
-                        title: _("Status");
-                        subtitle: bind (template.font_model as <$FontModel>).font_status;
+          Adw.ActionRow {
+            title: _("Status");
+            subtitle: bind (template.font_model as <$FontModel>).font_status;
 
-                        styles [
-                            "property",
-                        ]
-                    }
-                }
-            }
+            styles [
+              "property",
+            ]
+          }
         }
+      }
     }
+  }
 }
