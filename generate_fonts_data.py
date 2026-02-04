@@ -26,18 +26,18 @@ gfscripts = LoadScripts()
 SCRIPT_NAME_TO_ID = {script.name: code for code, script in gfscripts.items()}
 
 
-def get_required_glyph_ids(face: hb.Face, text: str) -> set:
-    font = hb.Font(face)
-    buf = hb.Buffer()
+def get_required_glyph_ids(face: hb.Face, text: str) -> set:  # type: ignore
+    font = hb.Font(face)  # type: ignore
+    buf = hb.Buffer()  # type: ignore
     buf.add_str(text)
     buf.guess_segment_properties()
-    hb.shape(font, buf)
+    hb.shape(font, buf)  # type: ignore
     return {info.codepoint for info in buf.glyph_infos}
 
 
 def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
-    blob = hb.Blob.from_file_path(str(ttf_path))
-    face = hb.Face(blob)
+    blob = hb.Blob.from_file_path(str(ttf_path))  # type: ignore
+    face = hb.Face(blob)  # type: ignore
 
     # we need to add the glyph ids as well for proper preview of complex non latin languages
     gids = get_required_glyph_ids(face, preview_string)
@@ -49,14 +49,14 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
             f"Some character in preview string '{preview_string}' doesn't exist in font {ttf_path}."
         )
 
-    subset_input = hb.SubsetInput()
+    subset_input = hb.SubsetInput()  # type: ignore
     for gid in gids:
         subset_input.glyph_set.add(gid)
 
     for char in preview_string:
         subset_input.unicode_set.add(ord(char))
 
-    subset_face = hb.subset(face, subset_input)
+    subset_face = hb.subset(face, subset_input)  # type: ignore
     return BytesIO(subset_face.blob.data)
 
 
@@ -90,7 +90,7 @@ def generate_previews_ttc(
 
 
 def load_metadata(path: Path) -> Dict[Any, Any]:
-    message = fonts_public_pb2.FamilyProto()
+    message = fonts_public_pb2.FamilyProto()  # type: ignore
     text_format.Parse(path.read_text(), message, allow_unknown_field=True)
     return MessageToDict(message, preserving_proto_field_name=True)
 
