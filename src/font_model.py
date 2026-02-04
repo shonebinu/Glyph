@@ -11,9 +11,6 @@ class FontModel(GObject.Object):
     is_installed = GObject.Property(type=bool, default=False)
     is_installing = GObject.Property(type=bool, default=False)
     install_state_name = GObject.Property(type=str, default="not_installing")
-    preview_string = GObject.Property(type=str)
-
-    preview_attrs = GObject.Property(type=Pango.AttrList)
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()
@@ -28,12 +25,9 @@ class FontModel(GObject.Object):
         self.preview_family = data["preview_family"]
         self.is_installed = is_installed
 
-        self.preview_attrs = Pango.AttrList()
-        self.preview_attrs.insert(
-            Pango.attr_font_desc_new(
-                Pango.FontDescription.from_string(f"{self.preview_family} 18")
-            )
-        )
+    @GObject.Property(type=str)
+    def preview_markup(self):
+        return f'<span font_family="{self.preview_family}" size="xx-large" fallback="false">{self.preview_string}</span>'
 
     @GObject.Property(type=str)
     def category_label(self):

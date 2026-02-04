@@ -66,8 +66,7 @@ template $FontRow: Box {
       height-request: 72;
       wrap-mode: none;
       text-overflow: clip;
-      text: bind (template.font_model as <$FontModel>).preview_string;
-      attributes: bind (template.font_model as <$FontModel>).preview_attrs;
+      markup: bind (template.font_model as <$FontModel>).preview_markup;
     }
   }
 
