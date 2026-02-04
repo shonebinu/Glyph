@@ -55,30 +55,13 @@ template $GlyphWindow: Adw.ApplicationWindow {
         Adw.ViewStackPage {
           name: "loading";
 
-          child: Box {
-            halign: center;
-            valign: center;
-            orientation: vertical;
-            spacing: 12;
+          child: Adw.StatusPage loading_status {
+            paintable: Adw.SpinnerPaintable {
+              widget: loading_status;
+            };
 
-            Spinner {
-              spinning: true;
-              width-request: 64;
-              height-request: 64;
-            }
-
-            Label {
-              label: _("Loading Preview Fonts…");
-              margin-top: 12;
-
-              styles [
-                "title-1",
-              ]
-            }
-
-            Label {
-              label: _("This could take a moment.");
-            }
+            title: _("Loading Preview Fonts...");
+            description: _("This could take a moment.");
           };
         }
 
