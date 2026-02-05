@@ -1,3 +1,6 @@
+import os
+from urllib.parse import urlparse
+
 from gi.repository import GObject
 
 
@@ -39,7 +42,12 @@ class FontModel(GObject.Object):
 
     @GObject.Property(type=str)
     def font_files_label(self):
-        return "\n".join([f'<a href="{fil}">{fil}</a>' for fil in self.files])
+        return ", ".join(
+            [
+                f'<a href="{fil}">{os.path.basename(urlparse(fil).path)}</a>'
+                for fil in self.files
+            ]
+        )
 
     @GObject.Property(type=str)
     def font_status(self):
