@@ -1,4 +1,4 @@
-from gi.repository import GObject, Pango
+from gi.repository import GObject
 
 
 class FontModel(GObject.Object):
@@ -35,7 +35,7 @@ class FontModel(GObject.Object):
 
     @GObject.Property(type=str)
     def subsets_label(self):
-        return ", ".join([sub.title() for sub in self.subsets])
+        return ", ".join([sub.replace("-", " ").title() for sub in self.subsets])
 
     @GObject.Property(type=str)
     def font_files_label(self):
