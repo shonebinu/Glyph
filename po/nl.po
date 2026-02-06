@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the glyph package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: glyph\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-04 07:00+0100\n"
+"PO-Revision-Date: 2026-02-06 10:57+0100\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: data/io.github.shonebinu.Glyph.desktop.in:2
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:7 src/window.blp:5
+msgid "Glyph"
+msgstr "Glief"
+
+#: data/io.github.shonebinu.Glyph.desktop.in:8
+msgid "Fonts;Install;Download;Viewer;Typeface;Typography;Glyphs;"
+msgstr "Lettertypen;Fonts;Installeren;Downloaden;Bekijken;Typografie;"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:8
+msgid "Install fonts"
+msgstr "Installeer lettertypen"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:11
+msgid ""
+"Glyph lets you install fonts from a catalog of thousands of fonts into your "
+"system for free. Browse and view previews of each font as you scroll."
+msgstr ""
+"Met behulp van Glief kun je gratis lettertypen installeren uit een "
+"catalogus met duizenden lettertypen. Bekijk hoe ze er uitzien terwijl je "
+"bladert."
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:13
+msgid "Features:"
+msgstr "Kenmerken:"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:15
+msgid "Preview fonts without internet or installation."
+msgstr ""
+"Bekijk lettertypen zonder ze te installeren (en zonder internetverbinding)."
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:17
+msgid ""
+"Search through thousands of fonts in various categories such as sans, mono "
+"etc."
+msgstr ""
+"Doorzoek duizenden lettertypen uit verschillende categorieën, zoals "
+"schreefloos, vaste breedte, etc."
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:18
+msgid "Install the latest font to your system."
+msgstr "Installeer de nieuwste versies op je systeem."
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:20
+msgid "View the details of fonts such as the designer, license, files etc."
+msgstr ""
+"Bekijk de details ervan, zoals wie de ontwerper is, wat de licentie is, etc."
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:22
+msgid "Fonts fetched from Google Fonts Github repo with original quality."
+msgstr ""
+"De lettertypen worden opgehaald uit de GitHub-repo van Google Fonts, met "
+"behoud van de oorspronkelijke kwaliteit."
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:84
+msgid "Glyph home"
+msgstr "Startscherm"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:89
+msgid "Font details dialog"
+msgstr "Lettertypedetails"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:94
+msgid "Fonts search"
+msgstr "Zoeken naar lettertypen"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:99
+msgid "Small screen size"
+msgstr "Klein scherm"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:107
+msgid "Release v0.1.0"
+msgstr "Uitgave v0.1.0"
+
+#: data/io.github.shonebinu.Glyph.metainfo.xml.in:109
+msgid "Initial release of the app"
+msgstr "De allereerste uitgave"
+
+#. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
+#: src/main.py:44
+msgid "translator-credits"
+msgstr "Heimen Stoffels <vistausss@fastmail.com>"
+
+#: src/window.blp:19 src/window.blp:48
+msgid "Search fonts"
+msgstr "Zoeken naar lettertypen"
+
+#: src/window.blp:36
+msgid "Main Menu"
+msgstr "Hoofdmenu"
+
+#: src/window.blp:63
+msgid "Loading Preview Fonts..."
+msgstr "Bezig met laden van voorvertoningen…"
+
+#: src/window.blp:64
+msgid "This could take a moment."
+msgstr "Dit kan even duren."
+
+#: src/window.blp:79
+msgid "No Fonts Found"
+msgstr "Er zijn geen zoekresultaten"
+
+#: src/window.blp:80
+msgid "Try a different search term or check your spelling."
+msgstr "Controleer je spelling of probeer een andere zoekopdracht."
+
+#: src/window.blp:91
+msgid "_Keyboard Shortcuts"
+msgstr "_Sneltoetsen"
+
+#: src/window.blp:96
+msgid "_About Glyph"
+msgstr "_Over Glief"
