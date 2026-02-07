@@ -47,10 +47,3 @@ class GlyphWindow(Adw.ApplicationWindow):
 
     def on_toast_notification_received(self, _, msg: str):
         self.toast_overlay.add_toast(Adw.Toast(title=msg))
-
-    # TODO: implement smart search based on subset, author etc
-    # TODO: implement fetch latest fonts data
-    # TODO: implement filtering based on subset and categories (maybe license), installed
-    # TODO: implement font testing page? download font to temporary and let user test it with diff text, styles etc?
-    # TODO: fix focus following after search
-    # TODO: let user delete fonts installed thru glyph?

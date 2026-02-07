@@ -36,6 +36,13 @@ template $GlyphWindow: Adw.ApplicationWindow {
           tooltip-text: _("Main Menu");
           menu-model: primary_menu;
         }
+
+        [end]
+        MenuButton {
+          icon-name: "funnel-outline";
+          tooltip-text: _("Filter");
+          popover: filter_popover;
+        }
       }
 
       [top]
@@ -80,6 +87,33 @@ template $GlyphWindow: Adw.ApplicationWindow {
             description: _("Try a different search term or check your spelling.");
           };
         }
+      };
+    }
+  };
+}
+
+Popover filter_popover {
+  has-arrow: true;
+
+  child: Box {
+    orientation: vertical;
+    spacing: 6;
+
+    Label {
+      label: _("Category");
+      margin-bottom: 6;
+    }
+
+    DropDown {
+      model: StringList {
+        strings [
+          "All categories",
+          "Sans Serif",
+          "Serif",
+          "Display",
+          "Monospace",
+          "Handwriting",
+        ]
       };
     }
   };
