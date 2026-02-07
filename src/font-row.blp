@@ -1,121 +1,64 @@
 using Gtk 4.0;
-using Adw 1;
 
 template $FontRow: Box {
-  spacing: 36;
   margin-top: 12;
-  margin-bottom: 6;
   margin-start: 18;
   margin-end: 24;
+  orientation: vertical;
+  spacing: 6;
+  hexpand: true;
 
   Box {
-    orientation: vertical;
-    spacing: 6;
-    hexpand: true;
-
-    Box {
-      spacing: 9;
-
-      Label {
-        halign: start;
-
-        styles [
-          "heading",
-        ]
-
-        label: bind (template.font_model as <$FontModel>).display_name;
-      }
-
-      Separator {
-        visible: bind (template.font_model as <$FontModel>).is_installed;
-      }
-
-      Label {
-        label: _("Installed");
-        visible: bind (template.font_model as <$FontModel>).is_installed;
-
-        styles [
-          "accent",
-          "caption-heading",
-        ]
-      }
-    }
+    spacing: 9;
 
     Label {
       halign: start;
 
       styles [
-        "caption",
+        "heading",
       ]
 
-      label: bind (template.font_model as <$FontModel>).category_label;
+      label: bind (template.font_model as <$FontModel>).display_name;
+    }
+
+    Separator {
+      visible: bind (template.font_model as <$FontModel>).is_installed;
     }
 
     Label {
-      halign: start;
+      label: _("Installed");
+      visible: bind (template.font_model as <$FontModel>).is_installed;
 
       styles [
-        "dimmed",
-        "caption",
+        "accent",
+        "caption-heading",
       ]
-
-      label: bind (template.font_model as <$FontModel>).subsets_label;
-    }
-
-    Inscription {
-      height-request: 72;
-      wrap-mode: none;
-      text-overflow: clip;
-      markup: bind (template.font_model as <$FontModel>).preview_markup;
     }
   }
 
-  Box {
-    spacing: 12;
+  Label {
+    halign: start;
+    label: bind (template.font_model as <$FontModel>).category_label;
 
-    Button {
-      icon-name: "info-outline-symbolic";
+    styles [
+      "caption",
+    ]
+  }
 
-      styles [
-        "flat",
-      ]
+  Label {
+    halign: start;
+    label: bind (template.font_model as <$FontModel>).subsets_label;
 
-      valign: center;
-      tooltip-text: _("Font details");
-      clicked => $on_detail_clicked();
-    }
+    styles [
+      "dimmed",
+      "caption",
+    ]
+  }
 
-    Stack {
-      visible-child-name: bind (template.font_model as <$FontModel>).install_state_name;
-
-      StackPage {
-        name: "not_installing";
-
-        child: Button {
-          icon-name: "folder-download-symbolic";
-
-          styles [
-            "flat",
-          ]
-
-          valign: center;
-          tooltip-text: _("Install font");
-          clicked => $on_install_clicked();
-        };
-      }
-
-      StackPage {
-        name: "installing";
-
-        child: Adw.Spinner {
-          valign: center;
-          halign: center;
-
-          styles [
-            "accent",
-          ]
-        };
-      }
-    }
+  Inscription preview_inscription {
+    height-request: 72;
+    wrap-mode: none;
+    text-overflow: clip;
+    markup: bind (template.font_model as <$FontModel>).preview_markup;
   }
 }

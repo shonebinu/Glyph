@@ -19,13 +19,6 @@ class GlyphWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.fonts_view.connect(
-            "installation-error", self.on_toast_notification_received
-        )
-        self.fonts_view.connect(
-            "installation-success", self.on_toast_notification_received
-        )
-
         asyncio.create_task(self.setup_async())
 
     async def setup_async(self):
@@ -44,6 +37,3 @@ class GlyphWindow(Adw.ApplicationWindow):
             self.fonts_view.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
         else:
             self.main_stack.set_visible_child_name("search_empty")
-
-    def on_toast_notification_received(self, _, msg: str):
-        self.toast_overlay.add_toast(Adw.Toast(title=msg))

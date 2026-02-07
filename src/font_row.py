@@ -1,4 +1,4 @@
-from gi.repository import GObject, Gtk
+from gi.repository import GObject, Gtk, Pango
 
 from .font_model import FontModel
 
@@ -9,21 +9,8 @@ class FontRow(Gtk.Box):
 
     font_model = GObject.Property(type=FontModel)
 
-    @GObject.Signal(arg_types=(FontModel,))
-    def detail_clicked(self, font_model: FontModel):
-        pass
+    preview_inscription: Gtk.Inscription = Gtk.Template.Child()
 
-    @GObject.Signal(arg_types=(FontModel,))
-    def install_clicked(self, font_model: FontModel):
-        pass
-
-    def __init__(self, **kwargs):
+    def __init__(self, font_map: Pango.FontMap, **kwargs):
         super().__init__(**kwargs)
-
-    @Gtk.Template.Callback()
-    def on_detail_clicked(self, _):
-        self.emit("detail-clicked", self.font_model)
-
-    @Gtk.Template.Callback()
-    def on_install_clicked(self, _):
-        self.emit("install-clicked", self.font_model)
+        self.preview_inscription.set_font_map(font_map)

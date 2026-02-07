@@ -12,7 +12,7 @@ from .font_model import FontModel
 
 class FontsManager:
     def __init__(self):
-        self.store = Gio.ListStore.new(FontModel)
+        self.font_store = Gio.ListStore.new(FontModel)
 
         data_dir = Path("/app/share/glyph")
         fonts_json_path = data_dir / "fonts.json"
@@ -33,7 +33,7 @@ class FontsManager:
         if not fonts_loaded:
             raise Exception("Failed to load preview fonts")
 
-        self.store.splice(0, 0, fonts)
+        self.font_store.splice(0, 0, fonts)
 
     async def install_font(self, font_files: List[str]):
         # do not try to use env vars or library(glib,os) dir methods here for proper working in flatpak for both dev and release
