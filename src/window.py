@@ -35,3 +35,5 @@ class GlyphWindow(Adw.ApplicationWindow):
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
         self.fonts_view.set_search_query(search_entry.get_text())
+        if not search_entry.has_focus():
+            search_entry.grab_focus()

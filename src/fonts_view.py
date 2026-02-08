@@ -44,6 +44,8 @@ class FontsView(Adw.Bin):
         self.bottom_sheet.set_open(True)
 
     def set_search_query(self, text: str):
+        if self.bottom_sheet.get_open():
+            self.bottom_sheet.set_open(False)
         self.search_query = text
         if self.selection_model.get_n_items() > 0:
             self.view_stack.set_visible_child_name("results")
