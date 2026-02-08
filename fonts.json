@@ -1210,6 +1210,26 @@
     "preview_family": "Alumni Sans SC Thin"
   },
   {
+    "family": "Alyamama",
+    "display_name": "Alyamama",
+    "designer": "Yazeed Omar",
+    "license": "OFL",
+    "category": [
+      "SERIF"
+    ],
+    "subsets": [
+      "arabic",
+      "greek",
+      "latin",
+      "latin-ext"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/alyamama/Alyamama[wght].ttf"
+    ],
+    "preview_string": "ولما كان تناسي حقوق الإنسان وازدراؤها قد أفضيا إلى أعمال همجية",
+    "preview_family": "Alyamama Light"
+  },
+  {
     "family": "Amarante",
     "display_name": "Amarante",
     "designer": "Karolina Lach",
@@ -3969,6 +3989,96 @@
     ],
     "preview_string": "Whereas disregard and contempt for human rights have resulted",
     "preview_family": "Besley"
+  },
+  {
+    "family": "Betania Patmos",
+    "display_name": "Betania Patmos",
+    "designer": "Carolina Giovagnoli",
+    "license": "OFL",
+    "category": [
+      "HANDWRITING"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/betaniapatmos/BetaniaPatmos-Regular.ttf"
+    ],
+    "preview_string": "Whereas disregard and contempt for human rights have resulted",
+    "preview_family": "Betania Patmos"
+  },
+  {
+    "family": "Betania Patmos GDL",
+    "display_name": "Betania Patmos Guideline",
+    "designer": "Carolina Giovagnoli",
+    "license": "OFL",
+    "category": [
+      "HANDWRITING"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/betaniapatmosgdl/BetaniaPatmosGDL-Regular.ttf"
+    ],
+    "preview_string": "Whereas disregard and contempt for human rights have resulted",
+    "preview_family": "Betania Patmos GDL"
+  },
+  {
+    "family": "Betania Patmos Guide Line",
+    "display_name": "Betania Patmos Guides",
+    "designer": "Carolina Giovagnoli",
+    "license": "OFL",
+    "category": [
+      "DISPLAY"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/betaniapatmosguideline/BetaniaPatmosGuideLine-Regular.ttf"
+    ],
+    "preview_string": "Whereas disregard and contempt for human rights have resulted",
+    "preview_family": "Betania Patmos GuideLine"
+  },
+  {
+    "family": "Betania Patmos In",
+    "display_name": "Betania Patmos In",
+    "designer": "Carolina Giovagnoli",
+    "license": "OFL",
+    "category": [
+      "HANDWRITING"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/betaniapatmosin/BetaniaPatmosIn-Regular.ttf"
+    ],
+    "preview_string": "Whereas disregard and contempt for human rights have resulted",
+    "preview_family": "Betania Patmos In"
+  },
+  {
+    "family": "Betania Patmos In GDL",
+    "display_name": "Betania Patmos In Guideline",
+    "designer": "Carolina Giovagnoli",
+    "license": "OFL",
+    "category": [
+      "HANDWRITING"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/betaniapatmosingdl/BetaniaPatmosInGDL-Regular.ttf"
+    ],
+    "preview_string": "Whereas disregard and contempt for human rights have resulted",
+    "preview_family": "Betania Patmos In GDL"
   },
   {
     "family": "Beth Ellen",
@@ -13598,6 +13708,26 @@
     ],
     "preview_string": "Whereas disregard and contempt for human rights have resulted",
     "preview_family": "Iceland"
+  },
+  {
+    "family": "Idiqlat",
+    "display_name": "Idiqlat",
+    "designer": "SIL International",
+    "license": "OFL",
+    "category": [
+      "SERIF"
+    ],
+    "subsets": [
+      "latin",
+      "syriac"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/idiqlat/Idiqlat-ExtraLight.ttf",
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/idiqlat/Idiqlat-Light.ttf",
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/idiqlat/Idiqlat-Regular.ttf"
+    ],
+    "preview_string": "ܟܠ ܒܪܢܫܐ ܒܪܝܠܗ ܚܐܪܐ ܘܒܪܒܪ ܓܘ ܐܝܩܪܐ ܘܙܕܩܐ. ܘܦܝܫܝܠܗ ܝܗܒܐ ܗܘܢܐ ܘܐܢܝܬ.",
+    "preview_family": "Idiqlat"
   },
   {
     "family": "IM Fell Double Pica",
@@ -30420,6 +30550,24 @@
     ],
     "preview_string": "人権の無視及び軽侮が、人類の良心を踏みにじった野蛮行為をもたらし、言論及び信仰の自由が受けられ、恐怖及び欠乏のない世界の到来が",
     "preview_family": "Rampart One"
+  },
+  {
+    "family": "Ramsina",
+    "display_name": "Ramsina",
+    "designer": "SIL International",
+    "license": "OFL",
+    "category": [
+      "SERIF"
+    ],
+    "subsets": [
+      "latin",
+      "syriac"
+    ],
+    "files": [
+      "https://raw.githubusercontent.com/google/fonts/main/ofl/ramsina/Ramsina-Regular.ttf"
+    ],
+    "preview_string": "ܟܠ ܒܪܢܫܐ ܒܪܝܠܗ ܚܐܪܐ ܘܒܪܒܪ ܓܘ ܐܝܩܪܐ ܘܙܕܩܐ. ܘܦܝܫܝܠܗ ܝܗܒܐ ܗܘܢܐ ܘܐܢܝܬ.",
+    "preview_family": "Ramsina"
   },
   {
     "family": "Ranchers",
