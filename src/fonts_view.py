@@ -1,6 +1,6 @@
 from typing import cast
 
-from gi.repository import Gio, GObject, Gtk
+from gi.repository import Adw, Gio, GObject, Gtk
 
 from .font_model import FontModel
 from .font_row import FontRow

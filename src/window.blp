@@ -38,7 +38,8 @@ template $GlyphWindow: Adw.ApplicationWindow {
         }
 
         [end]
-        MenuButton {
+        MenuButton filter_button {
+          sensitive: false;
           icon-name: "funnel-outline";
           tooltip-text: _("Filter");
           popover: filter_popover;

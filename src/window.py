@@ -14,6 +14,7 @@ class GlyphWindow(Adw.ApplicationWindow):
     main_stack: Adw.ViewStack = Gtk.Template.Child()
     fonts_view: FontsView = Gtk.Template.Child()
     search_button: Gtk.ToggleButton = Gtk.Template.Child()
+    filter_button: Gtk.MenuButton = Gtk.Template.Child()
     search_bar: Gtk.SearchBar = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
@@ -27,6 +28,7 @@ class GlyphWindow(Adw.ApplicationWindow):
         self.main_stack.set_visible_child_name("fonts_view")
         self.search_bar.set_sensitive(True)
         self.search_button.set_sensitive(True)
+        self.filter_button.set_sensitive(True)
 
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
