@@ -4,28 +4,44 @@ using Adw 1;
 
 template $FontsView: Adw.Bin {
   Adw.BottomSheet bottom_sheet {
-    content: ScrolledWindow {
-      hscrollbar-policy: never;
+    content: Adw.ViewStack view_stack {
+      Adw.ViewStackPage {
+        name: "results";
 
-      ListView list_view {
-        show-separators: true;
-        single-click-activate: true;
-        activate => $on_list_item_activated();
+        child: ScrolledWindow {
+          hscrollbar-policy: never;
 
-        factory: SignalListItemFactory {
-          setup => $on_factory_setup();
-          bind => $on_factory_bind();
-        };
+          ListView list_view {
+            show-separators: true;
+            single-click-activate: true;
+            activate => $on_list_item_activated();
 
-        model: NoSelection selection_model {
-          model: FilterListModel {
-            filter: StringFilter {
-              expression: expr item as <$FontModel>.display_name;
-              search: bind template.search_query;
+            factory: SignalListItemFactory {
+              setup => $on_factory_setup();
+              bind => $on_factory_bind();
             };
 
-            model: bind template.font_store as <Gio.ListModel>;
-          };
+            model: NoSelection selection_model {
+              model: FilterListModel {
+                filter: StringFilter {
+                  expression: expr item as <$FontModel>.display_name;
+                  search: bind template.search_query;
+                };
+
+                model: bind template.font_store as <Gio.ListModel>;
+              };
+            };
+          }
+        };
+      }
+
+      Adw.ViewStackPage {
+        name: "empty";
+
+        child: Adw.StatusPage {
+          icon-name: "edit-find-symbolic";
+          title: _("No Fonts Found");
+          description: _("Try a different search term or check your spelling.");
         };
       }
     };

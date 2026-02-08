@@ -25,17 +25,13 @@ class GlyphWindow(Adw.ApplicationWindow):
     async def setup_async(self):
         fonts_manager = await asyncio.to_thread(FontsManager)
         self.fonts_view.set_fonts_manager(fonts_manager)
+
         self.view_stack.set_visible_child_name("fonts_view")
+
         self.search_bar.set_sensitive(True)
         self.search_button.set_sensitive(True)
         self.filter_button.set_sensitive(True)
 
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
-        self.fonts_view.search_query = search_entry.get_text()
-        if self.fonts_view.selection_model.get_n_items() > 0:
-            if self.view_stack.get_visible_child_name() != "fonts_view":
-                self.view_stack.set_visible_child_name("fonts_view")
-            self.fonts_view.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
-        else:
-            self.view_stack.set_visible_child_name("search_empty")
+        self.fonts_view.set_search_query(search_entry.get_text())

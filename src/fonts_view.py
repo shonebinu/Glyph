@@ -17,6 +17,7 @@ class FontsView(Adw.Bin):
     list_view: Gtk.ListView = Gtk.Template.Child()
     selection_model: Gtk.NoSelection = Gtk.Template.Child()
     bottom_sheet: Adw.BottomSheet = Gtk.Template.Child()
+    view_stack: Adw.ViewStack = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,3 +42,11 @@ class FontsView(Adw.Bin):
     def on_list_item_activated(self, list_view, position):
         font_item = cast(FontModel, self.selection_model.get_item(position))
         self.bottom_sheet.set_open(True)
+
+    def set_search_query(self, text: str):
+        self.search_query = text
+        if self.selection_model.get_n_items() > 0:
+            self.view_stack.set_visible_child_name("results")
+            self.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
+        else:
+            self.view_stack.set_visible_child_name("empty")
