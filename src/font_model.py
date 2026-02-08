@@ -5,6 +5,9 @@ class FontModel(GObject.Object):
     __gtype_name__ = "FontModel"
 
     display_name = GObject.Property(type=str)
+    family = GObject.Property(type=str)
+    designer = GObject.Property(type=str)
+    license = GObject.Property(type=str)
     is_installed = GObject.Property(type=bool, default=False)
 
     def __init__(self, data: dict, is_installed: bool = False):

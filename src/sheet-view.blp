@@ -1,0 +1,95 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $SheetView: Adw.Bin {
+  Adw.StatusPage {
+    title: bind (template.font_model as <$FontModel>).display_name;
+
+    child: Adw.Clamp {
+      Box {
+        orientation: vertical;
+
+        ListBox {
+          selection-mode: none;
+
+          styles [
+            "boxed-list",
+          ]
+
+          Adw.ActionRow {
+            title: _("Family");
+            subtitle: bind (template.font_model as <$FontModel>).family;
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow {
+            title: _("Designer");
+            subtitle: bind (template.font_model as <$FontModel>).designer;
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow {
+            title: _("License");
+            subtitle: bind (template.font_model as <$FontModel>).license;
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow {
+            title: _("Category");
+            subtitle: bind (template.font_model as <$FontModel>).category_label;
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow {
+            title: _("Subsets");
+            subtitle: bind (template.font_model as <$FontModel>).subsets_label;
+
+            styles [
+              "property",
+            ]
+          }
+        }
+
+        Gtk.Box {
+          halign: center;
+          spacing: 12;
+
+          Gtk.Button {
+            Adw.ButtonContent {
+              label: _("Test Font");
+              icon-name: "text-insert2-symbolic";
+            }
+
+            styles [
+              "pill",
+            ]
+          }
+
+          Gtk.Button {
+            Adw.ButtonContent {
+              label: _("Install Font");
+              icon-name: "folder-download-symbolic";
+            }
+
+            styles [
+              "pill",
+              "suggested-action",
+            ]
+          }
+        }
+      }
+    };
+  }
+}

@@ -5,15 +5,12 @@
         <file preprocess="xml-stripblanks">shortcuts-dialog.ui</file>
         <file preprocess="xml-stripblanks">fonts-view.ui</file>
         <file preprocess="xml-stripblanks">font-row.ui</file>
+        <file preprocess="xml-stripblanks">sheet-view.ui</file>
 
         <file
             preprocess="xml-stripblanks"
             alias="appdata.xml"
         >../data/io.github.shonebinu.Glyph.metainfo.xml</file>
-
-        <file
-            preprocess="xml-stripblanks"
-        >icons/info-outline-symbolic.svg</file>
 
         <file
             preprocess="xml-stripblanks"
@@ -24,5 +21,9 @@
         >icons/funnel-outline-symbolic.svg</file>
 
         <file preprocess="xml-stripblanks">icons/edit-find-symbolic.svg</file>
+
+        <file
+            preprocess="xml-stripblanks"
+        >icons/text-insert2-symbolic.svg</file>
     </gresource>
 </gresources>

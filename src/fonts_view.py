@@ -5,6 +5,7 @@ from gi.repository import Adw, Gio, GObject, Gtk
 from .font_model import FontModel
 from .font_row import FontRow
 from .fonts_manager import FontsManager
+from .sheet_view import SheetView
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")
@@ -16,8 +17,9 @@ class FontsView(Adw.Bin):
     search_query = GObject.Property(type=str)
     list_view: Gtk.ListView = Gtk.Template.Child()
     selection_model: Gtk.NoSelection = Gtk.Template.Child()
-    bottom_sheet: Adw.BottomSheet = Gtk.Template.Child()
+    bottom_sheet_layout: Adw.BottomSheet = Gtk.Template.Child()
     view_stack: Adw.ViewStack = Gtk.Template.Child()
+    sheet_view: SheetView = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -41,8 +43,8 @@ class FontsView(Adw.Bin):
 
     def set_search_query(self, text: str):
         # close bottomsheet while searching
-        if self.bottom_sheet.get_open():
-            self.bottom_sheet.set_open(False)
+        if self.bottom_sheet_layout.get_open():
+            self.bottom_sheet_layout.set_open(False)
         self.search_query = text
         if self.selection_model.get_n_items() > 0:
             self.view_stack.set_visible_child_name("results")
@@ -51,6 +53,7 @@ class FontsView(Adw.Bin):
             self.view_stack.set_visible_child_name("empty")
 
     @Gtk.Template.Callback()
-    def on_list_item_activated(self, list_view, position):
+    def on_list_item_activated(self, _, position):
         font_item = cast(FontModel, self.selection_model.get_item(position))
-        self.bottom_sheet.set_open(True)
+        self.sheet_view.font_model = font_item
+        self.bottom_sheet_layout.set_open(True)
