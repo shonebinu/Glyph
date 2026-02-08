@@ -28,6 +28,7 @@ class FontsView(Adw.Bin):
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
+        # custom FontMap for font preview inscriptions
         row = FontRow(self.fonts_manager.custom_font_map)
         list_item.set_child(row)
 
@@ -38,12 +39,8 @@ class FontsView(Adw.Bin):
 
         row.font_model = model
 
-    @Gtk.Template.Callback()
-    def on_list_item_activated(self, list_view, position):
-        font_item = cast(FontModel, self.selection_model.get_item(position))
-        self.bottom_sheet.set_open(True)
-
     def set_search_query(self, text: str):
+        # close bottomsheet while searching
         if self.bottom_sheet.get_open():
             self.bottom_sheet.set_open(False)
         self.search_query = text
@@ -52,3 +49,8 @@ class FontsView(Adw.Bin):
             self.list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, None)
         else:
             self.view_stack.set_visible_child_name("empty")
+
+    @Gtk.Template.Callback()
+    def on_list_item_activated(self, list_view, position):
+        font_item = cast(FontModel, self.selection_model.get_item(position))
+        self.bottom_sheet.set_open(True)

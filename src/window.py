@@ -28,6 +28,7 @@ class GlyphWindow(Adw.ApplicationWindow):
 
         self.view_stack.set_visible_child_name("fonts_view")
 
+        # enable header buttons only after loading is finished
         self.search_bar.set_sensitive(True)
         self.search_button.set_sensitive(True)
         self.filter_button.set_sensitive(True)
@@ -35,5 +36,6 @@ class GlyphWindow(Adw.ApplicationWindow):
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
         self.fonts_view.set_search_query(search_entry.get_text())
+        # closing bottomsheet removes the focus from search entry
         if not search_entry.has_focus():
             search_entry.grab_focus()

@@ -13,6 +13,7 @@ template $FontRow: Box {
 
     Label {
       halign: start;
+      wrap: true;
 
       styles [
         "heading",
@@ -37,6 +38,7 @@ template $FontRow: Box {
   }
 
   Label {
+    wrap: true;
     halign: start;
     label: bind (template.font_model as <$FontModel>).category_label;
 
@@ -48,6 +50,7 @@ template $FontRow: Box {
   Label {
     halign: start;
     label: bind (template.font_model as <$FontModel>).subsets_label;
+    wrap: true;
 
     styles [
       "dimmed",
