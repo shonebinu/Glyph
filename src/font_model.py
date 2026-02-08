@@ -9,6 +9,7 @@ class FontModel(GObject.Object):
     designer = GObject.Property(type=str)
     license = GObject.Property(type=str)
     is_installed = GObject.Property(type=bool, default=False)
+    font_status = GObject.Property(type=str)
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()
@@ -22,6 +23,8 @@ class FontModel(GObject.Object):
         self.preview_string = data["preview_string"]
         self.preview_family = data["preview_family"]
         self.is_installed = is_installed
+
+        self.font_status = "Installed" if is_installed else "Not Installed"
 
     @GObject.Property(type=str)
     def category_label(self):

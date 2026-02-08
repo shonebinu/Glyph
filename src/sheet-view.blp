@@ -60,6 +60,15 @@ template $SheetView: Adw.Bin {
               "property",
             ]
           }
+
+          Adw.ActionRow {
+            title: _("Status");
+            subtitle: bind (template.font_model as <$FontModel>).font_status;
+
+            styles [
+              "property",
+            ]
+          }
         }
 
         Gtk.Box {
@@ -88,6 +97,15 @@ template $SheetView: Adw.Bin {
               "suggested-action",
             ]
           }
+        }
+
+        Gtk.Label {
+          label: _("Note: Testing font may take a moment.");
+
+          styles [
+            "caption",
+            "dim-label",
+          ]
         }
       }
     };
