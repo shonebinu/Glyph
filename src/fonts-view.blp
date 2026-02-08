@@ -1,25 +1,55 @@
 using Gtk 4.0;
 using Gio 2.0;
+using Adw 1;
 
-template $FontsView: ScrolledWindow {
-  hscrollbar-policy: never;
+template $FontsView: Adw.Bin {
+  Adw.BottomSheet bottom_sheet {
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
 
-  ListView list_view {
-    show-separators: true;
+      ListView list_view {
+        show-separators: true;
+        single-click-activate: true;
+        activate => $on_list_item_activated();
 
-    factory: SignalListItemFactory {
-      setup => $on_factory_setup();
-      bind => $on_factory_bind();
-    };
-
-    model: NoSelection selection_model {
-      model: FilterListModel {
-        filter: StringFilter {
-          expression: expr item as <$FontModel>.display_name;
-          search: bind template.search_query;
+        factory: SignalListItemFactory {
+          setup => $on_factory_setup();
+          bind => $on_factory_bind();
         };
 
-        model: bind template.font_store as <Gio.ListModel>;
+        model: NoSelection selection_model {
+          model: FilterListModel {
+            filter: StringFilter {
+              expression: expr item as <$FontModel>.display_name;
+              search: bind template.search_query;
+            };
+
+            model: bind template.font_store as <Gio.ListModel>;
+          };
+        };
+      }
+    };
+
+    sheet: Adw.StatusPage {
+      title: _("Sheet");
+
+      child: Adw.Clamp {
+        child: Adw.PreferencesGroup {
+          Adw.SwitchRow {
+            active: bind bottom_sheet.can-close bidirectional;
+            title: _("Can Close");
+          }
+
+          Adw.SwitchRow {
+            active: bind bottom_sheet.show-drag-handle bidirectional;
+            title: _("Show Drag Handle");
+          }
+
+          Adw.SwitchRow {
+            active: bind bottom_sheet.modal bidirectional;
+            title: _("Modal");
+          }
+        };
       };
     };
   }

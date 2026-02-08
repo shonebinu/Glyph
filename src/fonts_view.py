@@ -8,7 +8,7 @@ from .fonts_manager import FontsManager
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/fonts-view.ui")
-class FontsView(Gtk.ScrolledWindow):
+class FontsView(Adw.Bin):
     __gtype_name__ = "FontsView"
 
     font_store = GObject.Property(type=Gio.ListModel)
@@ -16,6 +16,7 @@ class FontsView(Gtk.ScrolledWindow):
     search_query = GObject.Property(type=str)
     list_view: Gtk.ListView = Gtk.Template.Child()
     selection_model: Gtk.NoSelection = Gtk.Template.Child()
+    bottom_sheet: Adw.BottomSheet = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -35,3 +36,8 @@ class FontsView(Gtk.ScrolledWindow):
         model = cast(FontModel, list_item.get_item())
 
         row.font_model = model
+
+    @Gtk.Template.Callback()
+    def on_list_item_activated(self, list_view, position):
+        font_item = cast(FontModel, self.selection_model.get_item(position))
+        self.bottom_sheet.set_open(True)
