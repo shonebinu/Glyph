@@ -62,6 +62,15 @@ template $SheetView: Adw.Bin {
           }
 
           Adw.ActionRow {
+            title: _("Files");
+            subtitle: bind (template.font_model as <$FontModel>).font_files_label;
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow {
             title: _("Status");
             subtitle: bind (template.font_model as <$FontModel>).font_status;
 
@@ -87,6 +96,8 @@ template $SheetView: Adw.Bin {
           }
 
           Gtk.Button {
+            clicked => $on_install_clicked();
+
             Adw.ButtonContent {
               label: _("Install Font");
               icon-name: "folder-download-symbolic";

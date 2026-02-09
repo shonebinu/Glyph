@@ -1,3 +1,6 @@
+import os
+from urllib.parse import urlparse
+
 from gi.repository import GObject
 
 
@@ -37,3 +40,12 @@ class FontModel(GObject.Object):
     @GObject.Property(type=str)
     def preview_markup(self):
         return f'<span font_family="{self.preview_family}" size="xx-large" fallback="false">{self.preview_string}</span>'
+
+    @GObject.Property(type=str)
+    def font_files_label(self):
+        return ", ".join(
+            [
+                f'<a href="{fil}">{os.path.basename(urlparse(fil).path)}</a>'
+                for fil in self.files
+            ]
+        )
