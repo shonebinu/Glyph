@@ -5,8 +5,14 @@ from pathlib import Path
 from typing import List
 from urllib.parse import urlparse
 
+import gi
 import httpx
-from gi.repository import Gio, PangoCairo
+from typing_extensions import Set
+
+gi.require_version("PangoFc", "1.0")
+# PangoFc needs to be imported for FontMap.config_changed to work
+
+from gi.repository import Gio, Gtk, Pango, PangoCairo, PangoFc  # type: ignore
 
 from .font_model import FontModel
 
@@ -19,19 +25,26 @@ class FontsManager:
         fonts_json_path = data_dir / "fonts.json"
         previews_ttc_path = data_dir / "previews.ttc"
 
-        installed_families = {
-            f.get_name() for f in PangoCairo.FontMap.get_default().list_families()
-        }
+        self.default_font_map = PangoCairo.FontMap.get_default()
 
         with fonts_json_path.open() as f:
             fonts_data = json.load(f)
             fonts = [
-                FontModel(font, font["family"] in installed_families)
+                FontModel(font, font["family"] in self.get_system_installed_fonts())
                 for font in fonts_data
             ]
 
         self.font_store.splice(0, 0, fonts)
 
+        self.custom_font_map = PangoCairo.FontMap.new()
+        self.load_custom_fonts(self.custom_font_map, previews_ttc_path)
+
+        # Listen to any changes in system font dirs
+        # https://gitlab.gnome.org/GNOME/gnome-font-viewer/-/blob/main/src/font-model.c#L506
+        settings = Gtk.Settings.get_default()
+        settings.connect("notify::gtk-fontconfig-timestamp", self.on_fontconfig_changed)  # type: ignore
+
+    def load_custom_fonts(self, font_map: Pango.FontMap, previews_ttc_path: Path):
         # The easiest way would've been to use add_font_file() fn in FontMap
         # but with that, during app, if any of the fonts with same name gets deleted manually
         # from system fonts or user fonts dirs, the preview of the same disappears
@@ -58,8 +71,6 @@ class FontsManager:
         if not success:
             raise Exception("Failed to load preview font files.")
 
-        self.custom_font_map = PangoCairo.FontMap.new()
-
         libpangoft2 = ctypes.CDLL("libpangoft2-1.0.so.0")
 
         libpangoft2.pango_fc_font_map_set_config.argtypes = [
@@ -67,9 +78,26 @@ class FontsManager:
             ctypes.c_void_p,
         ]
 
-        libpangoft2.pango_fc_font_map_set_config(hash(self.custom_font_map), fc_config)
+        libpangoft2.pango_fc_font_map_set_config(hash(font_map), fc_config)
 
         libfc.FcConfigDestroy(fc_config)
+
+    def on_fontconfig_changed(self, *_):
+        # This needs to be called for the font map data to sync properly
+        self.default_font_map.config_changed()  # type: ignore
+
+        installed_families = self.get_system_installed_fonts()
+
+        for i in range(self.font_store.get_n_items()):
+            font_model: FontModel = self.font_store.get_item(i)  # type:ignore
+
+            is_now_installed = font_model.family in installed_families
+
+            if font_model.is_installed != is_now_installed:
+                font_model.is_installed = is_now_installed
+
+    def get_system_installed_fonts(self) -> Set[str]:
+        return {f.get_name() for f in self.default_font_map.list_families()}
 
     async def install_font(self, font_files: List[str]):
         # do not try to use env vars or library(glib,os) dir methods here for proper working in flatpak for both dev and release
