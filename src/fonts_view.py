@@ -27,6 +27,7 @@ class FontsView(Adw.Bin):
     def set_fonts_manager(self, fonts_manager: FontsManager):
         self.fonts_manager = fonts_manager
         self.font_store = fonts_manager.font_store
+        self.sheet_view.set_fonts_manager(fonts_manager)
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):

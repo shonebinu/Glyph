@@ -84,10 +84,17 @@ template $SheetView: Adw.Bin {
           halign: center;
           spacing: 12;
 
-          Gtk.Button {
-            Adw.ButtonContent {
-              label: _("Test Font");
-              icon-name: "text-insert2-symbolic";
+          Button {
+            Box {
+              spacing: 6;
+
+              Image {
+                icon-name: "text-insert2-symbolic";
+              }
+
+              Label {
+                label: _("Test Font");
+              }
             }
 
             styles [
@@ -95,12 +102,34 @@ template $SheetView: Adw.Bin {
             ]
           }
 
-          Gtk.Button {
+          Button {
+            sensitive: bind (template.font_model as <$FontModel>).is_not_installing;
             clicked => $on_install_clicked();
 
-            Adw.ButtonContent {
-              label: _("Install Font");
-              icon-name: "folder-download-symbolic";
+            Box {
+              spacing: 6;
+
+              Stack {
+                visible-child-name: bind (template.font_model as <$FontModel>).installing_state;
+
+                StackPage {
+                  name: "default";
+
+                  child: Image {
+                    icon-name: "folder-download-symbolic";
+                  };
+                }
+
+                StackPage {
+                  name: "installing";
+
+                  child: Adw.Spinner {};
+                }
+              }
+
+              Label {
+                label: _("Install Font");
+              }
             }
 
             styles [

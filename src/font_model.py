@@ -11,8 +11,11 @@ class FontModel(GObject.Object):
     family = GObject.Property(type=str)
     designer = GObject.Property(type=str)
     license = GObject.Property(type=str)
+
     is_installed = GObject.Property(type=bool, default=False)
-    font_status = GObject.Property(type=str)
+
+    is_not_installing = GObject.Property(type=bool, default=True)
+    installing_state = GObject.Property(type=str)
 
     def __init__(self, data: dict, is_installed: bool = False):
         super().__init__()
@@ -25,9 +28,18 @@ class FontModel(GObject.Object):
         self.files = data["files"]
         self.preview_string = data["preview_string"]
         self.preview_family = data["preview_family"]
+
         self.is_installed = is_installed
 
-        self.font_status = "Installed" if is_installed else "Not Installed"
+        # for some reason, using _ with signals isn't working
+        self.connect("notify::is-installed", lambda *_: self.notify("font-status"))
+
+        self.is_not_installing = True
+        self.installing_state = "default"
+
+    @GObject.Property(type=str)
+    def font_status(self):
+        return "Installed" if self.is_installed else "Not Installed"
 
     @GObject.Property(type=str)
     def category_label(self):
@@ -49,3 +61,11 @@ class FontModel(GObject.Object):
                 for fil in self.files
             ]
         )
+
+    def set_installing_state(self, installing: bool):
+        if installing:
+            self.is_not_installing = False
+            self.installing_state = "installing"
+        else:
+            self.is_not_installing = True
+            self.installing_state = "default"

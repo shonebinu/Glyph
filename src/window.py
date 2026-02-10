@@ -20,18 +20,23 @@ class GlyphWindow(Adw.ApplicationWindow):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        asyncio.create_task(self.setup_async())
+        self.fonts_view.sheet_view.connect("show-toast", self.on_show_toast)
 
-    async def setup_async(self):
-        fonts_manager = await asyncio.to_thread(FontsManager)
-        self.fonts_view.set_fonts_manager(fonts_manager)
+        asyncio.create_task(self.setup())
 
-        self.view_stack.set_visible_child_name("fonts_view")
+    async def setup(self):
+        try:
+            fonts_manager = await asyncio.to_thread(FontsManager)
 
-        # enable header buttons only after loading is finished
-        self.search_bar.set_sensitive(True)
-        self.search_button.set_sensitive(True)
-        self.filter_button.set_sensitive(True)
+            self.fonts_view.set_fonts_manager(fonts_manager)
+            self.view_stack.set_visible_child_name("fonts_view")
+
+            # enable header buttons only after loading is finished
+            self.search_bar.set_sensitive(True)
+            self.search_button.set_sensitive(True)
+            self.filter_button.set_sensitive(True)
+        except Exception as e:
+            self.toast_overlay.add_toast(Adw.Toast(title=str(e)))
 
     @Gtk.Template.Callback()
     def on_search_changed(self, search_entry: Gtk.SearchEntry):
@@ -39,3 +44,6 @@ class GlyphWindow(Adw.ApplicationWindow):
         # closing bottomsheet removes the focus from search entry
         if not search_entry.has_focus():
             search_entry.grab_focus()
+
+    def on_show_toast(self, _, msg: str):
+        self.toast_overlay.add_toast(Adw.Toast(title=msg))
