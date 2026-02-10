@@ -28,7 +28,6 @@ class SheetView(Adw.Bin):
         asyncio.create_task(self.install_font())
 
     async def install_font(self):
-        self.font_model.set_installing_state(installing=True)
         if self.font_model.is_installed:
             dialog = Adw.AlertDialog(
                 heading="Reinstall Font",
@@ -46,6 +45,7 @@ class SheetView(Adw.Bin):
                 return
 
         toast_msg = ""
+        self.font_model.set_installing_state(installing=True)
 
         try:
             self.font_model.set_installing_state(installing=True)
