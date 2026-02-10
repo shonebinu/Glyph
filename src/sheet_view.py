@@ -24,7 +24,17 @@ class SheetView(Adw.Bin):
         self.fonts_manager = fonts_manager
 
     @Gtk.Template.Callback()
+    def get_stack_state_name(self, _, is_installing: bool):
+        return "installing" if is_installing else "default"
+
+    @Gtk.Template.Callback()
+    def get_install_btn_state(self, _, is_installing: bool):
+        return False if is_installing else True
+
+    @Gtk.Template.Callback()
     def on_install_clicked(self, _):
+        if self.font_model.is_installing:
+            return
         asyncio.create_task(self.install_font())
 
     async def install_font(self):
@@ -45,10 +55,9 @@ class SheetView(Adw.Bin):
                 return
 
         toast_msg = ""
-        self.font_model.set_installing_state(installing=True)
 
         try:
-            self.font_model.set_installing_state(installing=True)
+            self.font_model.is_installing = True
             await self.fonts_manager.install_font(self.font_model.files)
             self.font_model.is_installed = True
             toast_msg = f"{self.font_model.family} font installed."
@@ -56,8 +65,8 @@ class SheetView(Adw.Bin):
             toast_msg = "Connectivity issue. Please check your internet connection."
         except httpx.HTTPStatusError as e:
             toast_msg = f"Error: Server responded with status {e.response.status_code}."
-        except Exception:
-            toast_msg = "Error: Something went wrong while installing the font."
+        except Exception as e:
+            toast_msg = f"Error: Something went wrong while installing the font. {e}"
         finally:
-            self.font_model.set_installing_state(installing=False)
+            self.font_model.is_installing = False
             self.emit("show-toast", toast_msg)

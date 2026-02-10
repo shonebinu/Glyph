@@ -103,14 +103,14 @@ template $SheetView: Adw.Bin {
           }
 
           Button {
-            sensitive: bind (template.font_model as <$FontModel>).is_not_installing;
+            sensitive: bind $get_install_btn_state((template.font_model as <$FontModel>).is_installing) as <bool>;
             clicked => $on_install_clicked();
 
             Box {
               spacing: 6;
 
               Stack {
-                visible-child-name: bind (template.font_model as <$FontModel>).installing_state;
+                visible-child-name: bind $get_stack_state_name((template.font_model as <$FontModel>).is_installing) as <string>;
 
                 StackPage {
                   name: "default";
