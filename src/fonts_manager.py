@@ -23,30 +23,29 @@ class FontsManager:
 
         data_dir = Path("/app/share/glyph")
         fonts_json_path = data_dir / "fonts.json"
-        previews_ttc_path = data_dir / "previews.ttc"
+        preview_files_path = data_dir / "previews"
 
         self.default_font_map = PangoCairo.FontMap.get_default()
 
+        self.custom_font_map = PangoCairo.FontMap.new()
+        self.load_custom_fonts(self.custom_font_map, preview_files_path)
+
         with fonts_json_path.open() as f:
             fonts_data = json.load(f)
-            fonts = [
-                FontModel(font, font["family"] in self.get_system_installed_fonts())
-                for font in fonts_data
-            ]
-
+        fonts = [
+            FontModel(font, font["family"] in self.get_system_installed_fonts())
+            for font in fonts_data
+        ]
         self.font_store.splice(0, 0, fonts)
-
-        self.custom_font_map = PangoCairo.FontMap.new()
-        self.load_custom_fonts(self.custom_font_map, previews_ttc_path)
 
         # Listen to any changes in system font dirs
         # https://gitlab.gnome.org/GNOME/gnome-font-viewer/-/blob/main/src/font-model.c#L506
         settings = Gtk.Settings.get_default()
         settings.connect("notify::gtk-fontconfig-timestamp", self.on_fontconfig_changed)  # type: ignore
 
-    def load_custom_fonts(self, font_map: Pango.FontMap, previews_ttc_path: Path):
+    def load_custom_fonts(self, font_map: Pango.FontMap, preview_files_path: Path):
         # The easiest way would've been to use add_font_file() fn in FontMap
-        # but with that, during app, if any of the fonts with same name gets deleted manually
+        # but with that, during app, if any of the fonts with same name gets deleted
         # from system fonts or user fonts dirs, the preview of the same disappears
         # (glyph:2): Pango-WARNING **: 16:41:58.000: failed to create cairo scaled font, expect ugly output. the offending font is 'Abel 19.008'
         # (glyph:2): Pango-WARNING **: 16:41:58.000: font_face status is: file not found
@@ -65,11 +64,11 @@ class FontsManager:
         libfc.FcConfigDestroy.argtypes = [ctypes.c_void_p]
 
         fc_config = libfc.FcConfigCreate()
-        path_bytes = str(previews_ttc_path).encode("utf-8")
-        success = libfc.FcConfigAppFontAddFile(fc_config, path_bytes)
 
-        if not success:
-            raise Exception("Failed to load preview font files.")
+        for preview_file in preview_files_path.iterdir():
+            path_bytes = str(preview_file).encode("utf-8")
+            if not libfc.FcConfigAppFontAddFile(fc_config, path_bytes):
+                print(f"Failed to load preview file: {preview_file}")
 
         libpangoft2 = ctypes.CDLL("libpangoft2-1.0.so.0")
 

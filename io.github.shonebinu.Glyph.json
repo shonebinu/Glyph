@@ -82,8 +82,7 @@
       "buildsystem": "simple",
       "build-commands": [
         "mkdir -p ${FLATPAK_DEST}/share/glyph/",
-        "gzip -d previews.ttc.gz",
-        "cp -r fonts.json previews.ttc ${FLATPAK_DEST}/share/glyph/"
+        "cp -r fonts.json previews ${FLATPAK_DEST}/share/glyph/"
       ],
       "sources": [
         {
