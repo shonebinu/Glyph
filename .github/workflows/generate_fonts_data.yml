@@ -45,11 +45,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          rm -rf google_fonts script
+          tar -I 'zstd --max' -cvf fonts-bundle.tar.zst fonts.json previews
 
-          tar -czvf fonts-bundle.tar.gz fonts.json previews
-
-          git add fonts.json previews fonts-bundle.tar.gz
+          git add fonts-bundle.tar.zst
 
           if ! git diff --cached --exit-code --quiet; then
             git commit -m "Update font index: $(date -u +'%Y-%m-%d %H:%M UTC')"
