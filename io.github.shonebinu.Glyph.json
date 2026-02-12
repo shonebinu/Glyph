@@ -82,7 +82,6 @@
       "buildsystem": "simple",
       "build-commands": [
         "mkdir -p ${FLATPAK_DEST}/share/glyph/",
-        "tar -xf fonts-bundle.tar.zst",
         "cp -r fonts.json previews ${FLATPAK_DEST}/share/glyph/"
       ],
       "sources": [
