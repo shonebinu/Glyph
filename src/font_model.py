@@ -16,7 +16,12 @@ class FontModel(GObject.Object):
 
     is_installing = GObject.Property(type=bool, default=False)
 
-    def __init__(self, data: dict, is_installed: bool = False):
+    def __init__(
+        self,
+        data: dict,
+        is_installed: bool = False,
+        is_preview_font_added: bool = False,
+    ):
         super().__init__(
             family=data["family"],
             display_name=data["display_name"],
@@ -29,6 +34,7 @@ class FontModel(GObject.Object):
         self.files = data["files"]
         self.preview_string = data["preview_string"]
         self.preview_family = data["preview_family"]
+        self.is_preview_font_added = is_preview_font_added
 
         # for some reason, using _ with signals isn't working
         self.connect("notify::is-installed", lambda *_: self.notify("font-status"))
@@ -56,4 +62,7 @@ class FontModel(GObject.Object):
 
     @GObject.Property(type=str)
     def preview_markup(self):
-        return f'<span font_family="{self.preview_family}" size="xx-large" fallback="false">{self.preview_string}</span>'
+        if self.is_preview_font_added:
+            return f'<span font_family="{self.preview_family}" size="xx-large" fallback="false">{self.preview_string}</span>'
+        else:
+            return '<span size="xx-large">Failed to load font preview</span>'

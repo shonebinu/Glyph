@@ -28,12 +28,18 @@ class FontsManager:
         self.default_font_map = PangoCairo.FontMap.get_default()
 
         self.custom_font_map = PangoCairo.FontMap.new()
-        self.load_custom_fonts(self.custom_font_map, preview_files_path)
+        failed_families = self.load_custom_fonts(
+            self.custom_font_map, preview_files_path
+        )
 
         with fonts_json_path.open() as f:
             fonts_data = json.load(f)
         fonts = [
-            FontModel(font, font["family"] in self.get_system_installed_fonts())
+            FontModel(
+                font,
+                font["family"] in self.get_system_installed_fonts(),
+                font["family"] not in failed_families,
+            )
             for font in fonts_data
         ]
         self.font_store.splice(0, 0, fonts)
@@ -43,7 +49,9 @@ class FontsManager:
         settings = Gtk.Settings.get_default()
         settings.connect("notify::gtk-fontconfig-timestamp", self.on_fontconfig_changed)  # type: ignore
 
-    def load_custom_fonts(self, font_map: Pango.FontMap, preview_files_path: Path):
+    def load_custom_fonts(
+        self, font_map: Pango.FontMap, preview_files_path: Path
+    ) -> Set[str]:
         # The easiest way would've been to use add_font_file() fn in FontMap
         # but with that, during app, if any of the fonts with same name gets deleted
         # from system fonts or user fonts dirs, the preview of the same disappears
@@ -65,9 +73,14 @@ class FontsManager:
 
         fc_config = libfc.FcConfigCreate()
 
+        failed_families = set()
+
         for preview_file in preview_files_path.iterdir():
             path_bytes = str(preview_file).encode("utf-8")
             if not libfc.FcConfigAppFontAddFile(fc_config, path_bytes):
+                failed_families.add(
+                    preview_file.stem
+                )  # filename is same as family name
                 print(f"Failed to load preview file: {preview_file}")
 
         libpangoft2 = ctypes.CDLL("libpangoft2-1.0.so.0")
@@ -80,6 +93,8 @@ class FontsManager:
         libpangoft2.pango_fc_font_map_set_config(hash(font_map), fc_config)
 
         libfc.FcConfigDestroy(fc_config)
+
+        return failed_families
 
     def on_fontconfig_changed(self, *_):
         # This needs to be called for the font map data to sync properly

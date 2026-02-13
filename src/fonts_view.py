@@ -31,8 +31,7 @@ class FontsView(Adw.Bin):
 
     @Gtk.Template.Callback()
     def on_factory_setup(self, _, list_item: Gtk.ListItem):
-        # custom FontMap for font preview inscriptions
-        row = FontRow(self.fonts_manager.custom_font_map)
+        row = FontRow()
         list_item.set_child(row)
 
     @Gtk.Template.Callback()
@@ -41,6 +40,10 @@ class FontsView(Adw.Bin):
         model = cast(FontModel, list_item.get_item())
 
         row.font_model = model
+
+        # dont set custom fontmap if preview font couldn't be loaded since we show 'No preview' in default font
+        if model.is_preview_font_added:
+            row.set_inscription_font_map(self.fonts_manager.custom_font_map)
 
     def set_search_query(self, text: str):
         # close bottomsheet while searching

@@ -11,7 +11,8 @@ class FontRow(Gtk.Box):
 
     preview_inscription: Gtk.Inscription = Gtk.Template.Child()
 
-    def __init__(self, font_map: Pango.FontMap, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    def set_inscription_font_map(self, font_map: Pango.FontMap):
         self.preview_inscription.set_font_map(font_map)
