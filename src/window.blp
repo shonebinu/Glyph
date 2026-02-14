@@ -6,6 +6,15 @@ template $GlyphWindow: Adw.ApplicationWindow {
   default-width: 1250;
   default-height: 900;
 
+  Adw.Breakpoint {
+    condition ("max-width: 600sp")
+
+    setters {
+      overlay_split_view.collapsed: true;
+      show_sidebar_button.active: false;
+    }
+  }
+
   content: Adw.ToastOverlay toast_overlay {
     Adw.ViewStack view_stack {
       Adw.ViewStackPage {
@@ -29,7 +38,7 @@ template $GlyphWindow: Adw.ApplicationWindow {
       Adw.ViewStackPage {
         name: "fonts_view";
 
-        child: Adw.OverlaySplitView {
+        child: Adw.OverlaySplitView overlay_split_view {
           show-sidebar: bind show_sidebar_button.active;
 
           sidebar: Adw.ToolbarView {
