@@ -7,56 +7,15 @@ template $GlyphWindow: Adw.ApplicationWindow {
   default-height: 900;
 
   content: Adw.ToastOverlay toast_overlay {
-    Adw.ToolbarView {
-      [top]
-      Adw.HeaderBar {
-        ToggleButton show_sidebar_button {
-          icon-name: "sidebar-show-symbolic";
-          tooltip-text: _("Toggle Sidebar");
-        }
+    Adw.ViewStack view_stack {
+      Adw.ViewStackPage {
+        name: "loading";
 
-        ToggleButton search_button {
-          icon-name: "edit-find-symbolic";
-          tooltip-text: _("Search fonts");
-          sensitive: false;
+        child: Adw.ToolbarView {
+          [top]
+          Adw.HeaderBar {}
 
-          ShortcutController {
-            scope: managed;
-
-            Shortcut {
-              trigger: "<Control>f";
-              action: "activate";
-            }
-          }
-        }
-
-        [end]
-        MenuButton {
-          primary: true;
-          icon-name: "open-menu-symbolic";
-          tooltip-text: _("Main Menu");
-          menu-model: primary_menu;
-        }
-      }
-
-      [top]
-      SearchBar search_bar {
-        key-capture-widget: template;
-        search-mode-enabled: bind search_button.active bidirectional;
-        sensitive: false;
-
-        child: SearchEntry {
-          placeholder-text: _("Search fonts");
-          changed => $on_search_changed();
-          search-delay: 300;
-        };
-      }
-
-      content: Adw.ViewStack view_stack {
-        Adw.ViewStackPage {
-          name: "loading";
-
-          child: Adw.StatusPage loading_status {
+          content: Adw.StatusPage loading_status {
             paintable: Adw.SpinnerPaintable {
               widget: loading_status;
             };
@@ -64,49 +23,79 @@ template $GlyphWindow: Adw.ApplicationWindow {
             title: _("Loading Preview Fonts...");
             description: _("This could take a moment.");
           };
-        }
+        };
+      }
 
-        Adw.ViewStackPage {
-          name: "fonts_view";
+      Adw.ViewStackPage {
+        name: "fonts_view";
 
-          child: Adw.OverlaySplitView {
-            show-sidebar: bind show_sidebar_button.active;
+        child: Adw.OverlaySplitView {
+          show-sidebar: bind show_sidebar_button.active;
 
-            sidebar: Adw.StatusPage {
+          sidebar: Adw.ToolbarView {
+            [top]
+            Adw.HeaderBar {
+              [end]
+              MenuButton {
+                primary: true;
+                icon-name: "open-menu-symbolic";
+                tooltip-text: _("Main Menu");
+                menu-model: primary_menu;
+              }
+            }
+
+            content: Adw.StatusPage {
               title: _("Sidebar");
             };
+          };
+
+          content: Adw.ToolbarView {
+            styles [
+              "view",
+            ]
+
+            [top]
+            Adw.HeaderBar {
+              title-widget: Adw.WindowTitle fonts_view_window_title {};
+
+              ToggleButton show_sidebar_button {
+                active: true;
+                icon-name: "sidebar-show-symbolic";
+                tooltip-text: _("Toggle Sidebar");
+              }
+
+              [end]
+              ToggleButton search_button {
+                icon-name: "edit-find-symbolic";
+                tooltip-text: _("Search fonts");
+
+                ShortcutController {
+                  scope: managed;
+
+                  Shortcut {
+                    trigger: "<Control>f";
+                    action: "activate";
+                  }
+                }
+              }
+            }
+
+            [top]
+            SearchBar {
+              key-capture-widget: template;
+              search-mode-enabled: bind search_button.active bidirectional;
+
+              child: SearchEntry {
+                placeholder-text: _("Search fonts");
+                changed => $on_search_changed();
+                search-delay: 300;
+              };
+            }
 
             content: $FontsView fonts_view {};
           };
-        }
-      };
-    }
-  };
-}
-
-Popover filter_popover {
-  has-arrow: true;
-
-  child: Box {
-    orientation: vertical;
-    spacing: 6;
-
-    Label {
-      label: _("Category");
-      margin-bottom: 6;
-    }
-
-    DropDown {
-      model: StringList {
-        strings [
-          "All categories",
-          "Sans Serif",
-          "Serif",
-          "Display",
-          "Monospace",
-          "Handwriting",
-        ]
-      };
+        };
+      }
     }
   };
 }

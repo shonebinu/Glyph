@@ -13,8 +13,7 @@ class GlyphWindow(Adw.ApplicationWindow):
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     view_stack: Adw.ViewStack = Gtk.Template.Child()
     fonts_view: FontsView = Gtk.Template.Child()
-    search_button: Gtk.ToggleButton = Gtk.Template.Child()
-    search_bar: Gtk.SearchBar = Gtk.Template.Child()
+    fonts_view_window_title: Adw.WindowTitle = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -30,9 +29,10 @@ class GlyphWindow(Adw.ApplicationWindow):
             self.fonts_view.set_fonts_manager(fonts_manager)
             self.view_stack.set_visible_child_name("fonts_view")
 
-            # enable header buttons only after loading is finished
-            self.search_bar.set_sensitive(True)
-            self.search_button.set_sensitive(True)
+            self.fonts_view_window_title.set_title(
+                f"{fonts_manager.font_store.get_n_items()} fonts"
+            )
+
         except Exception as e:
             self.toast_overlay.add_toast(Adw.Toast(title=str(e)))
 
