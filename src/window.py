@@ -19,6 +19,7 @@ class GlyphWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
 
         self.fonts_view.sheet_view.connect("show-toast", self.on_show_toast)
+        self.fonts_view.filter_model.connect("items-changed", self.on_update_font_count)
 
         asyncio.create_task(self.setup())
 
@@ -28,10 +29,6 @@ class GlyphWindow(Adw.ApplicationWindow):
 
             self.fonts_view.set_fonts_manager(fonts_manager)
             self.view_stack.set_visible_child_name("fonts_view")
-
-            self.fonts_view_window_title.set_title(
-                f"{fonts_manager.font_store.get_n_items()} fonts"
-            )
 
         except Exception as e:
             self.toast_overlay.add_toast(Adw.Toast(title=str(e)))
@@ -45,3 +42,6 @@ class GlyphWindow(Adw.ApplicationWindow):
 
     def on_show_toast(self, _, msg: str):
         self.toast_overlay.add_toast(Adw.Toast(title=msg))
+
+    def on_update_font_count(self, filter_model: Gtk.FilterListModel, *_):
+        self.fonts_view_window_title.set_title(f"{filter_model.get_n_items()} fonts")

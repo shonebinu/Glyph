@@ -20,6 +20,7 @@ class FontsView(Adw.Bin):
     bottom_sheet_layout: Adw.BottomSheet = Gtk.Template.Child()
     view_stack: Adw.ViewStack = Gtk.Template.Child()
     sheet_view: SheetView = Gtk.Template.Child()
+    filter_model: Gtk.FilterListModel = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
