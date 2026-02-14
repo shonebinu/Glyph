@@ -6,6 +6,7 @@
         <file preprocess="xml-stripblanks">fonts-view.ui</file>
         <file preprocess="xml-stripblanks">font-row.ui</file>
         <file preprocess="xml-stripblanks">sheet-view.ui</file>
+        <file preprocess="xml-stripblanks">sidebar.ui</file>
 
         <file
             preprocess="xml-stripblanks"
@@ -21,5 +22,9 @@
         <file
             preprocess="xml-stripblanks"
         >icons/text-insert2-symbolic.svg</file>
+
+        <file
+            preprocess="xml-stripblanks"
+        >icons/sidebar-show-symbolic.svg</file>
     </gresource>
 </gresources>
