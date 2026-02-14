@@ -16,10 +16,6 @@
             preprocess="xml-stripblanks"
         >icons/folder-download-symbolic.svg</file>
 
-        <file
-            preprocess="xml-stripblanks"
-        >icons/funnel-outline-symbolic.svg</file>
-
         <file preprocess="xml-stripblanks">icons/edit-find-symbolic.svg</file>
 
         <file

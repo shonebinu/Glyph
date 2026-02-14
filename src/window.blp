@@ -3,7 +3,7 @@ using Adw 1;
 
 template $GlyphWindow: Adw.ApplicationWindow {
   title: _("Glyph");
-  default-width: 1200;
+  default-width: 1250;
   default-height: 900;
 
   content: Adw.ToastOverlay toast_overlay {
@@ -36,14 +36,6 @@ template $GlyphWindow: Adw.ApplicationWindow {
           icon-name: "open-menu-symbolic";
           tooltip-text: _("Main Menu");
           menu-model: primary_menu;
-        }
-
-        [end]
-        MenuButton filter_button {
-          sensitive: false;
-          icon-name: "funnel-outline";
-          tooltip-text: _("Filter");
-          popover: filter_popover;
         }
       }
 
