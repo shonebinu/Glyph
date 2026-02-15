@@ -2,7 +2,80 @@ using Gtk 4.0;
 using Adw 1;
 
 template $Sidebar: Adw.Bin {
-  Label {
-    label: _("Sidebar");
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      title: _("Filters");
+
+      Adw.ComboRow {
+        title: _("Category");
+
+        model: StringList {
+          strings: [
+            "All",
+            "Serif",
+            "Sans Serif",
+            "Display",
+            "Handwriting",
+            "Monospace",
+          ];
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Writing System");
+        activatable-widget: subset_dropdown;
+
+        [suffix]
+        DropDown subset_dropdown {
+          valign: center;
+          hexpand: true;
+          enable-search: true;
+
+          model: StringList {
+            strings: [
+              "All",
+              "Arabic",
+              "Bengali",
+              "Cyrillic",
+              "Devanagari",
+              "Greek",
+              "Gujarati",
+              "Hebrew",
+              "Latin",
+              "Tamil",
+              "Thai",
+            ];
+          };
+        }
+      }
+
+      Adw.SwitchRow {
+        title: _("Installed Only");
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Preview");
+
+      Adw.ActionRow {
+        title: _("Size");
+        activatable-widget: preview_size_scale;
+
+        [suffix]
+        Scale preview_size_scale {
+          digits: 0;
+          draw-value: true;
+          value-pos: right;
+          hexpand: true;
+
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            value: 40;
+            step-increment: 1;
+          };
+        }
+      }
+    }
   }
 }

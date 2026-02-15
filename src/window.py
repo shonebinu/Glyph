@@ -15,6 +15,7 @@ class GlyphWindow(Adw.ApplicationWindow):
     view_stack: Adw.ViewStack = Gtk.Template.Child()
     fonts_view: FontsView = Gtk.Template.Child()
     fonts_view_window_title: Adw.WindowTitle = Gtk.Template.Child()
+    sidebar: Sidebar = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -29,6 +30,7 @@ class GlyphWindow(Adw.ApplicationWindow):
             fonts_manager = await asyncio.to_thread(FontsManager)
 
             self.fonts_view.set_fonts_manager(fonts_manager)
+            self.sidebar.set_fonts_manager(fonts_manager)
             self.view_stack.set_visible_child_name("fonts_view")
 
         except Exception as e:

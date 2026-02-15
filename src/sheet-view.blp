@@ -80,9 +80,31 @@ template $SheetView: Adw.Bin {
           }
         }
 
-        Gtk.Box {
-          halign: center;
-          spacing: 12;
+        Adw.WrapBox {
+          align: 0.5;
+          child-spacing: 12;
+          line-spacing: 12;
+
+          Button {
+            sensitive: false;
+
+            Box {
+              spacing: 6;
+
+              Image {
+                icon-name: "user-trash-symbolic";
+              }
+
+              Label {
+                label: _("Remove Font");
+              }
+            }
+
+            styles [
+              "pill",
+              "destructive-action",
+            ]
+          }
 
           Button {
             Box {
@@ -137,6 +159,15 @@ template $SheetView: Adw.Bin {
               "suggested-action",
             ]
           }
+        }
+
+        Label {
+          label: _("Only fonts installed via Glyph can be removed.");
+
+          styles [
+            "dimmed",
+            "caption",
+          ]
         }
       }
     };

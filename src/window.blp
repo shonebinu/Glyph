@@ -7,7 +7,7 @@ template $GlyphWindow: Adw.ApplicationWindow {
   default-height: 900;
 
   Adw.Breakpoint {
-    condition ("max-width: 600sp")
+    condition ("max-width: 700sp")
 
     setters {
       overlay_split_view.collapsed: true;
@@ -53,7 +53,7 @@ template $GlyphWindow: Adw.ApplicationWindow {
               }
             }
 
-            content: $Sidebar {};
+            content: $Sidebar sidebar {};
           };
 
           content: Adw.ToolbarView {
