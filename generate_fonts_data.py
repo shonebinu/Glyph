@@ -177,8 +177,12 @@ def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
         "display_name": metadata.get("display_name", metadata["name"]),
         "designer": metadata["designer"],
         "license": metadata["license"],
-        "category": metadata["category"],
-        "subsets": [s for s in metadata["subsets"] if s != "menu"],
+        "category": [cat.replace("_", " ").title() for cat in metadata["category"]],
+        "subsets": [
+            sub.replace("-", " ").title()
+            for sub in metadata["subsets"]
+            if sub != "menu"
+        ],
         "files": [
             f"{FONT_FILE_BASE_URL}/{family_dir.parent.name}/{family_dir.name}/{font['filename']}"
             for font in font_files

@@ -45,11 +45,11 @@ class FontModel(GObject.Object):
 
     @GObject.Property(type=str)
     def category_label(self):
-        return ", ".join([cat.replace("_", " ").title() for cat in self.category])
+        return ", ".join(self.category)
 
     @GObject.Property(type=str)
     def subsets_label(self):
-        return ", ".join([sub.replace("-", " ").title() for sub in self.subsets])
+        return ", ".join(self.subsets)
 
     @GObject.Property(type=str)
     def font_files_label(self):
