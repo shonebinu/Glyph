@@ -6,47 +6,13 @@ template $Sidebar: Adw.Bin {
     Adw.PreferencesGroup {
       title: _("Filters");
 
-      Adw.ComboRow {
+      Adw.ComboRow category_combo {
         title: _("Category");
-
-        model: StringList {
-          strings: [
-            "All",
-            "Serif",
-            "Sans Serif",
-            "Display",
-            "Handwriting",
-            "Monospace",
-          ];
-        };
       }
 
-      Adw.ActionRow {
+      Adw.ComboRow subset_combo {
         title: _("Writing System");
-        activatable-widget: subset_dropdown;
-
-        [suffix]
-        DropDown subset_dropdown {
-          valign: center;
-          hexpand: true;
-          enable-search: true;
-
-          model: StringList {
-            strings: [
-              "All",
-              "Arabic",
-              "Bengali",
-              "Cyrillic",
-              "Devanagari",
-              "Greek",
-              "Gujarati",
-              "Hebrew",
-              "Latin",
-              "Tamil",
-              "Thai",
-            ];
-          };
-        }
+        enable-search: true;
       }
 
       Adw.SwitchRow {

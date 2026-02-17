@@ -20,6 +20,8 @@ from .font_model import FontModel
 class FontsManager:
     def __init__(self):
         self.font_store = Gio.ListStore.new(FontModel)
+        self.available_categories = Gtk.StringList()
+        self.available_subsets = Gtk.StringList()
 
         data_dir = Path("/app/share/glyph")
         fonts_json_path = data_dir / "fonts.json"
@@ -32,17 +34,24 @@ class FontsManager:
             self.custom_font_map, preview_files_path
         )
 
+        fonts = []
+        avail_cats = set()
+        avail_subs = set()
         with fonts_json_path.open() as f:
-            fonts_data = json.load(f)
-        fonts = [
-            FontModel(
-                font,
-                font["family"] in self.get_system_installed_fonts(),
-                font["family"] not in failed_families,
-            )
-            for font in fonts_data
-        ]
+            for font in json.load(f):
+                fonts.append(
+                    FontModel(
+                        font,
+                        font["family"] in self.get_system_installed_fonts(),
+                        font["family"] not in failed_families,
+                    )
+                )
+                avail_cats.update(font["category"])
+                avail_subs.update(font["subsets"])
+
         self.font_store.splice(0, 0, fonts)
+        self.available_categories.splice(0, 0, ["All"] + sorted(avail_cats))
+        self.available_subsets.splice(0, 0, ["All"] + sorted(avail_subs))
 
         # Listen to any changes in system font dirs
         # https://gitlab.gnome.org/GNOME/gnome-font-viewer/-/blob/main/src/font-model.c#L506
