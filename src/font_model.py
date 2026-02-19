@@ -59,10 +59,3 @@ class FontModel(GObject.Object):
                 for fil in self.files
             ]
         )
-
-    @GObject.Property(type=str)
-    def preview_markup(self):
-        if self.is_preview_font_added:
-            return f'<span font_family="{self.preview_family}" size="xx-large" fallback="false">{self.preview_string}</span>'
-        else:
-            return '<span size="xx-large">Failed to load font preview</span>'

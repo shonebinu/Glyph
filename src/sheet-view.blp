@@ -82,48 +82,38 @@ template $SheetView: Adw.Bin {
 
         Adw.WrapBox {
           align: 0.5;
-          child-spacing: 12;
-          line-spacing: 12;
-
-          Button {
-            sensitive: false;
-
-            Box {
-              spacing: 6;
-
-              Image {
-                icon-name: "user-trash-symbolic";
-              }
-
-              Label {
-                label: _("Remove Font");
-              }
-            }
-
-            styles [
-              "pill",
-              "destructive-action",
-            ]
-          }
-
-          Button {
-            Box {
-              spacing: 6;
-
-              Image {
-                icon-name: "text-insert2-symbolic";
-              }
-
-              Label {
-                label: _("Test Font");
-              }
-            }
-
-            styles [
-              "pill",
-            ]
-          }
-
+          // child-spacing: 12;
+          // line-spacing: 12;
+          // Button {
+          //   sensitive: false;
+          //   Box {
+          //     spacing: 6;
+          //     Image {
+          //       icon-name: "user-trash-symbolic";
+          //     }
+          //     Label {
+          //       label: _("Remove Font");
+          //     }
+          //   }
+          //   styles [
+          //     "pill",
+          //     "destructive-action",
+          //   ]
+          // }
+          // Button {
+          //   Box {
+          //     spacing: 6;
+          //     Image {
+          //       icon-name: "text-insert2-symbolic";
+          //     }
+          //     Label {
+          //       label: _("Test Font");
+          //     }
+          //   }
+          //   styles [
+          //     "pill",
+          //   ]
+          // }
           Button {
             sensitive: bind $get_install_btn_state((template.font_model as <$FontModel>).is_installing) as <bool>;
             clicked => $on_install_clicked();
@@ -161,14 +151,13 @@ template $SheetView: Adw.Bin {
           }
         }
 
-        Label {
-          label: _("Only fonts installed via Glyph can be removed.");
-
-          styles [
-            "dimmed",
-            "caption",
-          ]
-        }
+        // Label {
+        //   label: _("Only fonts installed via Glyph can be removed.");
+        //   styles [
+        //     "dimmed",
+        //     "caption",
+        //   ]
+        // }
       }
     };
   }

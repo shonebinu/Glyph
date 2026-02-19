@@ -1,47 +1,56 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $Sidebar: Adw.Bin {
-  Adw.PreferencesPage {
-    Adw.PreferencesGroup {
-      title: _("Filters");
+template $Sidebar: Adw.PreferencesPage {
+  Adw.PreferencesGroup {
+    title: _("Filters");
 
-      Adw.ComboRow category_combo {
-        title: _("Category");
-      }
+    Adw.ComboRow category_combo {
+      title: _("Category");
+    }
 
-      Adw.ComboRow subset_combo {
-        title: _("Writing System");
-        enable-search: true;
-      }
+    Adw.ComboRow subset_combo {
+      title: _("Writing System");
+      enable-search: true;
+    }
 
-      Adw.SwitchRow {
-        title: _("Installed Only");
+    Adw.SwitchRow installed_switch {
+      title: _("Installed Only");
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Preview");
+
+    Adw.ActionRow {
+      title: _("Size");
+      activatable-widget: preview_size_scale;
+
+      [suffix]
+      Scale preview_size_scale {
+        digits: 0;
+        draw-value: true;
+        value-pos: right;
+        hexpand: true;
+
+        adjustment: Adjustment preview_size_adjustment {
+          lower: 10;
+          upper: 25;
+          step-increment: 1;
+        };
       }
     }
 
-    Adw.PreferencesGroup {
-      title: _("Preview");
+    Label {
+      margin-top: 6;
+      margin-start: 6;
+      margin-end: 6;
+      label: _("Preview text is selected to best represent the font.");
 
-      Adw.ActionRow {
-        title: _("Size");
-        activatable-widget: preview_size_scale;
-
-        [suffix]
-        Scale preview_size_scale {
-          digits: 0;
-          draw-value: true;
-          value-pos: right;
-          hexpand: true;
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 100;
-            value: 40;
-            step-increment: 1;
-          };
-        }
-      }
+      styles [
+        "dimmed",
+        "caption",
+      ]
     }
   }
 }

@@ -50,6 +50,7 @@ glyph_sources = [
   'font_row.py',
   'sheet_view.py',
   'sidebar.py',
+  'filters.py',
 ]
 
 install_data(glyph_sources, install_dir: moduledir)

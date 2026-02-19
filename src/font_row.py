@@ -1,5 +1,6 @@
-from gi.repository import GObject, Gtk, Pango
+from gi.repository import GLib, GObject, Gtk, Pango
 
+from .filters import Filters
 from .font_model import FontModel
 
 
@@ -14,5 +15,28 @@ class FontRow(Gtk.Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def set_inscription_font_map(self, font_map: Pango.FontMap):
-        self.preview_inscription.set_font_map(font_map)
+    def update_markup(self, model: FontModel, filters: Filters):
+        size = filters.preview_size
+
+        if model.is_preview_font_added:
+            family = GLib.markup_escape_text(model.preview_family)
+            text = GLib.markup_escape_text(model.preview_string)
+            markup = f'<span font_family="{family}" font="{size}" fallback="false">{text}</span>'
+        else:
+            markup = f'<span font="{size}">Failed to load font preview</span>'
+
+        self.preview_inscription.set_markup(markup)
+
+    def bind_row_data(
+        self, model: FontModel, filters: Filters, font_map: Pango.FontMap
+    ):
+        self.font_model = model
+
+        if model.is_preview_font_added:
+            self.preview_inscription.set_font_map(font_map)
+
+        filters.connect(
+            "notify::preview-size", lambda *_: self.update_markup(model, filters)
+        )
+
+        self.update_markup(model, filters)

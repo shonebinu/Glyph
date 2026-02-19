@@ -23,10 +23,7 @@ template $FontsView: Adw.Bin {
 
             model: NoSelection selection_model {
               model: FilterListModel filter_model {
-                filter: StringFilter {
-                  expression: expr item as <$FontModel>.display_name;
-                  search: bind template.search_query;
-                };
+                filter: CustomFilter custom_filter {};
 
                 model: bind template.font_store as <Gio.ListModel>;
               };
@@ -41,7 +38,7 @@ template $FontsView: Adw.Bin {
         child: Adw.StatusPage {
           icon-name: "edit-find-symbolic";
           title: _("No Fonts Found");
-          description: _("Try a different search term or check your spelling.");
+          description: _("Try a different search term or filters.");
         };
       }
     };

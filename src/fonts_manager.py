@@ -14,11 +14,14 @@ gi.require_version("PangoFc", "1.0")
 
 from gi.repository import Gio, Gtk, Pango, PangoCairo, PangoFc  # type: ignore
 
+from .filters import Filters
 from .font_model import FontModel
 
 
 class FontsManager:
     def __init__(self):
+        self.filters = Filters()
+
         self.font_store = Gio.ListStore.new(FontModel)
         self.available_categories = Gtk.StringList()
         self.available_subsets = Gtk.StringList()
