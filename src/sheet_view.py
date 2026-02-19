@@ -13,15 +13,29 @@ class SheetView(Adw.Bin):
 
     font_model = GObject.Property(type=FontModel)
 
+    install_btn: Gtk.Button = Gtk.Template.Child()
+
     @GObject.Signal(arg_types=(str,))
     def show_toast(self, msg: str):
         pass
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.connect("notify::font-model", self.on_font_model_changed)
 
     def set_fonts_manager(self, fonts_manager: FontsManager):
         self.fonts_manager = fonts_manager
+
+    def on_font_model_changed(self, *args):
+        if self.font_model:
+            self.update_button_style()
+            self.font_model.connect("notify::is-installed", self.update_button_style)
+
+    def update_button_style(self, *_):
+        if self.font_model.is_installed:
+            self.install_btn.remove_css_class("suggested-action")
+        else:
+            self.install_btn.add_css_class("suggested-action")
 
     @Gtk.Template.Callback()
     def get_stack_state_name(self, _, is_installing: bool):
@@ -30,6 +44,10 @@ class SheetView(Adw.Bin):
     @Gtk.Template.Callback()
     def get_install_btn_state(self, _, is_installing: bool):
         return False if is_installing else True
+
+    @Gtk.Template.Callback()
+    def get_install_label_text(self, _, is_installed: bool):
+        return "Reinstall" if is_installed else "Install"
 
     @Gtk.Template.Callback()
     def on_install_clicked(self, _):

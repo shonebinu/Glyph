@@ -114,7 +114,7 @@ template $SheetView: Adw.Bin {
           //     "pill",
           //   ]
           // }
-          Button {
+          Button install_btn {
             sensitive: bind $get_install_btn_state((template.font_model as <$FontModel>).is_installing) as <bool>;
             clicked => $on_install_clicked();
 
@@ -140,13 +140,12 @@ template $SheetView: Adw.Bin {
               }
 
               Label {
-                label: _("Install Font");
+                label: bind $get_install_label_text((template.font_model as <$FontModel>).is_installed) as <string>;
               }
             }
 
             styles [
               "pill",
-              "suggested-action",
             ]
           }
         }
