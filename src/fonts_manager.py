@@ -161,45 +161,70 @@ class FontsManager:
         return {f.get_name() for f in self.default_font_map.list_families()}
 
     async def install_font(self, font: FontModel):
-        if not self.user_font_dir.exists():
-            self.user_font_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            font.is_installing = True
 
-        if not self.installed_fonts_json_path.parent.exists():
-            self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
+            if not self.user_font_dir.exists():
+                self.user_font_dir.mkdir(parents=True, exist_ok=True)
 
-        font_destination_path = (
-            self.user_font_dir / f"{font.family}_{str(uuid.uuid4())}"
-        )
+            if not self.installed_fonts_json_path.parent.exists():
+                self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # either every font files should be installed or none
-        with tempfile.TemporaryDirectory(
-            dir=self.user_font_dir.parent, prefix=".font_tmp_"
-        ) as tmp_dir:
-            tmp_dir_path = Path(tmp_dir)
+            font_destination_path = (
+                self.user_font_dir / f"{font.family}_{str(uuid.uuid4())}"
+            )
 
-            tasks = [
-                self.download_font_file(
-                    url, tmp_dir_path / PurePosixPath(urlparse(url).path).name
-                )
-                for url in font.files
-            ]
+            # either every font files should be installed or none
+            with tempfile.TemporaryDirectory(
+                dir=self.user_font_dir.parent, prefix=".font_tmp_"
+            ) as tmp_dir:
+                tmp_dir_path = Path(tmp_dir)
 
-            await asyncio.gather(*tasks)
+                tasks = [
+                    self.download_font_file(
+                        url, tmp_dir_path / PurePosixPath(urlparse(url).path).name
+                    )
+                    for url in font.files
+                ]
 
-            if font_destination_path.exists():
-                await asyncio.to_thread(shutil.rmtree, font_destination_path)
+                await asyncio.gather(*tasks)
 
-            # If user installing a font second time, remove the old files
-            if dir_name := self.app_installed_fonts.get(font.family):
+                if font_destination_path.exists():
+                    await asyncio.to_thread(shutil.rmtree, font_destination_path)
+
+                # If user installing a font second time, remove the old files
+                if dir_name := self.app_installed_fonts.get(font.family):
+                    await asyncio.to_thread(
+                        shutil.rmtree, self.user_font_dir / dir_name, ignore_errors=True
+                    )
+
                 await asyncio.to_thread(
-                    shutil.rmtree, self.user_font_dir / dir_name, ignore_errors=True
+                    shutil.move, tmp_dir_path, font_destination_path
                 )
 
-            await asyncio.to_thread(shutil.move, tmp_dir_path, font_destination_path)
+            self.app_installed_fonts[font.family] = font_destination_path.name
 
-        self.app_installed_fonts[font.family] = font_destination_path.name
+            self.installed_fonts_json_path.write_text(
+                json.dumps(self.app_installed_fonts)
+            )
 
-        self.installed_fonts_json_path.write_text(json.dumps(self.app_installed_fonts))
+            font.is_installed = True
+            font.is_app_installed = True
+
+        except httpx.RequestError:
+            raise Exception(
+                "Connectivity issue. Please check your internet connection."
+            )
+        except httpx.HTTPStatusError as e:
+            raise Exception(
+                f"Error: Server responded with status {e.response.status_code}."
+            )
+        except Exception as e:
+            raise Exception(
+                f"Error: Something went wrong while installing the font. {e}"
+            )
+        finally:
+            font.is_installing = False
 
     async def download_font_file(self, url: str, path: Path):
         async with self.httpx_client.stream("GET", url, follow_redirects=True) as resp:

@@ -1,6 +1,5 @@
 import asyncio
 
-import httpx
 from gi.repository import Adw, GObject, Gtk
 
 from .font_model import FontModel
@@ -72,21 +71,9 @@ class SheetView(Adw.Bin):
             if response != "install":
                 return
 
-        toast_msg = ""
-
         try:
-            # Do this from font manager ???
-            self.font_model.is_installing = True
             await self.fonts_manager.install_font(self.font_model)
-            self.font_model.is_installed = True
-            self.font_model.is_app_installed = True
-            toast_msg = f"{self.font_model.family} font installed."
-        except httpx.RequestError:
-            toast_msg = "Connectivity issue. Please check your internet connection."
-        except httpx.HTTPStatusError as e:
-            toast_msg = f"Error: Server responded with status {e.response.status_code}."
+            self.emit("show-toast", f"{self.font_model.family} font installed.")
+
         except Exception as e:
-            toast_msg = f"Error: Something went wrong while installing the font. {e}"
-        finally:
-            self.font_model.is_installing = False
-            self.emit("show-toast", toast_msg)
+            self.emit("show-toast", str(e))
