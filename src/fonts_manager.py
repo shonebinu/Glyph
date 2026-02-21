@@ -1,10 +1,13 @@
 import asyncio
 import ctypes
 import json
-from pathlib import Path
-from typing import List
+import shutil
+import tempfile
+import uuid
+from pathlib import Path, PurePosixPath
 from urllib.parse import urlparse
 
+import anyio
 import gi
 import httpx
 from typing_extensions import Set
@@ -12,7 +15,7 @@ from typing_extensions import Set
 gi.require_version("PangoFc", "1.0")
 # PangoFc needs to be imported for FontMap.config_changed to work
 
-from gi.repository import Gio, Gtk, Pango, PangoCairo, PangoFc  # type: ignore
+from gi.repository import Gio, GLib, Gtk, Pango, PangoCairo, PangoFc  # type: ignore
 
 from .filters import Filters
 from .font_model import FontModel
@@ -30,7 +33,34 @@ class FontsManager:
         fonts_json_path = data_dir / "fonts.json"
         preview_files_path = data_dir / "previews"
 
+        self.installed_fonts_json_path = (
+            Path(GLib.get_user_data_dir()) / "glyph" / "installed.json"
+        )
+
+        self.httpx_client = httpx.AsyncClient()
+
+        # do not try to use env vars or library(glib,os) dir methods here for proper working in flatpak for both dev and release
+        # https://github.com/shonebinu/Glyph/?tab=readme-ov-file#development
+        self.user_font_dir = Path("~/.local/share/fonts/").expanduser()
+
         self.default_font_map = PangoCairo.FontMap.get_default()
+
+        all_installed_fonts = self.get_all_installed_fonts()
+
+        try:
+            # family -> directory name
+            self.app_installed_fonts = {
+                family: dir
+                for family, dir in json.loads(
+                    self.installed_fonts_json_path.read_text()
+                ).items()
+                # dont include families that aren't in the Pango installed list. user might have uninstalled it manually ?
+                # will be overwritten(removed) in the next font install
+                if family in all_installed_fonts
+            }
+        except Exception as e:
+            print(e)
+            self.app_installed_fonts = {}
 
         self.custom_font_map = PangoCairo.FontMap.new()
         failed_families = self.load_custom_fonts(
@@ -40,17 +70,17 @@ class FontsManager:
         fonts = []
         avail_cats = set()
         avail_subs = set()
-        with fonts_json_path.open() as f:
-            for font in json.load(f):
-                fonts.append(
-                    FontModel(
-                        font,
-                        font["family"] in self.get_system_installed_fonts(),
-                        font["family"] not in failed_families,
-                    )
+        for font in json.loads(fonts_json_path.read_text()):
+            fonts.append(
+                FontModel(
+                    font,
+                    font["family"] in all_installed_fonts,
+                    font["family"] in self.app_installed_fonts,
+                    font["family"] not in failed_families,
                 )
-                avail_cats.update(font["category"])
-                avail_subs.update(font["subsets"])
+            )
+            avail_cats.update(font["category"])
+            avail_subs.update(font["subsets"])
 
         self.font_store.splice(0, 0, fonts)
         self.available_categories.splice(0, 0, ["All"] + sorted(avail_cats))
@@ -112,7 +142,7 @@ class FontsManager:
         # This needs to be called for the font map data to sync properly
         self.default_font_map.config_changed()  # type: ignore
 
-        installed_families = self.get_system_installed_fonts()
+        installed_families = self.get_all_installed_fonts()
 
         for i in range(self.font_store.get_n_items()):
             font_model: FontModel = self.font_store.get_item(i)  # type:ignore
@@ -122,23 +152,58 @@ class FontsManager:
             if font_model.is_installed != is_now_installed:
                 font_model.is_installed = is_now_installed
 
-    def get_system_installed_fonts(self) -> Set[str]:
+            # If user deletes a font installed via app manually while app is running
+            if not is_now_installed and font_model.family in self.app_installed_fonts:
+                font_model.is_app_installed = is_now_installed
+                self.app_installed_fonts.pop(font_model.family)
+
+    def get_all_installed_fonts(self) -> Set[str]:
         return {f.get_name() for f in self.default_font_map.list_families()}
 
-    async def install_font(self, font_files: List[str]):
-        # do not try to use env vars or library(glib,os) dir methods here for proper working in flatpak for both dev and release
-        # https://github.com/shonebinu/Glyph/?tab=readme-ov-file#development
-        user_font_dir = Path("~/.local/share/fonts/").expanduser()
-        user_font_dir.mkdir(parents=True, exist_ok=True)
+    async def install_font(self, font: FontModel):
+        if not self.user_font_dir.exists():
+            self.user_font_dir.mkdir(parents=True, exist_ok=True)
 
-        async with httpx.AsyncClient() as client:
-            tasks = [client.get(url, follow_redirects=True) for url in font_files]
-            responses = await asyncio.gather(*tasks)
+        if not self.installed_fonts_json_path.parent.exists():
+            self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
 
-        for r in responses:
-            r.raise_for_status()
+        font_destination_path = (
+            self.user_font_dir / f"{font.family}_{str(uuid.uuid4())}"
+        )
 
-        for url, resp in zip(font_files, responses):
-            filename = Path(urlparse(url).path).name
-            path = user_font_dir / filename
-            await asyncio.to_thread(path.write_bytes, resp.content)
+        # either every font files should be installed or none
+        with tempfile.TemporaryDirectory(
+            dir=self.user_font_dir.parent, prefix=".font_tmp_"
+        ) as tmp_dir:
+            tmp_dir_path = Path(tmp_dir)
+
+            tasks = [
+                self.download_font_file(
+                    url, tmp_dir_path / PurePosixPath(urlparse(url).path).name
+                )
+                for url in font.files
+            ]
+
+            await asyncio.gather(*tasks)
+
+            if font_destination_path.exists():
+                await asyncio.to_thread(shutil.rmtree, font_destination_path)
+
+            # If user installing a font second time, remove the old files
+            if dir_name := self.app_installed_fonts.get(font.family):
+                await asyncio.to_thread(
+                    shutil.rmtree, self.user_font_dir / dir_name, ignore_errors=True
+                )
+
+            await asyncio.to_thread(shutil.move, tmp_dir_path, font_destination_path)
+
+        self.app_installed_fonts[font.family] = font_destination_path.name
+
+        self.installed_fonts_json_path.write_text(json.dumps(self.app_installed_fonts))
+
+    async def download_font_file(self, url: str, path: Path):
+        async with self.httpx_client.stream("GET", url, follow_redirects=True) as resp:
+            resp.raise_for_status()
+            async with await anyio.open_file(path, "wb") as f:
+                async for chunk in resp.aiter_bytes(chunk_size=256 * 1024):
+                    await f.write(chunk)

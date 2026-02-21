@@ -75,9 +75,11 @@ class SheetView(Adw.Bin):
         toast_msg = ""
 
         try:
+            # Do this from font manager ???
             self.font_model.is_installing = True
-            await self.fonts_manager.install_font(self.font_model.files)
+            await self.fonts_manager.install_font(self.font_model)
             self.font_model.is_installed = True
+            self.font_model.is_app_installed = True
             toast_msg = f"{self.font_model.family} font installed."
         except httpx.RequestError:
             toast_msg = "Connectivity issue. Please check your internet connection."

@@ -13,6 +13,7 @@ class FontModel(GObject.Object):
     license = GObject.Property(type=str)
 
     is_installed = GObject.Property(type=bool, default=False)
+    is_app_installed = GObject.Property(type=bool, default=False)
 
     is_installing = GObject.Property(type=bool, default=False)
 
@@ -20,6 +21,7 @@ class FontModel(GObject.Object):
         self,
         data: dict,
         is_installed: bool = False,
+        is_app_installed: bool = False,
         is_preview_font_added: bool = False,
     ):
         super().__init__(
@@ -28,6 +30,7 @@ class FontModel(GObject.Object):
             designer=data["designer"],
             license=data["license"],
             is_installed=is_installed,
+            is_app_installed=is_app_installed,
         )
         self.category = data["category"]
         self.subsets = data["subsets"]
