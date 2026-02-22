@@ -160,6 +160,30 @@ class FontsManager:
     def get_all_installed_fonts(self) -> Set[str]:
         return {f.get_name() for f in self.default_font_map.list_families()}
 
+    async def sync_installed_fonts_json(self):
+        await asyncio.to_thread(
+            self.installed_fonts_json_path.write_text,
+            json.dumps(self.app_installed_fonts, indent=2),
+        )
+
+    async def remove_font(self, font: FontModel):
+        try:
+            dir_name = self.app_installed_fonts[font.family]
+
+            path = self.user_font_dir / dir_name
+            if path.exists():
+                await asyncio.to_thread(shutil.rmtree, path)
+
+            self.app_installed_fonts.pop(font.family)
+
+            await self.sync_installed_fonts_json()
+
+            font.is_installed = False
+            font.is_app_installed = False
+
+        except Exception as e:
+            raise Exception(f"Failed to remove font :{e}")
+
     async def install_font(self, font: FontModel):
         try:
             font.is_installing = True
@@ -204,9 +228,7 @@ class FontsManager:
 
             self.app_installed_fonts[font.family] = font_destination_path.name
 
-            self.installed_fonts_json_path.write_text(
-                json.dumps(self.app_installed_fonts)
-            )
+            await self.sync_installed_fonts_json()
 
             font.is_installed = True
             font.is_app_installed = True

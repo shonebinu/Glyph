@@ -82,24 +82,32 @@ template $SheetView: Adw.Bin {
 
         Adw.WrapBox {
           align: 0.5;
-          // child-spacing: 12;
-          // line-spacing: 12;
-          // Button {
-          //   sensitive: false;
-          //   Box {
-          //     spacing: 6;
-          //     Image {
-          //       icon-name: "user-trash-symbolic";
-          //     }
-          //     Label {
-          //       label: _("Remove Font");
-          //     }
-          //   }
-          //   styles [
-          //     "pill",
-          //     "destructive-action",
-          //   ]
-          // }
+          child-spacing: 12;
+          line-spacing: 12;
+
+          Button remove_btn {
+            sensitive: bind (template.font_model as <$FontModel>).is_app_installed;
+            visible: bind (template.font_model as <$FontModel>).is_installed;
+            clicked => $on_remove_clicked();
+
+            Box {
+              spacing: 6;
+
+              Image {
+                icon-name: "user-trash-symbolic";
+              }
+
+              Label {
+                label: _("Remove");
+              }
+            }
+
+            styles [
+              "pill",
+              "destructive-action",
+            ]
+          }
+
           // Button {
           //   Box {
           //     spacing: 6;
@@ -150,13 +158,15 @@ template $SheetView: Adw.Bin {
           }
         }
 
-        // Label {
-        //   label: _("Only fonts installed via Glyph can be removed.");
-        //   styles [
-        //     "dimmed",
-        //     "caption",
-        //   ]
-        // }
+        Label {
+          visible: bind (template.font_model as <$FontModel>).is_installed;
+          label: _("Only fonts installed via Glyph can be removed using app.");
+
+          styles [
+            "dimmed",
+            "caption",
+          ]
+        }
       }
     };
   }

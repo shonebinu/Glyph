@@ -13,6 +13,7 @@ class SheetView(Adw.Bin):
     font_model = GObject.Property(type=FontModel)
 
     install_btn: Gtk.Button = Gtk.Template.Child()
+    remove_btn: Gtk.Button = Gtk.Template.Child()
 
     @GObject.Signal(arg_types=(str,))
     def show_toast(self, msg: str):
@@ -54,6 +55,10 @@ class SheetView(Adw.Bin):
             return
         asyncio.create_task(self.install_font())
 
+    @Gtk.Template.Callback()
+    def on_remove_clicked(self, _):
+        asyncio.create_task(self.remove_font())
+
     async def install_font(self):
         if self.font_model.is_installed:
             dialog = Adw.AlertDialog(
@@ -77,3 +82,16 @@ class SheetView(Adw.Bin):
 
         except Exception as e:
             self.emit("show-toast", str(e))
+
+    async def remove_font(self):
+        self.remove_btn.set_sensitive(False)
+
+        try:
+            await self.fonts_manager.remove_font(self.font_model)
+            self.emit("show-toast", f"{self.font_model.family} font removed.")
+
+        except Exception as e:
+            self.emit("show-toast", str(e))
+
+        finally:
+            self.remove_btn.set_sensitive(True)
