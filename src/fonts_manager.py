@@ -178,8 +178,9 @@ class FontsManager:
 
             await self.sync_installed_fonts_json()
 
-            font.is_installed = False
             font.is_app_installed = False
+            if font.family not in self.get_all_installed_fonts():
+                font.is_installed = False
 
         except Exception as e:
             raise Exception(f"Failed to remove font :{e}")

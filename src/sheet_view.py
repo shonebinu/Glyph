@@ -13,7 +13,6 @@ class SheetView(Adw.Bin):
     font_model = GObject.Property(type=FontModel)
 
     install_btn: Gtk.Button = Gtk.Template.Child()
-    remove_btn: Gtk.Button = Gtk.Template.Child()
 
     @GObject.Signal(arg_types=(str,))
     def show_toast(self, msg: str):
@@ -90,14 +89,9 @@ class SheetView(Adw.Bin):
             self.emit("show-toast", str(e))
 
     async def remove_font(self):
-        self.remove_btn.set_sensitive(False)
-
         try:
             await self.fonts_manager.remove_font(self.font_model)
             self.emit("show-toast", f"{self.font_model.family} font removed.")
 
         except Exception as e:
             self.emit("show-toast", str(e))
-
-        finally:
-            self.remove_btn.set_sensitive(True)
