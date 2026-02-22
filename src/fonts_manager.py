@@ -180,6 +180,7 @@ class FontsManager:
 
             font.is_app_installed = False
             if font.family not in self.get_all_installed_fonts():
+                # Only set is_installed to False if the font is not available anywhere
                 font.is_installed = False
 
         except Exception as e:
