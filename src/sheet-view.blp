@@ -123,7 +123,7 @@ template $SheetView: Adw.Bin {
           //   ]
           // }
           Button install_btn {
-            sensitive: bind $get_install_btn_state((template.font_model as <$FontModel>).is_installing) as <bool>;
+            sensitive: bind $get_install_btn_sensitivity((template.font_model as <$FontModel>).is_installing) as <bool>;
             clicked => $on_install_clicked();
 
             Box {

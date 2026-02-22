@@ -42,7 +42,7 @@ class SheetView(Adw.Bin):
         return "installing" if is_installing else "default"
 
     @Gtk.Template.Callback()
-    def get_install_btn_state(self, _, is_installing: bool):
+    def get_install_btn_sensitivity(self, _, is_installing: bool):
         return False if is_installing else True
 
     @Gtk.Template.Callback()
