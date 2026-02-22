@@ -50,6 +50,12 @@ class SheetView(Adw.Bin):
         return "Reinstall" if is_installed else "Install"
 
     @Gtk.Template.Callback()
+    def get_remove_label_visibility(
+        self, _, is_installed: bool, is_app_installed: bool
+    ):
+        return is_installed and not is_app_installed
+
+    @Gtk.Template.Callback()
     def on_install_clicked(self, _):
         if self.font_model.is_installing:
             return

@@ -159,7 +159,7 @@ template $SheetView: Adw.Bin {
         }
 
         Label {
-          visible: bind (template.font_model as <$FontModel>).is_installed;
+          visible: bind $get_remove_label_visibility((template.font_model as <$FontModel>).is_installed,(template.font_model as <$FontModel>).is_app_installed) as <bool>;
           label: _("Only fonts installed via Glyph can be removed using app.");
 
           styles [
