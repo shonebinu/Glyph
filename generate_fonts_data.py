@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import uuid
 from io import BytesIO
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
@@ -59,6 +60,17 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
     return BytesIO(subset_face.blob.data)
 
 
+def rename_ttf(font: TTFont, new_name: str):
+    clean_name = new_name.replace(" ", "")
+
+    for record in font["name"].names:
+        if record.nameID in [1, 4, 16]:
+            record.string = new_name.encode(record.getEncoding())
+
+        elif record.nameID == 6:
+            record.string = clean_name.encode(record.getEncoding())
+
+
 def generate_preview_files(
     preview_samples: List[Tuple[str, Path, str]],
 ) -> Dict[str, str]:
@@ -70,13 +82,14 @@ def generate_preview_files(
     for family, ttf_path, preview_string in preview_samples:
         try:
             subset_data = generate_subset(ttf_path, preview_string)
-
             font = TTFont(subset_data)
-            font.save(output_dir / f"{family}.ttf")
 
-            # setting the metadata family name as font name isn't working for some fonts preview after subsetting
-            # (maybe some name tables are dropped)
-            preview_family_map[family] = font["name"].getBestFamilyName()
+            # Assign new names for subsetted fonts so there is no conflict with existing ones in the system with the same name
+            new_family_name = str(uuid.uuid4())
+            rename_ttf(font, new_family_name)
+            preview_family_map[family] = new_family_name
+
+            font.save(output_dir / f"{new_family_name}.ttf")
         except Exception as e:
             print(
                 f"Skipping font subsetting {str(ttf_path)} for '{preview_string}': {e}"

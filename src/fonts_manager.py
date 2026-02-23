@@ -1,5 +1,4 @@
 import asyncio
-import ctypes
 import json
 import shutil
 import tempfile
@@ -10,12 +9,8 @@ from urllib.parse import urlparse
 import anyio
 import gi
 import httpx
-from typing_extensions import Set
-
-gi.require_version("PangoFc", "1.0")
-# PangoFc needs to be imported for FontMap.config_changed to work
-
-from gi.repository import Gio, GLib, Gtk, Pango, PangoCairo, PangoFc  # type: ignore
+from gi.repository import Gio, GLib, Gtk, Pango, PangoCairo
+from typing_extensions import Any, Dict, List, Set, Tuple
 
 from .filters import Filters
 from .font_model import FontModel
@@ -29,159 +24,109 @@ class FontsManager:
         self.available_categories = Gtk.StringList()
         self.available_subsets = Gtk.StringList()
 
-        data_dir = Path("/app/share/glyph")
-        fonts_json_path = data_dir / "fonts.json"
-        preview_files_path = data_dir / "previews"
-
+        self.user_font_dir = Path("~/.local/share/fonts/").expanduser()
         self.installed_fonts_json_path = (
             Path(GLib.get_user_data_dir()) / "glyph" / "installed.json"
         )
+        self.installed_fonts = self.get_installed_fonts()
 
+        self.default_font_map = None
+        self.custom_font_map = PangoCairo.FontMap.new()
         self.httpx_client = httpx.AsyncClient()
 
-        # do not try to use env vars or library(glib,os) dir methods here for proper working in flatpak for both dev and release
-        # https://github.com/shonebinu/Glyph/?tab=readme-ov-file#development
-        self.user_font_dir = Path("~/.local/share/fonts/").expanduser()
+        data_dir = Path("/app/share/glyph")
+        fonts, categories, subsets = self.prepare_font_data(
+            data_dir / "fonts.json", data_dir / "previews"
+        )
 
-        self.default_font_map = PangoCairo.FontMap.get_default()
+        self.font_store.splice(0, 0, fonts)
+        self.available_categories.splice(0, 0, categories)
+        self.available_subsets.splice(0, 0, subsets)
 
-        all_installed_fonts = self.get_all_installed_fonts()
-
+    def get_installed_fonts(self):
         try:
-            # family -> directory name
-            self.app_installed_fonts = {
-                family: dir
-                for family, dir in json.loads(
-                    self.installed_fonts_json_path.read_text()
-                ).items()
-                # dont include families that aren't in the Pango installed list. user might have uninstalled it manually ?
-                # will be overwritten(removed) in the next font install
-                if family in all_installed_fonts
-            }
-        except Exception as e:
-            print(e)
-            self.app_installed_fonts = {}
+            installed_fonts = json.loads(self.installed_fonts_json_path.read_text())
+        except Exception:
+            installed_fonts = {}
+        return installed_fonts
 
-        self.custom_font_map = PangoCairo.FontMap.new()
+    def prepare_font_data(
+        self, fonts_json_path: Path, preview_files_path: Path
+    ) -> Tuple[List[FontModel], List[str], List[str]]:
+        raw_data = json.loads(fonts_json_path.read_text())
+
         failed_families = self.load_custom_fonts(
-            self.custom_font_map, preview_files_path
+            self.custom_font_map, preview_files_path, raw_data
         )
 
         fonts = []
-        avail_cats = set()
-        avail_subs = set()
-        for font in json.loads(fonts_json_path.read_text()):
+        avail_cats: Set[str] = set()
+        avail_subs: Set[str] = set()
+
+        for font_dict in raw_data:
+            family = font_dict["family"]
+
             fonts.append(
                 FontModel(
-                    font,
-                    font["family"] in all_installed_fonts,
-                    font["family"] in self.app_installed_fonts,
-                    font["family"] not in failed_families,
+                    font_dict,
+                    is_installed=family in self.installed_fonts,
+                    is_preview_font_added=family not in failed_families,
                 )
             )
-            avail_cats.update(font["category"])
-            avail_subs.update(font["subsets"])
 
-        self.font_store.splice(0, 0, fonts)
-        self.available_categories.splice(0, 0, ["All"] + sorted(avail_cats))
-        self.available_subsets.splice(0, 0, ["All"] + sorted(avail_subs))
+            avail_cats.update(font_dict.get("category", []))
+            avail_subs.update(font_dict.get("subsets", []))
 
-        # Listen to any changes in system font dirs
-        # https://gitlab.gnome.org/GNOME/gnome-font-viewer/-/blob/main/src/font-model.c#L506
-        settings = Gtk.Settings.get_default()
-        settings.connect("notify::gtk-fontconfig-timestamp", self.on_fontconfig_changed)  # type: ignore
+        categories = ["All"] + sorted(list(avail_cats))
+        subsets = ["All"] + sorted(list(avail_subs))
+
+        return fonts, categories, subsets
 
     def load_custom_fonts(
-        self, font_map: Pango.FontMap, preview_files_path: Path
+        self,
+        font_map: Pango.FontMap,
+        preview_files_path: Path,
+        font_data: List[Dict[str, Any]],
     ) -> Set[str]:
-        # The easiest way would've been to use add_font_file() fn in FontMap
-        # but with that, during app, if any of the fonts with same name gets deleted
-        # from system fonts or user fonts dirs, the preview of the same disappears
-        # (glyph:2): Pango-WARNING **: 16:41:58.000: failed to create cairo scaled font, expect ugly output. the offending font is 'Abel 19.008'
-        # (glyph:2): Pango-WARNING **: 16:41:58.000: font_face status is: file not found
-        # (glyph:2): Pango-WARNING **: 16:41:58.000: scaled_font status is: file not found
-
-        # Easiest alternative is to generate and use SVG
-        # Change each preview fonts name to uuid while generating it?
-        # Other option is Webkit
-        libfc = ctypes.CDLL("libfontconfig.so.1")
-
-        libfc.FcConfigCreate.restype = ctypes.c_void_p
-
-        libfc.FcConfigAppFontAddFile.argtypes = [ctypes.c_void_p, ctypes.c_char_p]
-        libfc.FcConfigAppFontAddFile.restype = ctypes.c_int
-
-        libfc.FcConfigDestroy.argtypes = [ctypes.c_void_p]
-
-        fc_config = libfc.FcConfigCreate()
-
         failed_families = set()
 
-        for preview_file in preview_files_path.iterdir():
-            path_bytes = str(preview_file).encode("utf-8")
-            if not libfc.FcConfigAppFontAddFile(fc_config, path_bytes):
-                failed_families.add(
-                    preview_file.stem
-                )  # filename is same as family name
-                print(f"Failed to load preview file: {preview_file}")
+        for font in font_data:
+            family = font["family"]
+            preview_family = font["preview_family"]
 
-        libpangoft2 = ctypes.CDLL("libpangoft2-1.0.so.0")
+            preview_file = preview_files_path / f"{preview_family}.ttf"
 
-        libpangoft2.pango_fc_font_map_set_config.argtypes = [
-            ctypes.c_void_p,
-            ctypes.c_void_p,
-        ]
+            if not preview_file.exists():
+                failed_families.add(family)
+                continue
 
-        libpangoft2.pango_fc_font_map_set_config(hash(font_map), fc_config)
-
-        libfc.FcConfigDestroy(fc_config)
+            success = font_map.add_font_file(str(preview_file))
+            if not success:
+                failed_families.add(family)
 
         return failed_families
 
-    def on_fontconfig_changed(self, *_):
-        # This needs to be called for the font map data to sync properly
-        self.default_font_map.config_changed()  # type: ignore
-
-        installed_families = self.get_all_installed_fonts()
-
-        for i in range(self.font_store.get_n_items()):
-            font_model: FontModel = self.font_store.get_item(i)  # type:ignore
-
-            is_now_installed = font_model.family in installed_families
-
-            if font_model.is_installed != is_now_installed:
-                font_model.is_installed = is_now_installed
-
-            # If user deletes a font installed via app manually while app is running
-            if not is_now_installed and font_model.family in self.app_installed_fonts:
-                font_model.is_app_installed = is_now_installed
-                self.app_installed_fonts.pop(font_model.family)
-
-    def get_all_installed_fonts(self) -> Set[str]:
-        return {f.get_name() for f in self.default_font_map.list_families()}
-
-    async def sync_installed_fonts_json(self):
-        await asyncio.to_thread(
-            self.installed_fonts_json_path.write_text,
-            json.dumps(self.app_installed_fonts, indent=2),
+    def sync_installed_fonts_json(self):
+        self.installed_fonts_json_path.write_text(
+            json.dumps(self.installed_fonts, indent=2)
         )
+
+    def is_font_outside_installed(self, family: str) -> bool:
+        if not self.default_font_map:
+            self.default_font_map = PangoCairo.FontMap.get_default()
+        return family in {f.get_name() for f in self.default_font_map.list_families()}
 
     async def remove_font(self, font: FontModel):
         try:
-            dir_name = self.app_installed_fonts[font.family]
+            dir_name = self.installed_fonts[font.family]
 
             path = self.user_font_dir / dir_name
             if path.exists():
                 await asyncio.to_thread(shutil.rmtree, path)
 
-            self.app_installed_fonts.pop(font.family)
-
-            await self.sync_installed_fonts_json()
-
-            font.is_app_installed = False
-            if font.family not in self.get_all_installed_fonts():
-                # Only set is_installed to False if the font is not available anywhere
-                font.is_installed = False
+            self.installed_fonts.pop(font.family)
+            self.sync_installed_fonts_json()
+            font.is_installed = False
 
         except Exception as e:
             raise Exception(f"Failed to remove font :{e}")
@@ -190,11 +135,8 @@ class FontsManager:
         try:
             font.is_installing = True
 
-            if not self.user_font_dir.exists():
-                self.user_font_dir.mkdir(parents=True, exist_ok=True)
-
-            if not self.installed_fonts_json_path.parent.exists():
-                self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
+            self.user_font_dir.mkdir(parents=True, exist_ok=True)
+            self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
 
             font_destination_path = (
                 self.user_font_dir / f"{font.family}_{str(uuid.uuid4())}"
@@ -214,39 +156,22 @@ class FontsManager:
                 ]
 
                 await asyncio.gather(*tasks)
-
-                if font_destination_path.exists():
-                    await asyncio.to_thread(shutil.rmtree, font_destination_path)
-
-                # If user installing a font second time, remove the old files
-                if dir_name := self.app_installed_fonts.get(font.family):
-                    await asyncio.to_thread(
-                        shutil.rmtree, self.user_font_dir / dir_name, ignore_errors=True
-                    )
-
                 await asyncio.to_thread(
                     shutil.move, tmp_dir_path, font_destination_path
                 )
 
-            self.app_installed_fonts[font.family] = font_destination_path.name
-
-            await self.sync_installed_fonts_json()
-
+            self.installed_fonts[font.family] = font_destination_path.name
+            self.sync_installed_fonts_json()
             font.is_installed = True
-            font.is_app_installed = True
 
         except httpx.RequestError:
             raise Exception(
                 "Connectivity issue. Please check your internet connection."
             )
         except httpx.HTTPStatusError as e:
-            raise Exception(
-                f"Error: Server responded with status {e.response.status_code}."
-            )
+            raise Exception(f"Server error: {e.response.status_code}")
         except Exception as e:
-            raise Exception(
-                f"Error: Something went wrong while installing the font. {e}"
-            )
+            raise Exception(f"Installation failed: {e}")
         finally:
             font.is_installing = False
 

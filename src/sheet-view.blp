@@ -85,70 +85,16 @@ template $SheetView: Adw.Bin {
           child-spacing: 12;
           line-spacing: 12;
 
-          Button remove_btn {
-            sensitive: bind (template.font_model as <$FontModel>).is_app_installed;
-            visible: bind (template.font_model as <$FontModel>).is_installed;
-            clicked => $on_remove_clicked();
-
+          Button {
             Box {
               spacing: 6;
 
               Image {
-                icon-name: "user-trash-symbolic";
+                icon-name: "text-insert2-symbolic";
               }
 
               Label {
-                label: _("Remove");
-              }
-            }
-
-            styles [
-              "pill",
-              "destructive-action",
-            ]
-          }
-
-          // Button {
-          //   Box {
-          //     spacing: 6;
-          //     Image {
-          //       icon-name: "text-insert2-symbolic";
-          //     }
-          //     Label {
-          //       label: _("Test Font");
-          //     }
-          //   }
-          //   styles [
-          //     "pill",
-          //   ]
-          // }
-          Button install_btn {
-            sensitive: bind $get_install_btn_sensitivity((template.font_model as <$FontModel>).is_installing) as <bool>;
-            clicked => $on_install_clicked();
-
-            Box {
-              spacing: 6;
-
-              Stack {
-                visible-child-name: bind $get_stack_state_name((template.font_model as <$FontModel>).is_installing) as <string>;
-
-                StackPage {
-                  name: "default";
-
-                  child: Image {
-                    icon-name: "folder-download-symbolic";
-                  };
-                }
-
-                StackPage {
-                  name: "installing";
-
-                  child: Adw.Spinner {};
-                }
-              }
-
-              Label {
-                label: bind $get_install_label_text((template.font_model as <$FontModel>).is_installed) as <string>;
+                label: _("Test Font");
               }
             }
 
@@ -156,16 +102,74 @@ template $SheetView: Adw.Bin {
               "pill",
             ]
           }
-        }
 
-        Label {
-          visible: bind $get_remove_label_visibility((template.font_model as <$FontModel>).is_installed,(template.font_model as <$FontModel>).is_app_installed) as <bool>;
-          label: _("Only fonts installed via Glyph can be removed using app.");
+          Stack {
+            visible-child-name: bind $get_main_actions_stack_name((template.font_model as <$FontModel>).is_installed) as <string>;
 
-          styles [
-            "dimmed",
-            "caption",
-          ]
+            StackPage {
+              name: "remove";
+
+              child: Button {
+                clicked => $on_remove_clicked();
+
+                Box {
+                  spacing: 6;
+
+                  Image {
+                    icon-name: "user-trash-symbolic";
+                  }
+
+                  Label {
+                    label: _("Remove");
+                  }
+                }
+
+                styles [
+                  "pill",
+                  "destructive-action",
+                ]
+              };
+            }
+
+            StackPage {
+              name: "install";
+
+              child: Button {
+                clicked => $on_install_clicked();
+
+                Box {
+                  spacing: 6;
+
+                  Stack {
+                    visible-child-name: bind $get_install_btn_stack_name((template.font_model as <$FontModel>).is_installing) as <string>;
+
+                    StackPage {
+                      name: "default";
+
+                      child: Image {
+                        icon-name: "folder-download-symbolic";
+                      };
+                    }
+
+                    StackPage {
+                      name: "installing";
+
+                      child: Adw.Spinner {};
+                    }
+                  }
+
+                  Label {
+                    label: "Install";
+                  }
+                }
+
+                styles [
+                  "pill",
+                  "suggested-action",
+                ]
+              };
+            }
+          }
         }
       }
     };
