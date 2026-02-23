@@ -9,8 +9,11 @@ from urllib.parse import urlparse
 import anyio
 import gi
 import httpx
-from gi.repository import Gio, GLib, Gtk, Pango, PangoCairo
 from typing_extensions import Any, Dict, List, Set, Tuple
+
+gi.require_version("PangoFc", "1.0")
+# PangoFc needs to be imported for using FontMap.config_changed method
+from gi.repository import Gio, GLib, Gtk, Pango, PangoCairo, PangoFc  # type:ignore
 
 from .filters import Filters
 from .font_model import FontModel
@@ -30,7 +33,7 @@ class FontsManager:
         )
         self.installed_fonts = self.get_installed_fonts()
 
-        self.default_font_map = None
+        self.default_font_map = PangoCairo.FontMap.get_default()
         self.custom_font_map = PangoCairo.FontMap.new()
         self.httpx_client = httpx.AsyncClient()
 
@@ -42,6 +45,13 @@ class FontsManager:
         self.font_store.splice(0, 0, fonts)
         self.available_categories.splice(0, 0, categories)
         self.available_subsets.splice(0, 0, subsets)
+
+        # To sync real-time system fonts changes with fontmap
+        settings = Gtk.Settings.get_default()
+        settings.connect(  # type: ignore
+            "notify::gtk-fontconfig-timestamp",
+            lambda *_: self.default_font_map.config_changed(),  # type: ignore
+        )
 
     def get_installed_fonts(self):
         try:
@@ -122,8 +132,6 @@ class FontsManager:
         )
 
     def is_font_outside_installed(self, family: str) -> bool:
-        if not self.default_font_map:
-            self.default_font_map = PangoCairo.FontMap.get_default()
         return family in {f.get_name() for f in self.default_font_map.list_families()}
 
     async def remove_font(self, font: FontModel):
