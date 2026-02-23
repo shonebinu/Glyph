@@ -45,10 +45,19 @@ class FontsManager:
 
     def get_installed_fonts(self):
         try:
-            installed_fonts = json.loads(self.installed_fonts_json_path.read_text())
+            raw_installed_fonts: Dict[str, str] = json.loads(
+                self.installed_fonts_json_path.read_text()
+            )
         except Exception:
-            installed_fonts = {}
-        return installed_fonts
+            return {}
+
+        # Exclude items where the installed path doesn't exist or is empty(user might have uninstalled manually)
+        return {
+            family: dir_name
+            for family, dir_name in raw_installed_fonts.items()
+            if (self.user_font_dir / dir_name).exists()
+            and any((self.user_font_dir / dir_name).iterdir())
+        }
 
     def prepare_font_data(
         self, fonts_json_path: Path, preview_files_path: Path
