@@ -36,13 +36,6 @@ class FontModel(GObject.Object):
         self.preview_family = data["preview_family"]
         self.is_preview_font_added = is_preview_font_added
 
-        # for some reason, using _ with signals isn't working
-        self.connect("notify::is-installed", lambda *_: self.notify("font-status"))
-
-    @GObject.Property(type=str)
-    def font_status(self):
-        return "Installed" if self.is_installed else "Not Installed"
-
     @GObject.Property(type=str)
     def category_label(self):
         return ", ".join(self.category)

@@ -8,6 +8,7 @@ template $SheetView: Adw.Bin {
     child: Adw.Clamp {
       Box {
         orientation: vertical;
+        spacing: 12;
 
         ListBox {
           selection-mode: none;
@@ -64,15 +65,6 @@ template $SheetView: Adw.Bin {
           Adw.ActionRow {
             title: _("Files");
             subtitle: bind (template.font_model as <$FontModel>).font_files_label;
-
-            styles [
-              "property",
-            ]
-          }
-
-          Adw.ActionRow {
-            title: _("Status");
-            subtitle: bind (template.font_model as <$FontModel>).font_status;
 
             styles [
               "property",

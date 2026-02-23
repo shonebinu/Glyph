@@ -51,7 +51,8 @@ class FontsManager:
         except Exception:
             return {}
 
-        # Exclude items where the installed path doesn't exist or is empty(user might have uninstalled manually)
+        # Exclude items where the installed path doesn't exist or is empty
+        # Will be overwritten in the next install/remove
         return {
             family: dir_name
             for family, dir_name in raw_installed_fonts.items()
