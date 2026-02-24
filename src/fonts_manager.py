@@ -61,7 +61,7 @@ class FontsManager:
             lambda *_: self.default_font_map.config_changed(),  # type: ignore
         )
 
-    def get_installed_fonts(self):
+    def get_installed_fonts(self) -> Dict[str, str]:
         try:
             raw_installed_fonts: Dict[str, str] = json.loads(
                 self.installed_fonts_json_path.read_text()
@@ -69,13 +69,18 @@ class FontsManager:
         except Exception:
             return {}
 
-        # Exclude items where the installed path doesn't exist
-        # Will be overwritten in the next install/remove
-        return {
-            family: dir_name
-            for family, dir_name in raw_installed_fonts.items()
-            if (self.user_font_dir / dir_name).is_dir()
+        installed_fonts = {
+            fam: dir
+            for fam, di in raw_installed_fonts.items()
+            if (self.user_font_dir / di).is_dir()
         }
+
+        if len(installed_fonts) != len(raw_installed_fonts):
+            self.installed_fonts_json_path.write_text(
+                json.dumps(installed_fonts, indent=2)
+            )
+
+        return installed_fonts
 
     def prepare_font_data(
         self, fonts_json_path: Path, preview_files_path: Path
@@ -215,18 +220,15 @@ class FontsManager:
             deleted_dir = file.get_basename()
 
             family = next(
-                (
-                    family
-                    for family, dir in self.installed_fonts.items()
-                    if dir == deleted_dir
-                ),
+                (fam for fam, di in self.installed_fonts.items() if di == deleted_dir),
                 None,
             )
 
-            if not deleted_dir or not family:
+            if not family:
                 return
 
-            self.installed_fonts.pop(family)
+            self.installed_fonts.pop(family, None)
+            self.sync_installed_fonts_json()
             self.update_model_installed_status(family, False)
 
     def update_model_installed_status(self, family: str, is_installed: bool):
