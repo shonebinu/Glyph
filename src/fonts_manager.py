@@ -49,6 +49,9 @@ class FontsManager:
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
         self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
 
+        # To avoid race condition between directory monitor and remove font fn
+        self.internal_removals = set()
+
         self.user_font_dir_monitor = Gio.File.new_for_path(
             str(self.user_font_dir)
         ).monitor_directory(Gio.FileMonitorFlags.NONE)
@@ -70,7 +73,7 @@ class FontsManager:
             return {}
 
         installed_fonts = {
-            fam: dir
+            fam: di
             for fam, di in raw_installed_fonts.items()
             if (self.user_font_dir / di).is_dir()
         }
@@ -152,6 +155,7 @@ class FontsManager:
 
             path = self.user_font_dir / dir_name
             if path.is_dir():
+                self.internal_removals.add(dir_name)
                 await asyncio.to_thread(shutil.rmtree, path)
 
             self.installed_fonts.pop(font.family)
@@ -219,6 +223,10 @@ class FontsManager:
         if event_type == Gio.FileMonitorEvent.DELETED:
             deleted_dir = file.get_basename()
 
+            if deleted_dir in self.internal_removals:
+                self.internal_removals.remove(deleted_dir)
+                return
+
             family = next(
                 (fam for fam, di in self.installed_fonts.items() if di == deleted_dir),
                 None,
@@ -227,7 +235,7 @@ class FontsManager:
             if not family:
                 return
 
-            self.installed_fonts.pop(family, None)
+            self.installed_fonts.pop(family)
             self.sync_installed_fonts_json()
             self.update_model_installed_status(family, False)
 
