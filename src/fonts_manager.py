@@ -69,13 +69,12 @@ class FontsManager:
         except Exception:
             return {}
 
-        # Exclude items where the installed path doesn't exist or is empty
+        # Exclude items where the installed path doesn't exist
         # Will be overwritten in the next install/remove
         return {
             family: dir_name
             for family, dir_name in raw_installed_fonts.items()
             if (self.user_font_dir / dir_name).is_dir()
-            and any((self.user_font_dir / dir_name).iterdir())
         }
 
     def prepare_font_data(
@@ -212,29 +211,23 @@ class FontsManager:
         other_file: Gio.File,
         event_type: Gio.FileMonitorEvent,
     ):
-        if event_type in (
-            Gio.FileMonitorEvent.DELETED,
-            Gio.FileMonitorEvent.CHANGES_DONE_HINT,
-        ):
-            changed_dir = file.get_basename()
+        if event_type == Gio.FileMonitorEvent.DELETED:
+            deleted_dir = file.get_basename()
 
             family = next(
                 (
                     family
                     for family, dir in self.installed_fonts.items()
-                    if dir == changed_dir
+                    if dir == deleted_dir
                 ),
                 None,
             )
 
-            if not changed_dir or not family:
+            if not deleted_dir or not family:
                 return
 
-            changed_dir_path = self.user_font_dir / changed_dir
-
-            if not changed_dir_path.is_dir() or not any(changed_dir_path.iterdir()):
-                self.installed_fonts.pop(family)
-                self.update_model_installed_status(family, False)
+            self.installed_fonts.pop(family)
+            self.update_model_installed_status(family, False)
 
     def update_model_installed_status(self, family: str, is_installed: bool):
         model = self.family_model_map.get(family)
@@ -243,5 +236,4 @@ class FontsManager:
             return
 
         if model.is_installed != is_installed:
-            print(model.family)
             model.is_installed = is_installed
