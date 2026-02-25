@@ -40,14 +40,12 @@ def generate_subset(ttf_path: Path, preview_string: str) -> BytesIO:
     face = hb.Face(blob)  # type: ignore
 
     # we need to add the glyph ids as well for proper preview of complex non latin languages
-    gids = get_required_glyph_ids(face, preview_string)
+    gids = get_required_glyph_ids(face, "".join(preview_string.split()))
 
     if 0 in gids:
         # 0 = missing character
         # For some fonts, this could be solved by generating better preview string or removing whitespaces in the preview string
-        print(
-            f"Some character in preview string '{preview_string}' doesn't exist in font {ttf_path}."
-        )
+        raise Exception("Failed to generate subset")
 
     subset_input = hb.SubsetInput()  # type: ignore
     for gid in gids:
