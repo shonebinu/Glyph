@@ -24,15 +24,26 @@ template $FontRow: Box {
     }
 
     Separator {
-      visible: bind (template.font_model as <$FontModel>).is_installed;
+      visible: bind $should_show_separator((template.font_model as <$FontModel>).is_app_installed,(template.font_model as <$FontModel>).is_external_installed) as <bool>;
     }
 
     Label {
       label: _("Installed");
-      visible: bind (template.font_model as <$FontModel>).is_installed;
+      visible: bind (template.font_model as <$FontModel>).is_app_installed;
 
       styles [
         "accent",
+        "caption-heading",
+      ]
+    }
+
+    Label {
+      label: _("System");
+      visible: bind (template.font_model as <$FontModel>).is_external_installed;
+      tooltip-text: _("This font is already installed on this computer from another source.");
+
+      styles [
+        "dimmed",
         "caption-heading",
       ]
     }

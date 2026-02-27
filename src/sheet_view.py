@@ -23,8 +23,8 @@ class SheetView(Adw.Bin):
         self.fonts_manager = fonts_manager
 
     @Gtk.Template.Callback()
-    def get_main_actions_stack_name(self, _, is_installed: bool):
-        return "install" if not is_installed else "remove"
+    def get_main_actions_stack_name(self, _, is_app_installed: bool):
+        return "install" if not is_app_installed else "remove"
 
     @Gtk.Template.Callback()
     def get_install_btn_stack_name(self, _, is_installing: bool):
@@ -41,7 +41,7 @@ class SheetView(Adw.Bin):
         asyncio.create_task(self.remove_font())
 
     async def install_font(self):
-        if self.fonts_manager.is_font_outside_installed(self.font_model.family):
+        if self.font_model.is_external_installed:
             dialog = Adw.AlertDialog(
                 heading="Install Font",
                 body=f"The font `{self.font_model.family}` is already installed on this computer from another source. This operation may create a duplicate.",

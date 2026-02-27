@@ -50,7 +50,7 @@ class FontsView(Adw.Bin):
         if filters.subset != "All" and filters.subset not in font.subsets:
             return False
 
-        if filters.installed_only and not font.is_installed:
+        if filters.installed_only and not font.is_app_installed:
             return False
 
         return True

@@ -40,3 +40,9 @@ class FontRow(Gtk.Box):
         )
 
         self.update_markup(model, filters)
+
+    @Gtk.Template.Callback()
+    def should_show_separator(
+        self, _, is_app_installed: bool, is_external_installed: bool
+    ) -> bool:
+        return True if is_app_installed or is_external_installed else False

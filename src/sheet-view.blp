@@ -96,7 +96,7 @@ template $SheetView: Adw.Bin {
           }
 
           Stack {
-            visible-child-name: bind $get_main_actions_stack_name((template.font_model as <$FontModel>).is_installed) as <string>;
+            visible-child-name: bind $get_main_actions_stack_name((template.font_model as <$FontModel>).is_app_installed) as <string>;
 
             StackPage {
               name: "remove";
