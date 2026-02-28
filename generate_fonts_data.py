@@ -129,15 +129,16 @@ def get_sample_by_subset_name(subset_name: str) -> str | None:
 
 
 def get_best_preview_string(metadata) -> str:
-    if "sample_text" in metadata and "tester" in metadata["sample_text"]:
-        return metadata["sample_text"]["tester"]
+    preview_string = None
 
-    if "languages" in metadata and metadata["languages"]:
+    if "sample_text" in metadata and "tester" in metadata["sample_text"]:
+        preview_string = metadata["sample_text"]["tester"]
+    elif "languages" in metadata and metadata["languages"]:
         for lang_code in metadata["languages"]:
             if lang_code in gflanguages and gflanguages[lang_code].sample_text.tester:
-                return gflanguages[lang_code].sample_text.tester
-
-    if "primary_script" in metadata:
+                preview_string = gflanguages[lang_code].sample_text.tester
+                break
+    elif "primary_script" in metadata:
         target_script = metadata["primary_script"]
         script_languages = [
             lang
@@ -146,24 +147,30 @@ def get_best_preview_string(metadata) -> str:
         ]
         if script_languages:
             most_popular = max(script_languages, key=lambda l: l.population)
-            return most_popular.sample_text.tester
+            preview_string = most_popular.sample_text.tester
+    else:
+        subsets = metadata.get("subsets", [])
 
-    subsets = metadata.get("subsets", [])
+        if "latin" in subsets or "latin-ext" in subsets:
+            sample = get_sample_by_subset_name("latin")
+            if sample:
+                preview_string = sample
+        else:
+            for subset in subsets:
+                if subset in ["menu", "latin", "latin-ext"]:
+                    continue
 
-    if "latin" in subsets or "latin-ext" in subsets:
-        sample = get_sample_by_subset_name("latin")
-        if sample:
-            return sample
+                sample = get_sample_by_subset_name(subset)
+                if sample:
+                    preview_string = sample
+                    break
 
-    for subset in subsets:
-        if subset in ["menu", "latin", "latin-ext"]:
-            continue
-
-        sample = get_sample_by_subset_name(subset)
-        if sample:
-            return sample
-
-    return "The quick brown fox jumps over the lazy dog"
+    # Some tester strings have newlines
+    return (
+        " ".join(preview_string.splitlines())
+        if preview_string
+        else "The quick brown fox jumps over the lazy dog"
+    )
 
 
 def parse_metadata(metadata_path: Path) -> Tuple[Dict[str, str], Path, str]:
