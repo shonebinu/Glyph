@@ -1,0 +1,89 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $TestFont: Adw.Bin {
+  styles [
+    "view",
+  ]
+
+  Adw.ViewStack test_view_stack {
+    Adw.ViewStackPage {
+      name: "loading";
+
+      child: Adw.StatusPage loading_status {
+        paintable: Adw.SpinnerPaintable {
+          widget: loading_status;
+        };
+
+        title: _("Loading Test Fonts...");
+        description: _("This could take a moment.");
+      };
+    }
+
+    Adw.ViewStackPage {
+      name: "main_view";
+
+      child: Box {
+        orientation: vertical;
+
+        ScrolledWindow {
+          vexpand: true;
+
+          Adw.Clamp {
+            maximum-size: 900;
+
+            Box faces_container {
+              orientation: vertical;
+              spacing: 24;
+              margin-top: 12;
+              margin-bottom: 32;
+              margin-start: 9;
+              margin-end: 9;
+            }
+          }
+        }
+
+        Adw.Clamp {
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 9;
+          margin-end: 9;
+          maximum-size: 900;
+
+          ListBox {
+            selection-mode: none;
+
+            styles [
+              "boxed-list",
+            ]
+
+            Adw.EntryRow preview_text_entry_row {
+              title: _("Preview Text");
+              changed => $refresh_preview();
+            }
+
+            Adw.ActionRow {
+              title: _("Font Size");
+
+              [suffix]
+              Scale size_scale {
+                hexpand: true;
+                draw-value: true;
+                value-pos: right;
+                digits: 0;
+
+                adjustment: Adjustment preview_size_adjustment {
+                  lower: 10;
+                  upper: 50;
+                  value: 20;
+                  step-increment: 2;
+                  value-changed => $refresh_preview();
+                };
+              }
+            }
+          }
+        }
+      };
+    }
+  }
+}

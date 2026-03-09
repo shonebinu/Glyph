@@ -12,6 +12,10 @@ class SheetView(Adw.Bin):
 
     font_model = GObject.Property(type=FontModel)
 
+    @GObject.Signal(arg_types=(FontModel,))
+    def test_font(self, msg: FontModel):
+        pass
+
     @GObject.Signal(arg_types=(str,))
     def show_toast(self, msg: str):
         pass
@@ -29,6 +33,10 @@ class SheetView(Adw.Bin):
     @Gtk.Template.Callback()
     def get_install_btn_stack_name(self, _, is_installing: bool):
         return "installing" if is_installing else "default"
+
+    @Gtk.Template.Callback()
+    def on_test_clicked(self, _):
+        self.emit("test_font", self.font_model)
 
     @Gtk.Template.Callback()
     def on_install_clicked(self, _):

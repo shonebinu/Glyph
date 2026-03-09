@@ -10,6 +10,7 @@ blueprints = custom_target('blueprints',
     'font-row.blp',
     'sheet-view.blp',
     'sidebar.blp',
+    'test-font.blp',
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
@@ -51,6 +52,7 @@ glyph_sources = [
   'sheet_view.py',
   'sidebar.py',
   'filters.py',
+  'test_font.py',
 ]
 
 install_data(glyph_sources, install_dir: moduledir)

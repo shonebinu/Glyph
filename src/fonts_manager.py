@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 import anyio
 import gi
 import httpx
-from typing_extensions import Any, Dict, List, Set, Tuple
+from typing_extensions import Any, Dict, List, Set, Tuple, TypedDict
 
 gi.require_version("PangoFc", "1.0")
 # PangoFc needs to be imported for using FontMap.config_changed method
@@ -17,6 +17,13 @@ from gi.repository import Gio, GLib, Gtk, Pango, PangoCairo, PangoFc  # type: ig
 
 from .filters import Filters
 from .font_model import FontModel
+
+
+class FontFace(TypedDict):
+    name: str
+    weight: int
+    style: int
+    desc: Pango.FontDescription
 
 
 class FontsManager:
@@ -218,6 +225,61 @@ class FontsManager:
             async with await anyio.open_file(path, "wb") as f:
                 async for chunk in resp.aiter_bytes(chunk_size=256 * 1024):
                     await f.write(chunk)
+
+    async def download_font_for_test(
+        self, font: FontModel
+    ) -> Tuple[Pango.FontMap, list[FontFace]]:
+        test_font_map = PangoCairo.FontMap.new()
+
+        try:
+            # temp folder should not get cleaned
+            with tempfile.TemporaryDirectory(delete=False) as tmp_dir:
+                tmp_dir_path = Path(tmp_dir)
+
+                tasks = [
+                    self.download_font_file(
+                        url, tmp_dir_path / PurePosixPath(urlparse(url).path).name
+                    )
+                    for url in font.files
+                ]
+
+                await asyncio.gather(*tasks)
+
+                for file in tmp_dir_path.iterdir():
+                    test_font_map.add_font_file(str(file))
+
+                pango_family = test_font_map.get_family(font.family)
+
+                font_faces: list[FontFace] = []
+                for face in pango_family.list_faces():
+                    face_desc = face.describe()
+
+                    face_name = face.get_face_name()
+                    weight = face_desc.get_weight()
+                    # normal style is 0
+                    style = face_desc.get_style()
+
+                    font_faces.append(
+                        {
+                            "name": face_name,
+                            "weight": weight,
+                            "style": style,
+                            "desc": face_desc,
+                        }
+                    )
+
+                font_faces.sort(key=lambda face: (face["weight"], face["style"]))
+
+                return test_font_map, font_faces
+
+        except httpx.RequestError:
+            raise Exception(
+                "Connectivity issue. Please check your internet connection."
+            )
+        except httpx.HTTPStatusError as e:
+            raise Exception(f"Server error: {e.response.status_code}")
+        except Exception as e:
+            raise Exception(f"Font files download failed: {e}")
 
     def on_user_font_dir_changed(
         self,

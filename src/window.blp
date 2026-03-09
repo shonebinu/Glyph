@@ -36,71 +36,96 @@ template $GlyphWindow: Adw.ApplicationWindow {
       }
 
       Adw.ViewStackPage {
-        name: "fonts_view";
+        name: "main_view";
 
-        child: Adw.OverlaySplitView overlay_split_view {
-          show-sidebar: bind show_sidebar_button.active;
+        child: Adw.NavigationView nav_view {
+          Adw.NavigationPage {
+            title: _("Fonts View");
+            tag: "fonts_view";
 
-          sidebar: Adw.ToolbarView {
-            [top]
-            Adw.HeaderBar {
-              [end]
-              MenuButton {
-                primary: true;
-                icon-name: "open-menu-symbolic";
-                tooltip-text: _("Main Menu");
-                menu-model: primary_menu;
-              }
-            }
+            child: Adw.OverlaySplitView overlay_split_view {
+              show-sidebar: bind show_sidebar_button.active;
 
-            content: $Sidebar sidebar {};
-          };
-
-          content: Adw.ToolbarView {
-            styles [
-              "view",
-            ]
-
-            [top]
-            Adw.HeaderBar {
-              title-widget: Adw.WindowTitle fonts_view_window_title {};
-
-              ToggleButton show_sidebar_button {
-                active: true;
-                icon-name: "sidebar-show-symbolic";
-                tooltip-text: _("Toggle Sidebar");
-              }
-
-              [end]
-              ToggleButton search_button {
-                icon-name: "edit-find-symbolic";
-                tooltip-text: _("Search fonts");
-
-                ShortcutController {
-                  scope: managed;
-
-                  Shortcut {
-                    trigger: "<Control>f";
-                    action: "activate";
+              sidebar: Adw.ToolbarView {
+                [top]
+                Adw.HeaderBar {
+                  [end]
+                  MenuButton {
+                    primary: true;
+                    icon-name: "open-menu-symbolic";
+                    tooltip-text: _("Main Menu");
+                    menu-model: primary_menu;
                   }
                 }
-              }
-            }
 
-            [top]
-            SearchBar {
-              key-capture-widget: template;
-              search-mode-enabled: bind search_button.active bidirectional;
-
-              child: SearchEntry {
-                placeholder-text: _("Search fonts");
-                changed => $on_search_changed();
-                search-delay: 300;
+                content: $Sidebar sidebar {};
               };
-            }
 
-            content: $FontsView fonts_view {};
-          };
+              content: Adw.ToolbarView {
+                styles [
+                  "view",
+                ]
+
+                [top]
+                Adw.HeaderBar {
+                  title-widget: Adw.WindowTitle fonts_view_header_title {};
+
+                  ToggleButton show_sidebar_button {
+                    active: true;
+                    icon-name: "sidebar-show-symbolic";
+                    tooltip-text: _("Toggle Sidebar");
+                  }
+
+                  [end]
+                  ToggleButton search_button {
+                    icon-name: "edit-find-symbolic";
+                    tooltip-text: _("Search fonts");
+
+                    ShortcutController {
+                      scope: managed;
+
+                      Shortcut {
+                        trigger: "<Control>f";
+                        action: "activate";
+                      }
+                    }
+                  }
+                }
+
+                [top]
+                SearchBar {
+                  key-capture-widget: template;
+                  search-mode-enabled: bind search_button.active bidirectional;
+
+                  child: SearchEntry {
+                    placeholder-text: _("Search fonts");
+                    changed => $on_search_changed();
+                    search-delay: 300;
+                  };
+                }
+
+                content: $FontsView fonts_view {};
+              };
+            };
+          }
+
+          Adw.NavigationPage {
+            title: _("Test Font");
+            tag: "test_view";
+
+            child: Adw.ToolbarView {
+              styles [
+                "view",
+              ]
+
+              [top]
+              Adw.HeaderBar {
+                title-widget: Adw.WindowTitle test_view_header_title {};
+              }
+
+              content: $TestFont test_font {};
+            };
+          }
         };
       }
     }
