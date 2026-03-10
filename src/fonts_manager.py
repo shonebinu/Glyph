@@ -33,7 +33,9 @@ class FontsManager:
         self.user_font_dir = Path("~/.local/share/fonts/").expanduser()
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
         self.installed_fonts_json_path = (
-            Path(GLib.get_user_data_dir()) / "glyph" / "installed.json"
+            Path(GLib.get_user_data_dir())
+            / "io.github.shonebinu.Glyph"
+            / "installed.json"
         )
         self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
 
