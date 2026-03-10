@@ -83,7 +83,6 @@ class TestFont(Adw.Bin):
 
     @Gtk.Template.Callback()
     def refresh_preview(self, *_):
-
         preview_text = self.preview_text_entry_row.get_text()
         font_size = int(self.preview_size_adjustment.get_value())
 

@@ -245,8 +245,12 @@ class FontsManager:
 
                 await asyncio.gather(*tasks)
 
-                for file in tmp_dir_path.iterdir():
-                    test_font_map.add_font_file(str(file))
+                await asyncio.to_thread(
+                    lambda: [
+                        test_font_map.add_font_file(str(file))
+                        for file in tmp_dir_path.iterdir()
+                    ]
+                )
 
                 pango_family = test_font_map.get_family(font.family)
 
