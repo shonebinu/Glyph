@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Glyph
-Exec=glyph
+Name=Lipi
+Exec=lipi
 Icon=io.github.shonebinu.Glyph
 Terminal=false
 Type=Application

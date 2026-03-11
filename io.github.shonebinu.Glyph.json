@@ -3,7 +3,7 @@
   "runtime": "org.gnome.Platform",
   "runtime-version": "49",
   "sdk": "org.gnome.Sdk",
-  "command": "glyph",
+  "command": "lipi",
   "finish-args": [
     "--share=ipc",
     "--socket=fallback-x11",
@@ -78,22 +78,22 @@
       ]
     },
     {
-      "name": "glyph-fonts_data",
+      "name": "lipi-fonts_data",
       "buildsystem": "simple",
       "build-commands": [
-        "mkdir -p ${FLATPAK_DEST}/share/glyph/",
-        "cp -r fonts.json previews ${FLATPAK_DEST}/share/glyph/"
+        "mkdir -p ${FLATPAK_DEST}/share/io.github.shonebinu.Glyph/",
+        "cp -r fonts.json previews ${FLATPAK_DEST}/share/io.github.shonebinu.Glyph/"
       ],
       "sources": [
         {
           "type": "git",
-          "url": "https://github.com/shonebinu/Glyph.git",
+          "url": "https://github.com/shonebinu/Lipi.git",
           "branch": "fonts"
         }
       ]
     },
     {
-      "name": "glyph",
+      "name": "lipi",
       "builddir": true,
       "buildsystem": "meson",
       "sources": [

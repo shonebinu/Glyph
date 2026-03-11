@@ -27,15 +27,15 @@ class FontFace(TypedDict):
 
 
 class FontsManager:
+    APP_ID = "io.github.shonebinu.Glyph"
+
     def __init__(self):
         self.filters = Filters()
 
         self.user_font_dir = Path("~/.local/share/fonts/").expanduser()
         self.user_font_dir.mkdir(parents=True, exist_ok=True)
         self.installed_fonts_json_path = (
-            Path(GLib.get_user_data_dir())
-            / "io.github.shonebinu.Glyph"
-            / "installed.json"
+            Path(GLib.get_user_data_dir()) / self.APP_ID / "installed.json"
         )
         self.installed_fonts_json_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -45,7 +45,7 @@ class FontsManager:
 
         self.app_installed_fonts = self.get_app_installed_fonts()
 
-        data_dir = Path("/app/share/glyph")
+        data_dir = Path(f"/app/share/{self.APP_ID}")
         fonts, categories, subsets, self.family_model_map = self.prepare_font_data(
             data_dir / "fonts.json", data_dir / "previews"
         )

@@ -1,8 +1,8 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GlyphWindow: Adw.ApplicationWindow {
-  title: _("Glyph");
+template $LipiWindow: Adw.ApplicationWindow {
+  title: _("Lipi");
   default-width: 1250;
   default-height: 900;
 
@@ -49,6 +49,10 @@ template $GlyphWindow: Adw.ApplicationWindow {
               sidebar: Adw.ToolbarView {
                 [top]
                 Adw.HeaderBar {
+                  title-widget: Adw.WindowTitle {
+                    title: _("Lipi");
+                  };
+
                   [end]
                   MenuButton {
                     primary: true;
@@ -140,7 +144,7 @@ menu primary_menu {
     }
 
     item {
-      label: _("_About Glyph");
+      label: _("_About Lipi");
       action: "app.about";
     }
   }

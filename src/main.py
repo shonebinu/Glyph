@@ -9,10 +9,10 @@ gi.require_version("Adw", "1")
 from gi.events import GLibEventLoopPolicy
 from gi.repository import Adw, Gio, Gtk
 
-from .window import GlyphWindow
+from .window import LipiWindow
 
 
-class GlyphApplication(Adw.Application):
+class LipiApplication(Adw.Application):
     """The main application singleton class."""
 
     def __init__(self):
@@ -32,7 +32,7 @@ class GlyphApplication(Adw.Application):
         """
         win = self.props.active_window
         if not win:
-            win = GlyphWindow(application=self)
+            win = LipiWindow(application=self)
         win.present()
 
     def on_about_action(self, *args):
@@ -40,8 +40,18 @@ class GlyphApplication(Adw.Application):
         about = Adw.AboutDialog.new_from_appdata(
             "/io/github/shonebinu/Glyph/appdata.xml",
         )
+
+        about.add_link("Donate with Ko-Fi", "https://ko-fi.com/shonebinu")
+        about.add_link("Sponsor on Github", "https://github.com/sponsors/shonebinu")
+        about.add_legal_section(
+            "Data Source",
+            "Fonts and their metadata provided by the <a href='https://github.com/google/fonts'>Google Fonts</a> team and contributors.",
+            Gtk.License.CUSTOM,
+            "Individual fonts are distributed under their respective licenses.",
+        )
+
         # Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-        about.set_translator_credits(_("translator-credits"))
+        # about.set_translator_credits(_("translator-credits"))
         about.present(self.props.active_window)
 
     def create_action(self, name, callback, shortcuts=None):
@@ -63,5 +73,5 @@ class GlyphApplication(Adw.Application):
 def main(version):
     """The application's entry point."""
     asyncio.set_event_loop_policy(GLibEventLoopPolicy())
-    app = GlyphApplication()
+    app = LipiApplication()
     return app.run(sys.argv)

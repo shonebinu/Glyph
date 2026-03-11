@@ -1,10 +1,10 @@
 import asyncio
-from typing import Set, Tuple
+from typing import List, Set, Tuple
 
 from gi.repository import Adw, GObject, Gtk, Pango
 
 from .font_model import FontModel
-from .fonts_manager import FontsManager
+from .fonts_manager import FontFace, FontsManager
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/test-font.ui")
@@ -58,17 +58,17 @@ class TestFont(Adw.Bin):
             self.faces_container.remove(child)
             child = self.faces_container.get_first_child()
 
-    def populate_faces_container(self, fontmap, faces):
+    def populate_faces_container(self, fontmap: Pango.FontMap, faces: List[FontFace]):
         self.clear_faces_container()
 
         for face in faces:
             face_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=26)
 
             style_label = Gtk.Label(
-                label=f"{face['name']} {face['weight']}", halign=Gtk.Align.START
+                label=f"{face['name']} {face['weight']}",
+                halign=Gtk.Align.START,
+                css_classes=["caption", "dimmed"],
             )
-            style_label.add_css_class("caption-heading")
-            style_label.add_css_class("dimmed")
 
             preview_label = Gtk.Label(wrap=True, xalign=0)
             preview_label.set_font_map(fontmap)

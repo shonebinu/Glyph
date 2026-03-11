@@ -1,22 +1,22 @@
 <div align=center>
 
-![Glyph app screenshot](./data/screenshots/banner.png)
+![Lipi app screenshot](./data/screenshots/banner.png)
 
-<img src="./data/icons/hicolor/scalable/apps/io.github.shonebinu.Glyph.svg" alt="Glyph Logo" width="128" >
+<img src="./data/icons/hicolor/scalable/apps/io.github.shonebinu.Glyph.svg" alt="Lipi Logo" width="128" >
 
-# Glyph
+# Lipi
 
 **Install fonts**
 
 ![Flathub Downloads](https://img.shields.io/flathub/downloads/io.github.shonebinu.Glyph?style=for-the-badge)
 ![Flathub Version](https://img.shields.io/flathub/v/io.github.shonebinu.Glyph?style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/shonebinu/Glyph?style=for-the-badge&color=yellow)
+![GitHub License](https://img.shields.io/github/license/shonebinu/Lipi?style=for-the-badge&color=yellow)
 
 </div>
 
 ## Description
 
-Glyph is an app for installing fonts from [Google Fonts Github Repo](https://github.com/google/fonts) written in Python, using GTK4 and Libadwaita. It lets you search through thousands of available fonts and install them into your system in original quality.
+Lipi is an app for installing fonts from [Google Fonts Github Repo](https://github.com/google/fonts) written in Python, using GTK4 and Libadwaita. It lets you search through thousands of available fonts and install them into your system in original quality.
 
 ## Features
 
@@ -29,7 +29,7 @@ Glyph is an app for installing fonts from [Google Fonts Github Repo](https://git
 ## Install
 
 <a href='https://flathub.org/apps/io.github.shonebinu.Glyph'>
-    <img width='240' alt='Get Brief on Flathub' src='https://flathub.org/api/badge?svg&locale=en '/>
+    <img width='240' alt='Get Lipi on Flathub' src='https://flathub.org/api/badge?svg&locale=en '/>
 </a>
 
 ## Development

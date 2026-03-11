@@ -1,1 +1,1 @@
-i18n.gettext('glyph', preset: 'glib')
+i18n.gettext('lipi', preset: 'glib')

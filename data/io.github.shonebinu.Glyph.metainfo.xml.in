@@ -4,22 +4,20 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
 
-  <name>Glyph</name>
-  <summary>Install fonts</summary>
+  <name>Lipi</name>
+  <summary>Discover and install online fonts</summary>
   <description>
     <p
-        >Glyph lets you install fonts from a catalog of thousands of fonts into your system for free.
-      Browse and view previews of each font as you scroll.</p>
+        >Discover and install thousands of fonts directly on your system with Lipi.</p>
     <p>Features:</p>
     <ul>
-      <li>Preview fonts without internet or installation.</li>
-      <li
-            >Search through thousands of fonts in various categories such as sans, mono etc.</li>
-      <li>Install the latest font to your system.</li>
-      <li
-            >View the details of fonts such as the designer, license, files etc.</li>
-      <li
-            >Fonts fetched from Google Fonts Github repo with original quality.</li>
+    <li>Preview fonts offline without needing to install them.</li>
+    <li>Test fonts with your own custom text to see how they look.</li>
+    <li>Search through categories like Sans, Serif, and Monospace.</li>
+    <li>Quickly install the latest fonts to your system.</li>
+    <li>View font details, including the designer, license, and file info.</li>
+    <li
+            >High-quality fonts sourced directly from the Google Fonts GitHub repository.</li>
     </ul>
   </description>
 
@@ -28,20 +26,20 @@
   </developer>
 
   <!-- Required: Should be a link to the upstream homepage for the component -->
-  <url type="homepage">https://github.com/shonebinu/Glyph</url>
+  <url type="homepage">https://github.com/shonebinu/Lipi</url>
   <!-- Recommended: It is highly recommended for open-source projects to display the source code
   repository -->
-  <url type="vcs-browser">https://github.com/shonebinu/Glyph</url>
+  <url type="vcs-browser">https://github.com/shonebinu/Lipi</url>
   <!-- Should point to the software's bug tracking system, for users to report new bugs -->
-  <url type="bugtracker">https://github.com/shonebinu/Glyph/issues</url>
+  <url type="bugtracker">https://github.com/shonebinu/Lipi/issues</url>
   <!-- Should link a FAQ page for this software, to answer some of the most-asked questions in
   detail -->
   <!-- URLs of this type should point to a webpage where users can submit or modify translations of
   the upstream project -->
-  <url type="translate">https://github.com/shonebinu/Glyph/tree/main/po</url>
+  <url type="translate">https://github.com/shonebinu/Lipi/tree/main/po</url>
   <!-- <url type="faq">https://example.org/faq</url> -->
   <!-- Should provide a web link to an online user's reference, a software manual or help page -->
-  <url type="help">https://github.com/shonebinu/Glyph/issues</url>
+  <url type="help">https://github.com/shonebinu/Lipi/issues</url>
   <!-- URLs of this type should point to a webpage showing information on how to donate to the
   described software project -->
   <url type="donation">https://ko-fi.com/shonebinu</url>
@@ -50,7 +48,7 @@
   <url type="contact">https://shonebinu.com</url>
   <!-- URLs of this type should point to a webpage showing information on how to contribute to the
   described software project -->
-  <url type="contribute">https://github.com/shonebinu/Glyph</url>
+  <url type="contribute">https://github.com/shonebinu/Lipi</url>
 
   <supports>
     <control>pointing</control>
@@ -62,7 +60,7 @@
     <display_length compare="ge">360</display_length>
   </requires>
 
-  <translation type="gettext">glyph</translation>
+  <translation type="gettext">lipi</translation>
   <!-- All graphical applications having a desktop file must have this tag in the MetaInfo.
      If this is present, appstreamcli compose will pull icons, keywords and categories from the desktop
   file. -->
@@ -73,34 +71,52 @@
 
   <!-- Applications should set a brand color in both light and dark variants like so -->
   <branding>
-    <color type="primary" scheme_preference="light">#99c1f1</color>
-    <color type="primary" scheme_preference="dark">#1a5fb4</color>
+    <color type="primary" scheme_preference="light">#e4b2e5</color>
+    <color type="primary" scheme_preference="dark">#3d233d</color>
   </branding>
 
   <screenshots>
     <screenshot type="default">
       <image>
-        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph.png</image>
-      <caption>Glyph home</caption>
+        https://raw.githubusercontent.com/shonebinu/Lipi/refs/heads/main/data/screenshots/initial.png</image>
+      <caption>Initial screen</caption>
     </screenshot>
     <screenshot>
       <image>
-        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph-details.png</image>
-      <caption>Font details dialog</caption>
+        https://raw.githubusercontent.com/shonebinu/Lipi/refs/heads/main/data/screenshots/font-details.png</image>
+      <caption>Font details view</caption>
     </screenshot>
     <screenshot>
       <image>
-        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph-search.png</image>
-      <caption>Fonts search</caption>
+        https://raw.githubusercontent.com/shonebinu/Lipi/refs/heads/main/data/screenshots/font-test.png</image>
+      <caption>Font testing page</caption>
     </screenshot>
     <screenshot>
       <image>
-        https://raw.githubusercontent.com/shonebinu/Glyph/refs/heads/main/data/screenshots/glyph-small.png</image>
-      <caption>Small screen size</caption>
+        https://raw.githubusercontent.com/shonebinu/Lipi/refs/heads/main/data/screenshots/small-screen-initial.png</image>
+      <caption>Small screen</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/shonebinu/Lipi/refs/heads/main/data/screenshots/small-screen-font-test.png</image>
+      <caption>Small screen font testing</caption>
     </screenshot>
   </screenshots>
 
   <releases>
+    <release version="0.2.0" date="2026-03-11">
+        <!-- <url type="details">https://example.org/changelog.html#version_1.0.1</url> -->
+        <description translate="no">
+        <p>Release v0.2.0</p>
+        <ul>
+            <li>New app name and logo</li>
+            <li>Implement font testing page</li>
+            <li>New navigation based UI</li>
+            <li>Add filter options</li>
+            <li>Option to delete fonts installed via app</li>
+        </ul>
+        </description>
+    </release>
     <release version="0.1.0" date="2026-02-01">
       <!-- <url type="details">https://example.org/changelog.html#version_1.0.1</url> -->
       <description translate="no">

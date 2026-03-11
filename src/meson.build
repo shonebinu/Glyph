@@ -1,5 +1,5 @@
 pkgdatadir = get_option('prefix') / get_option('datadir') / meson.project_name()
-moduledir = pkgdatadir / 'glyph'
+moduledir = pkgdatadir / 'lipi'
 gnome = import('gnome')
 
 blueprints = custom_target('blueprints',
@@ -16,8 +16,8 @@ blueprints = custom_target('blueprints',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-gnome.compile_resources('glyph',
-  'glyph.gresource.xml',
+gnome.compile_resources('lipi',
+  'lipi.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
@@ -33,15 +33,15 @@ conf.set('localedir', get_option('prefix') / get_option('localedir'))
 conf.set('pkgdatadir', pkgdatadir)
 
 configure_file(
-  input: 'glyph.in',
-  output: 'glyph',
+  input: 'lipi.in',
+  output: 'lipi',
   configuration: conf,
   install: true,
   install_dir: get_option('bindir'),
   install_mode: 'rwxr-xr-x'
 )
 
-glyph_sources = [
+lipi_sources = [
   '__init__.py',
   'main.py',
   'window.py',
@@ -55,4 +55,4 @@ glyph_sources = [
   'test_font.py',
 ]
 
-install_data(glyph_sources, install_dir: moduledir)
+install_data(lipi_sources, install_dir: moduledir)

@@ -10,8 +10,8 @@ from .test_font import TestFont
 
 
 @Gtk.Template(resource_path="/io/github/shonebinu/Glyph/window.ui")
-class GlyphWindow(Adw.ApplicationWindow):
-    __gtype_name__ = "GlyphWindow"
+class LipiWindow(Adw.ApplicationWindow):
+    __gtype_name__ = "LipiWindow"
 
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     view_stack: Adw.ViewStack = Gtk.Template.Child()

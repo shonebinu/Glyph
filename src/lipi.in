@@ -1,6 +1,6 @@
 #!@PYTHON@
 
-# glyph.in
+# lipi.in
 #
 # Copyright 2026 Shone Binu
 #
@@ -31,16 +31,16 @@ localedir = '@localedir@'
 
 sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain('glyph', localedir)
-locale.textdomain('glyph')
-gettext.install('glyph', localedir)
+locale.bindtextdomain('lipi', localedir)
+locale.textdomain('lipi')
+gettext.install('lipi', localedir)
 
 if __name__ == '__main__':
     import gi
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'glyph.gresource'))
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'lipi.gresource'))
     resource._register()
 
-    from glyph import main
+    from lipi import main
     sys.exit(main.main(VERSION))
