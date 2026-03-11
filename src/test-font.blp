@@ -81,6 +81,12 @@ template $TestFont: Adw.Bin {
                 };
               }
             }
+
+            Adw.SwitchRow preview_fallback_switch {
+              title: _("Font Fallback");
+              subtitle: _("Try to use system fonts for characters missing from this font");
+              notify::active => $refresh_preview();
+            }
           }
         }
       };

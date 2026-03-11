@@ -17,6 +17,7 @@ class TestFont(Adw.Bin):
     faces_container: Gtk.Box = Gtk.Template.Child()
     preview_text_entry_row: Adw.EntryRow = Gtk.Template.Child()
     preview_size_adjustment: Gtk.Adjustment = Gtk.Template.Child()
+    preview_fallback_switch: Adw.SwitchRow = Gtk.Template.Child()
 
     @GObject.Signal(arg_types=(str,))
     def show_toast(self, msg: str):
@@ -91,11 +92,13 @@ class TestFont(Adw.Bin):
     def refresh_preview(self, *_):
         preview_text = self.preview_text_entry_row.get_text()
         font_size = int(self.preview_size_adjustment.get_value())
+        is_fallback = self.preview_fallback_switch.get_active()
 
         for widget, desc in self.preview_label_widgets:
             desc.set_size(Pango.SCALE * font_size)
             attr_list = Pango.AttrList()
             attr_list.insert(Pango.attr_font_desc_new(desc))
+            attr_list.insert(Pango.attr_fallback_new(is_fallback))
 
             widget.set_attributes(attr_list)
             widget.set_label(preview_text)
