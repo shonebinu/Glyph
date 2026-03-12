@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import uuid
 from io import BytesIO
 from pathlib import Path
@@ -14,8 +15,10 @@ from gftools import fonts_public_pb2
 from google.protobuf import text_format
 from google.protobuf.json_format import MessageToDict
 
+GF_COMMIT_SHA = os.environ.get("GF_COMMIT_SHA", "main")
+
 LICENSE_FOLDERS = ["ofl", "apache", "ufl"]
-FONT_FILE_BASE_URL = "https://raw.githubusercontent.com/google/fonts/main"
+FONT_FILE_BASE_URL = f"https://raw.githubusercontent.com/google/fonts/{GF_COMMIT_SHA}"
 
 OUTPUT_JSON_PATH = "fonts.json"
 OUTPUT_PREVIEWS_PATH = "previews/"
@@ -256,7 +259,7 @@ def main(google_fonts_path: Path) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Index Google Fonts and generate preview fonts collection."
+        description="Index Google Fonts and generate preview fonts."
     )
     parser.add_argument(
         "google_fonts_path",
