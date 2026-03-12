@@ -39,7 +39,9 @@ jobs:
           cd ..
 
       - name: Run indexing script
-        run: python script/generate_fonts_data.py ./google_fonts
+        run: |
+          rm -rf fonts.json previews
+          python script/generate_fonts_data.py ./google_fonts
 
       - name: Commit and push changes
         run: |
