@@ -1,6 +1,6 @@
 # deps below are for generation script
 fonttools
-gftools
+gfmetadata
 protobuf
 gflanguages
 uharfbuzz

@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Tuple
 import uharfbuzz as hb
 from fontTools.ttLib import TTFont
 from gflanguages import LoadLanguages, LoadScripts
-from gftools import fonts_public_pb2
+from gfmetadata import fonts_public_pb2
 from google.protobuf import text_format
 from google.protobuf.json_format import MessageToDict
 
